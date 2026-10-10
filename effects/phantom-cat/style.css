@@ -1,6 +1,6 @@
 /* Phantom Thief Cat — 怪盗猫从墙后冒出来，左右看看、抬帽致意、甩出一张预告函钉在墙上，然后缩回去 */
 :root {
-  --bg: #f7f5f0;
+  --bg: #f8e9ec;
   --ink: #2e2440;         /* 描边颜色 */
   --accent: #ff6f91;      /* 领结/预告函颜色 */
   --rise: 520ms;          /* 冒出来的时长 */
@@ -8,7 +8,7 @@
   --spin: 2;              /* 卡片飞行中转几圈 */
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { font-size: min(3.333vw, 4.444vh); }
+html { font-size: min(3.7vw, 4.9vh); }
 body {
   margin: 0; min-height: 100vh; display: grid; place-items: center;
   background: var(--bg); color: var(--ink); overflow: hidden;

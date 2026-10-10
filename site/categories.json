@@ -3,14 +3,6 @@
     "zh": "文字",
     "en": "Text"
   },
-  "scroll": {
-    "zh": "滚动",
-    "en": "Scroll"
-  },
-  "loader": {
-    "zh": "加载",
-    "en": "Loader"
-  },
   "micro": {
     "zh": "微交互",
     "en": "Micro"
@@ -23,9 +15,13 @@
     "zh": "按钮",
     "en": "Button"
   },
-  "background": {
-    "zh": "背景",
-    "en": "Background"
+  "physics": {
+    "zh": "物理",
+    "en": "Physics"
+  },
+  "loader": {
+    "zh": "加载",
+    "en": "Loader"
   },
   "transition": {
     "zh": "转场",

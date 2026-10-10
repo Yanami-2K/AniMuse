@@ -7,15 +7,29 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="tv">
-    <div class="screen" id="screen">
-      <div class="content" id="content">
-        <p class="t">build #128</p>
-        <p class="big">部署完成</p>
-        <p class="s">3 个服务已上线 · 用时 42s</p>
+  <div class="set">
+    <i class="ant l"></i><i class="ant r"></i>
+    <div class="tv">
+      <div class="bezel">
+        <div class="screen" id="screen">
+          <div class="content" id="content">
+            <p class="t">build #128</p>
+            <p class="big">部署完成</p>
+            <p class="s">3 个服务已上线 · 用时 42s</p>
+          </div>
+          <canvas class="snow" id="snow" width="96" height="72" aria-hidden="true"></canvas>
+          <i class="dot" id="dot" aria-hidden="true"></i>
+          <i class="glass" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="panel">
+        <button class="knob" id="knob" type="button" aria-label="开关"><i></i></button>
+        <i class="knob small"><i></i></i>
+        <i class="grille"></i>
+        <span class="led" id="led"></span>
       </div>
     </div>
-    <span class="led" id="led"></span>
+    <i class="foot l"></i><i class="foot r"></i>
   </div>
   <script src="script.js"></script>
 </body>

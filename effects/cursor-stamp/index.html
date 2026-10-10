@@ -3,17 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cursor Click &amp; Stamp · AniMuse</title>
+<title>Rubber Stamp Approve · AniMuse</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <!-- 印泥颗粒感：用噪声在印记上抠掉一些小点 -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -4.2 3.7" result="m"/>
+      <feComposite in="SourceGraphic" in2="m" operator="in"/>
+    </filter>
+  </svg>
   <div class="scene" id="scene">
     <article class="doc" id="doc">
       <header><span class="tag">PR #42</span><b>订单列表加状态筛选</b></header>
       <i class="sk" style="--w:92%"></i><i class="sk" style="--w:78%"></i><i class="sk" style="--w:64%"></i>
       <footer><span class="who">2 files · +48 −6</span><button class="btn" id="btn" type="button">Approve</button></footer>
-      <div class="stamp" id="stamp" aria-hidden="true"><span>已通过</span><small>APPROVED</small></div>
+      <div class="mark" id="mark" aria-hidden="true"><span>已通过</span><small>APPROVED · 2026</small></div>
+      <i class="specks" id="specks"></i>
+      <i class="shadow" id="shadow"></i>
     </article>
+    <div class="tool" id="tool" aria-hidden="true"><i class="knob"></i><i class="neck"></i><i class="block"></i><i class="rubber"></i></div>
     <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
   <script src="script.js"></script>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morphing Download Button · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <button class="btn" id="btn" type="button" aria-label="下载">
+      <svg viewBox="-12 -12 124 124" aria-hidden="true">
+        <circle class="track" cx="50" cy="50" r="58"/>
+        <circle class="ring" id="ring" cx="50" cy="50" r="58" pathLength="100"/>
+        <circle class="disc" id="disc" cx="50" cy="50" r="48"/>
+        <g id="icon"><path id="p1"/><path id="p2"/></g>
+        <g class="sparks" id="sparks"></g>
+      </svg>
+    </button>
+    <p class="cap"><span id="state">下载</span><b id="pct"></b></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "slug": "liquid-button",
+  "order": 2,
+  "category": "button",
+  "name": {
+    "zh": "液态磁吸按钮",
+    "en": "Liquid Magnetic Button"
+  },
+  "summary": {
+    "zh": "指针靠近，按钮整体被吸过去一点，同时一截液体从边缘伸出来去够指针，离开时拉出细颈再“啵”地断开缩回。点一下炸成一圈水珠，再一颗颗融回去。",
+    "en": "As the pointer nears, the button drifts toward it while a blob of liquid reaches out from the edge; leave and it stretches a thin neck, snaps and retracts. Click and it bursts into droplets that merge back one by one."
+  },
+  "technique": {
+    "zh": "SVG goo 滤镜：feGaussianBlur 模糊 + feColorMatrix 把 alpha 拉陡（×24 −10），靠近的形状就会粘连。四个弹簧体：本体、伸出的液体、更远的一滴、文字；液体目标点 = 本体中心 + 方向 × min(距离, 椭圆边缘距离 + reach)。文字不进滤镜，所以始终清晰。",
+    "en": "SVG goo filter: feGaussianBlur + feColorMatrix steepening alpha (×24 −10) so nearby shapes fuse. Four springs: body, reaching blob, a farther droplet and the label; the blob target is centre + dir × min(distance, ellipse edge + reach). The label stays outside the filter so it is always crisp."
+  },
+  "tags": [
+    "magnetic",
+    "gooey",
+    "hover",
+    "button",
+    "磁吸",
+    "液体"
+  ],
+  "tech": [
+    "SVG filter",
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--field",
+      "default": "11rem",
+      "desc": {
+        "zh": "磁场半径",
+        "en": "magnetic field radius"
+      }
+    },
+    {
+      "name": "--pull",
+      "default": ".3",
+      "desc": {
+        "zh": "本体跟过去的比例",
+        "en": "how far the body follows"
+      }
+    },
+    {
+      "name": "--reach",
+      "default": "1.8rem",
+      "desc": {
+        "zh": "液体最多伸出多远",
+        "en": "max reach beyond the edge"
+      }
+    },
+    {
+      "name": "--goo",
+      "default": ".55",
+      "desc": {
+        "zh": "粘稠度（模糊半径 = goo × 1rem）",
+        "en": "gooeyness (blur = goo × 1rem)"
+      }
+    },
+    {
+      "name": "--liquid",
+      "default": "#ff5a36",
+      "desc": {
+        "zh": "液体颜色",
+        "en": "liquid color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "按钮文字改 #txt；滤镜半径跟着 rem 算，放大缩小都不会糊。注意 goo 层要比按钮大一圈，不然水珠飞出去会被裁掉。",
+    "en": "Edit #txt for the label; the blur scales with rem so it holds at any size. Keep the goo layer larger than the button or flying droplets get clipped."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 4300
+}

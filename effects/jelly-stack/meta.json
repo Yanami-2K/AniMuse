@@ -1,0 +1,74 @@
+{
+  "slug": "jelly-stack",
+  "order": 1,
+  "category": "card",
+  "name": {
+    "zh": "果冻卡片堆",
+    "en": "Jelly Card Stack"
+  },
+  "summary": {
+    "zh": "一摞能拖能甩的卡片。抓上半截往右拖会顺时针转、抓下半截反过来，像真的捏着一张纸；甩得越快越“果冻”，甩出去的卡会绕回最底下，永远甩不完。没人碰时有根手指自己演示。",
+    "en": "A deck you can drag and fling. Grab the top half and it rotates one way, the bottom half the other, like pinching real paper; faster means more jelly; flung cards tuck back underneath, forever. A ghost finger demos it when idle."
+  },
+  "technique": {
+    "zh": "rAF 里 240Hz 固定步长做弹簧积分（a = k·Δx − c·v）。果冻感 = 沿速度方向拉伸、垂直方向压扁：rotate(θ) scale(1+s, 1−0.7s) rotate(−θ)，s 跟速度成正比并封顶。松手速度超过阈值就让卡片只受空气阻力飞出，380ms 后换到最底层再弹回。",
+    "en": "A fixed 240Hz spring step in rAF (a = k·Δx − c·v). Jelly = stretch along the velocity, squash across it: rotate(θ) scale(1+s, 1−0.7s) rotate(−θ), with s proportional to speed and capped. Past the throw threshold the card flies with air drag only, then after 380ms is re-ordered to the bottom and springs home."
+  },
+  "tags": [
+    "drag",
+    "spring",
+    "swipe",
+    "physics",
+    "拖拽",
+    "弹簧"
+  ],
+  "tech": [
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--stiffness",
+      "default": "220",
+      "desc": {
+        "zh": "弹簧刚度，越大回位越快",
+        "en": "spring stiffness"
+      }
+    },
+    {
+      "name": "--damping",
+      "default": "17",
+      "desc": {
+        "zh": "阻尼，越小越晃",
+        "en": "damping (lower = wobblier)"
+      }
+    },
+    {
+      "name": "--jelly",
+      "default": ".00042",
+      "desc": {
+        "zh": "每 px/s 速度拉伸多少",
+        "en": "stretch per px/s of speed"
+      }
+    },
+    {
+      "name": "--throw",
+      "default": "650",
+      "desc": {
+        "zh": "甩出去的速度阈值（px/s）",
+        "en": "fling velocity threshold (px/s)"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "卡片内容随便换，数量随便加（order 数组会自动管层级）；只想要“拖了会弹回”就把 up() 里甩出去那段删掉。",
+    "en": "Swap the card content and add as many as you like; for drag-and-spring-back only, delete the fling branch in up()."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1150
+}

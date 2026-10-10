@@ -1,6 +1,6 @@
 {
   "slug": "phantom-cat",
-  "order": 15,
+  "order": 11,
   "category": "character",
   "name": {
     "zh": "怪盗猫的预告函",
@@ -70,5 +70,5 @@
     "script.js"
   ],
   "preview": "preview.png",
-  "posterAt": 4400
+  "posterAt": 4100
 }
