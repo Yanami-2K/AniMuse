@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AniMuse · 动效灵感</title>
+<meta name="description" content="开源的网页动效灵感库。每个效果都能现场看、能改参数，一键复制 Prompt 丢给 Cursor / Claude Code / Codex，照着源码还原。">
+<meta property="og:title" content="AniMuse · 动效灵感">
+<meta property="og:description" content="看到喜欢的动效却说不清？挑一个，复制 Prompt，丢给你的 AI。">
+<meta property="og:image" content="__PAGES__og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f6f4ef">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css?v=__BUILD__">
+</head>
+<body class="loading">
+  <header class="top" id="top">
+    <a class="brand" href="#" aria-label="AniMuse">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#18171c"/><path d="M9 23 L14.6 9 h2.8 L23 23" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle class="mark-dot" cx="16" cy="19" r="2.6" fill="#ff5a36"/></svg>
+      <span class="brand-name">AniMuse</span><span class="brand-zh" data-i18n="brandZh">动效灵感</span>
+    </a>
+    <nav class="top-nav">
+      <a href="#gallery" data-i18n="navGallery">效果</a>
+      <a href="#contribute" data-i18n="navContribute">投稿</a>
+      <a href="https://github.com/__REPO__" target="_blank" rel="noopener" class="gh">GitHub<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5l5-5M4.5 3.5h4v4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+      <button class="lang" id="lang" type="button" aria-label="Switch language"><span data-l="zh">中</span><span data-l="en">EN</span><i></i></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-main">
+        <p class="eyebrow"><span class="eb-num">v1</span><span data-i18n="eyebrow">开源 · 原生 HTML / CSS / JS · MIT</span></p>
+        <h1 class="word" id="word" aria-label="AniMuse"></h1>
+        <p class="lede" id="lede" data-i18n="lede">看到喜欢的动效却说不清？挑一个，复制 Prompt，丢给你的 AI。</p>
+        <p class="sub" data-i18n-html="sub">每个效果都是能直接打开的源码。Prompt 里写清楚时长、曲线、错峰，再把源码链接附上，AI 照着抄就不会走样。</p>
+        <div class="hero-cta">
+          <a class="btn-ink" href="#gallery"><span data-i18n="ctaBrowse">逛逛效果</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <span class="hero-count"><b id="heroCount">0</b> <span data-i18n="countUnit">个效果，持续更新</span></span>
+        </div>
+      </div>
+      <figure class="curve" id="curve" aria-hidden="true">
+        <div class="curve-plot">
+          <svg viewBox="0 0 200 200" class="curve-svg">
+            <g class="curve-grid"><path d="M0 50H200M0 100H200M0 150H200M50 0V200M100 0V200M150 0V200"/></g>
+            <path class="curve-axis" d="M0 200 L200 0" />
+            <path class="curve-path" id="curvePath" d="M0 200 C40 40 40 0 200 0"/>
+            <circle class="curve-h" cx="40" cy="40" r="4"/><circle class="curve-h" cx="40" cy="0" r="4"/>
+            <path class="curve-hl" d="M0 200 L40 40 M200 0 L40 0"/>
+          </svg>
+          <div class="curve-run"><div class="curve-x"><div class="curve-y"><i></i></div></div></div>
+        </div>
+        <div class="curve-track"><i class="curve-box"></i></div>
+        <figcaption><code>cubic-bezier(.2, .8, .2, 1)</code><span data-i18n="curveCap">全站只用这一条曲线</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <div class="bar" id="bar">
+        <div class="chips" id="chips" role="tablist"><span class="chip-pill" id="chipPill" aria-hidden="true"></span></div>
+        <label class="search">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13.2 13.2L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="q" type="search" autocomplete="off" spellcheck="false" data-i18n-ph="searchPh" placeholder="搜一下：打字、按钮、猫…">
+          <kbd>/</kbd>
+        </label>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden><span data-i18n="empty">没找到。换个词试试，或者</span> <a href="#contribute" data-i18n="emptyLink">投一个进来</a></p>
+    </section>
+
+    <section class="contribute" id="contribute">
+      <div class="contrib-head">
+        <p class="eyebrow"><span class="eb-num">PR</span><span data-i18n="contribEyebrow">投稿</span></p>
+        <h2 data-i18n="contribTitle">你也做了一个好看的动效？</h2>
+        <p data-i18n="contribText">建一个目录，放 index.html、style.css、script.js 和 meta.json，提个 PR 就行。不需要构建工具，不需要框架。</p>
+      </div>
+      <pre class="tree"><code>effects/
+└─ <b>your-effect</b>/
+   ├─ index.html   <span data-i18n="treeHtml"># 双击就能打开的 Demo</span>
+   ├─ style.css    <span data-i18n="treeCss"># 参数都放在 :root 变量里</span>
+   ├─ script.js    <span data-i18n="treeJs"># 可选</span>
+   ├─ meta.json    <span data-i18n="treeMeta"># 名字、分类、参数</span>
+   └─ README.md</code></pre>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>AniMuse · <span data-i18n="brandZh">动效灵感</span></span>
+    <span>MIT · <a href="https://github.com/__REPO__" target="_blank" rel="noopener">GitHub</a> · <span class="ref" title="build">__REF7__</span></span>
+  </footer>
+
+  <div class="detail" id="detail" hidden aria-modal="true" role="dialog" aria-labelledby="dTitle">
+    <div class="detail-scrim" data-close></div>
+    <article class="sheet" id="sheet">
+      <header class="sheet-top">
+        <button class="icon-btn" type="button" data-close aria-label="Close"><svg viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <span class="sheet-crumb" id="dCrumb"></span>
+        <span class="sheet-nav">
+          <button class="icon-btn" type="button" id="dPrev" aria-label="Previous"><svg viewBox="0 0 20 20"><path d="M12 4.5L6.5 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="icon-btn" type="button" id="dNext" aria-label="Next"><svg viewBox="0 0 20 20"><path d="M8 4.5l5.5 5.5L8 15.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </span>
+      </header>
+      <div class="sheet-body">
+        <div class="d-stage-wrap">
+          <div class="d-stage" id="dStage"></div>
+          <div class="d-stage-tools">
+            <button type="button" class="tool" id="dReplay"><svg viewBox="0 0 16 16"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="replay">重播</span></button>
+            <a class="tool" id="dOpen" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7.5 8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="openDemo">单独打开</span></a>
+            <a class="tool" id="dSrc" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M5.5 4.5L2 8l3.5 3.5M10.5 4.5L14 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="viewSrc">看源码</span></a>
+          </div>
+        </div>
+        <div class="d-info">
+          <p class="d-no" id="dNo"></p>
+          <h2 class="d-title" id="dTitle"></h2>
+          <p class="d-en" id="dEn"></p>
+          <p class="d-sum" id="dSum"></p>
+          <div class="d-tech" id="dTech"></div>
+          <h3 data-i18n="howTitle">怎么做的</h3>
+          <p class="d-how" id="dHow"></p>
+          <h3 data-i18n="paramsTitle">关键参数</h3>
+          <table class="params"><tbody id="dParams"></tbody></table>
+        </div>
+        <section class="d-prompt">
+          <div class="p-head">
+            <h3 data-i18n="promptTitle">Prompt</h3>
+            <div class="seg" id="seg" role="tablist">
+              <span class="seg-pill" aria-hidden="true"></span>
+              <button type="button" role="tab" data-v="ref" aria-selected="true" data-i18n="vRef">引用源码</button>
+              <button type="button" role="tab" data-v="inline" data-i18n="vInline">内嵌源码</button>
+            </div>
+          </div>
+          <p class="p-hint" id="pHint"></p>
+          <div class="p-box">
+            <pre class="p-text" id="pText" tabindex="0"></pre>
+            <div class="p-fade"></div>
+          </div>
+          <div class="p-actions">
+            <button class="copy" id="copy" type="button">
+              <span class="ico" aria-hidden="true"><svg class="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><svg class="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>
+              <span class="lbl"><span class="a" data-i18n="copy">复制 Prompt</span><span class="b" data-i18n="copied">复制好了</span></span>
+            </button>
+            <span class="p-meta" id="pMeta"></span>
+          </div>
+        </section>
+      </div>
+    </article>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="#17a34a"/><path d="M6 10.3l2.7 2.7L14 7.6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="toastText"></span></div>
+
+  <noscript><p style="padding:2rem">AniMuse 需要 JavaScript 才能展示效果。也可以直接去 <a href="https://github.com/__REPO__/tree/main/effects">GitHub</a> 看源码。</p></noscript>
+  <script src="data.js?v=__BUILD__"></script>
+  <script src="app.js?v=__BUILD__"></script>
+</body>
+</html>

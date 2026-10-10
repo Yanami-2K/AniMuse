@@ -1,0 +1,73 @@
+{
+  "slug": "review-pin",
+  "order": 8,
+  "category": "card",
+  "name": {
+    "zh": "荧光笔 + 评论图钉",
+    "en": "Review Pin Drop"
+  },
+  "summary": {
+    "zh": "荧光笔从左到右划过一句话（跨行也连续），图钉从上方掉下来钉在句尾，落地压扁回弹，评论卡跟着弹出来。",
+    "en": "A highlighter sweeps a phrase left to right (continuous across line breaks), a pin drops onto the end of it with a squash-and-bounce, then a comment card springs in."
+  },
+  "technique": {
+    "zh": "mark 用 linear-gradient 背景，background-size 从 0% 过渡到 100%，配合 box-decoration-break: clone 跨行；图钉位置用 getClientRects() 取最后一行的末尾。",
+    "en": "The mark has a linear-gradient background animated from 0% to 100% background-size, with box-decoration-break: clone for line wraps; the pin is placed at the end of the last rect from getClientRects()."
+  },
+  "tags": [
+    "highlight",
+    "comment",
+    "annotation",
+    "批注"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--sweep",
+      "default": "650ms",
+      "desc": {
+        "zh": "划线时长",
+        "en": "sweep duration"
+      }
+    },
+    {
+      "name": "--drop",
+      "default": "520ms",
+      "desc": {
+        "zh": "图钉下落 + 回弹时长",
+        "en": "pin drop + bounce"
+      }
+    },
+    {
+      "name": "--marker",
+      "default": "#ffe066",
+      "desc": {
+        "zh": "荧光笔颜色",
+        "en": "highlighter color"
+      }
+    },
+    {
+      "name": "--accent",
+      "default": "#ff5a36",
+      "desc": {
+        "zh": "图钉颜色",
+        "en": "pin color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "任何一段文字里用 <mark id=\"hl\"> 包住要标的部分就行。",
+    "en": "Wrap the target phrase in <mark id=\"hl\"> inside any paragraph."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2700
+}

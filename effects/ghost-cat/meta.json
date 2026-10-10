@@ -1,0 +1,73 @@
+{
+  "slug": "ghost-cat",
+  "order": 14,
+  "category": "character",
+  "name": {
+    "zh": "飘飘幽灵猫",
+    "en": "Floating Ghost Cat"
+  },
+  "summary": {
+    "zh": "一只纯 SVG 的幽灵猫：上下飘、尾巴摇、随机眨眼（偶尔连眨两下），影子跟着一缩一放，旁边的星星一闪一闪。点它会吓一跳。",
+    "en": "A pure-SVG ghost cat: it floats, wags its tail, blinks at random (sometimes twice), its shadow breathes and stars twinkle. Tap it for a little jump-scare."
+  },
+  "technique": {
+    "zh": "SVG 部件用 transform-box: fill-box 设各自的旋转中心；身体 float 和影子 shadow 用同一个周期反向缩放；眨眼是 scaleY(.1) 的 0.18s 动画，间隔随机 2~5 秒。",
+    "en": "SVG parts use transform-box: fill-box for their own pivots; body float and shadow share a period with inverse scaling; a blink is a 0.18s scaleY(.1), every 2–5s at random."
+  },
+  "tags": [
+    "mascot",
+    "svg",
+    "idle",
+    "角色"
+  ],
+  "tech": [
+    "SVG",
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--float",
+      "default": "3.2s",
+      "desc": {
+        "zh": "上下飘一次的周期",
+        "en": "float period"
+      }
+    },
+    {
+      "name": "--amp",
+      "default": "9px",
+      "desc": {
+        "zh": "飘动幅度",
+        "en": "float amplitude"
+      }
+    },
+    {
+      "name": "--body",
+      "default": "#e9e3ff",
+      "desc": {
+        "zh": "身体颜色",
+        "en": "body color"
+      }
+    },
+    {
+      "name": "--ink",
+      "default": "#3b2f4a",
+      "desc": {
+        "zh": "描边颜色",
+        "en": "stroke color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "改 --body 就能换一只颜色；可以拿来当 404 页或空状态的吉祥物。",
+    "en": "Change --body for a new colorway; works as a 404 or empty-state mascot."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1000
+}

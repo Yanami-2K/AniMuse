@@ -1,0 +1,38 @@
+{
+  "text": {
+    "zh": "文字",
+    "en": "Text"
+  },
+  "scroll": {
+    "zh": "滚动",
+    "en": "Scroll"
+  },
+  "loader": {
+    "zh": "加载",
+    "en": "Loader"
+  },
+  "micro": {
+    "zh": "微交互",
+    "en": "Micro"
+  },
+  "card": {
+    "zh": "卡片",
+    "en": "Card"
+  },
+  "button": {
+    "zh": "按钮",
+    "en": "Button"
+  },
+  "background": {
+    "zh": "背景",
+    "en": "Background"
+  },
+  "transition": {
+    "zh": "转场",
+    "en": "Transition"
+  },
+  "character": {
+    "zh": "角色",
+    "en": "Character"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "slug": "crt-off",
+  "order": 13,
+  "category": "transition",
+  "name": {
+    "zh": "老电视关机",
+    "en": "CRT Power Off"
+  },
+  "summary": {
+    "zh": "画面先被压成一条发亮的细线，再缩成一个点，然后熄灭；开机就倒着放。做转场、关弹窗都很有梗。",
+    "en": "The picture squashes into a bright line, shrinks to a dot, then goes dark; power-on is the same thing reversed. A fun transition or modal close."
+  },
+  "technique": {
+    "zh": "四个关键帧：scale(1,1) → scale(1.02, 2px/高) 同时 brightness(3) → scale(6px/宽, 2px/高) → scale(0)；倒放时把 offset 换成 1-offset。",
+    "en": "Four keyframes: scale(1,1) → scale(1.02, 2px/h) with brightness(3) → scale(6px/w, 2px/h) → scale(0); for power-on reverse the list and map offset to 1 − offset."
+  },
+  "tags": [
+    "transition",
+    "retro",
+    "crt",
+    "转场"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--off",
+      "default": "560ms",
+      "desc": {
+        "zh": "关机总时长",
+        "en": "power-off duration"
+      }
+    },
+    {
+      "name": "--on",
+      "default": "640ms",
+      "desc": {
+        "zh": "开机总时长",
+        "en": "power-on duration"
+      }
+    },
+    {
+      "name": "--screen",
+      "default": "#fffdf8",
+      "desc": {
+        "zh": "屏幕底色",
+        "en": "screen color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "拿 frames() 给任何一个容器用就行，比如关闭弹窗时对弹窗内容播一遍。",
+    "en": "Apply frames() to any container, e.g. play it on a modal’s content when closing."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 700
+}

@@ -1,0 +1,36 @@
+/* Parallax Tilt Card — 卡片跟着指针倾斜，里面几层按深度错开位移，鼠标离开后弹簧回正 */
+:root {
+  --bg: #f7f5f0;
+  --ink: #1c1a21;
+  --accent: #ff5a36;
+  --max-tilt: 14;         /* 最大倾斜角度(deg) */
+  --depth: 1;             /* 视差强度倍数 */
+  --stiffness: 0.08;      /* 弹簧刚度：越大越跟手 */
+  --damping: 0.82;        /* 阻尼：越小越晃 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(3.333vw, 4.444vh); }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center;
+  background: var(--bg); color: var(--ink); overflow: hidden;
+  font-family: ui-sans-serif, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.stage { perspective: 50rem; padding: 3rem; }
+.card {
+  --rx: 0deg; --ry: 0deg; --px: 0; --py: 0;
+  position: relative; width: 13rem; height: 17rem; border-radius: 1.1rem; overflow: hidden;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
+  box-shadow: calc(var(--px) * -1.2rem) calc(1.6rem + var(--py) * -1rem) 2.6rem -1.4rem rgba(28, 26, 33, .45);
+  will-change: transform;
+}
+.layer { position: absolute; transform: translate3d(calc(var(--px) * var(--z) * var(--depth) * 1rem), calc(var(--py) * var(--z) * var(--depth) * 1rem), 0); }
+.bg { inset: -1rem; --z: -.4; background: #fff4e6; }
+.grid { inset: -1rem; --z: -.2; background-image: linear-gradient(#f0dcc4 1px, transparent 1px), linear-gradient(90deg, #f0dcc4 1px, transparent 1px); background-size: 1.2rem 1.2rem; }
+.sun { --z: .5; right: 1.4rem; top: 1.6rem; width: 5.4rem; height: 5.4rem; border-radius: 50%; background: var(--accent); border: .2rem solid var(--ink); }
+.title { --z: 1; left: 1.3rem; bottom: 1.4rem; }
+.title small { display: block; font: 700 .62rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .12em; margin-bottom: .5rem; }
+.title b { display: block; font-size: 2.9rem; line-height: .9; font-weight: 900; letter-spacing: -.05em; }
+.chip { --z: 1.4; left: 1.3rem; top: 1.4rem; font: 700 .62rem/1 ui-monospace, "SF Mono", Menlo, monospace; background: var(--ink); color: #fff; padding: .4rem .55rem; border-radius: 99px; }
+/* 一条斜向的反光带，跟随指针平移 */
+.sheen { position: absolute; inset: -50%; pointer-events: none; background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, .55) 50%, transparent 58%); transform: translate3d(calc(var(--px) * 18%), calc(var(--py) * 12%), 0); mix-blend-mode: soft-light; }

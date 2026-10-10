@@ -1,0 +1,74 @@
+{
+  "slug": "phantom-cat",
+  "order": 15,
+  "category": "character",
+  "name": {
+    "zh": "怪盗猫的预告函",
+    "en": "Phantom Thief Cat"
+  },
+  "summary": {
+    "zh": "戴礼帽和眼罩的怪盗猫从墙后冒出来，左看右看，抬帽致意，甩出一张旋转的预告函钉在墙上，然后缩回去。一段 4 秒的小剧情。",
+    "en": "A top-hatted, masked thief cat pops up from behind a wall, glances left and right, tips its hat, flicks a spinning calling card that pins to the wall, then ducks away. A 4-second micro-story."
+  },
+  "technique": {
+    "zh": "一条 async 时间线串起 6 个动作；冒头带 4% 过冲；只移动瞳孔做「看」；卡片从爪子位置 translate + rotate(2 圈 + 6deg) + scale 飞出，落定瞬间出现图钉并压缩一下。",
+    "en": "Six beats on one async timeline: a 4% overshoot on the pop-up; only the pupils move to “look”; the card flies from the paw with translate + rotate(2 turns + 6deg) + scale, and a pin appears with a small squash on landing."
+  },
+  "tags": [
+    "mascot",
+    "svg",
+    "story",
+    "角色"
+  ],
+  "tech": [
+    "SVG",
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--rise",
+      "default": "520ms",
+      "desc": {
+        "zh": "冒出来的时长",
+        "en": "pop-up duration"
+      }
+    },
+    {
+      "name": "--throw",
+      "default": "640ms",
+      "desc": {
+        "zh": "卡片飞行时长",
+        "en": "card flight duration"
+      }
+    },
+    {
+      "name": "--spin",
+      "default": "2",
+      "desc": {
+        "zh": "卡片飞行中转几圈",
+        "en": "turns in flight"
+      }
+    },
+    {
+      "name": "--accent",
+      "default": "#ff6f91",
+      "desc": {
+        "zh": "领结 / 预告函颜色",
+        "en": "bow / card color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "预告函的文案改 .card 里的内容，适合做发布预告、彩蛋。",
+    "en": "Edit the text in .card; nice for launch teasers or easter eggs."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 4400
+}

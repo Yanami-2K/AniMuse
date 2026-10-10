@@ -1,0 +1,71 @@
+{
+  "slug": "line-reveal",
+  "order": 3,
+  "category": "scroll",
+  "name": {
+    "zh": "遮罩逐行升起",
+    "en": "Masked Line Reveal"
+  },
+  "summary": {
+    "zh": "大标题每一行从看不见的遮罩下面升上来，带一点点旋转，行间错峰，最后一条细线画出来。进入视口才触发。",
+    "en": "Each headline line rises out from under an invisible mask with a hint of rotation, staggered, then a hairline draws in. Fires when it enters the viewport."
+  },
+  "technique": {
+    "zh": "每行外层 overflow:hidden，内层 translate3d(0,105%,0) rotate(2.5deg) → none；IntersectionObserver 加 .in；transition-delay 递增。",
+    "en": "Outer line is overflow:hidden; inner goes translate3d(0,105%,0) rotate(2.5deg) → none. IntersectionObserver adds .in; transition-delay steps per line."
+  },
+  "tags": [
+    "scroll",
+    "headline",
+    "标题"
+  ],
+  "tech": [
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--dur",
+      "default": "1000ms",
+      "desc": {
+        "zh": "每行上升时长",
+        "en": "rise duration per line"
+      }
+    },
+    {
+      "name": "--stagger",
+      "default": "110ms",
+      "desc": {
+        "zh": "行间错峰",
+        "en": "delay between lines"
+      }
+    },
+    {
+      "name": "--ease",
+      "default": "cubic-bezier(.2, .9, .1, 1)",
+      "desc": {
+        "zh": "出手快、收尾很软",
+        "en": "snappy start, very soft end"
+      }
+    },
+    {
+      "name": "--rise",
+      "default": "105%",
+      "desc": {
+        "zh": "起始位置（相对行高）",
+        "en": "start offset (of line height)"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "每一行用 <span class=\"ln\"><span>…</span></span> 包起来；正式用时删掉 script.js 里那行循环的 setTimeout。",
+    "en": "Wrap each line in <span class=\"ln\"><span>…</span></span>; remove the demo loop setTimeout in script.js."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2200
+}
