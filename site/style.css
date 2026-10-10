@@ -175,6 +175,7 @@ html[lang="zh-CN"] .lang [data-l="zh"], html[lang="en"] .lang [data-l="en"] { co
 .detail[hidden] { display: none; }
 .detail-scrim { position: absolute; inset: 0; background: rgba(246, 244, 239, .72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .sheet { position: absolute; inset: 14px; max-width: 1360px; margin: 0 auto; background: var(--card); border: 1px solid var(--rule); border-radius: 20px; box-shadow: 0 40px 80px -40px rgba(24, 23, 28, .45); display: flex; flex-direction: column; overflow: hidden; }
+.sheet:focus { outline: none; }  /* 打开时焦点落在窗口本身，只为让 Tab 从窗口里开始，不画焦点环 */
 .sheet-top { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--rule-2); }
 .sheet-crumb { flex: 1; font: 600 12px/1 var(--mono); color: var(--muted); letter-spacing: .03em; }
 .sheet-nav { display: flex; gap: 6px; }
@@ -200,6 +201,10 @@ html[lang="zh-CN"] .lang [data-l="zh"], html[lang="en"] .lang [data-l="en"] { co
 .d-no { margin: 0 0 10px; font: 600 12px/1 var(--mono); color: var(--accent); letter-spacing: .04em; }
 .d-title { margin: 0; font-size: clamp(28px, 3vw, 40px); line-height: 1.1; letter-spacing: -.03em; font-weight: 800; }
 .d-en { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.d-credit { margin: 12px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: baseline; }
+.d-credit a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color .2s; }
+.d-credit a:hover { border-color: var(--accent); }
+.d-credit em { font: 600 11px/1 var(--mono); font-style: normal; padding: 3px 6px; border-radius: 5px; background: var(--paper); border: 1px solid var(--rule-2); color: var(--ink-2); }
 .d-sum { margin: 18px 0 0; font-size: 15.5px; color: var(--ink); line-height: 1.7; }
 .d-tech { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
 .d-tech span { font: 600 11.5px/1 var(--mono); padding: 5px 8px; border-radius: 6px; background: var(--paper); border: 1px solid var(--rule-2); color: var(--ink-2); }

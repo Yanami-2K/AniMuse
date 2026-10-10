@@ -1,0 +1,79 @@
+{
+  "slug": "p5-results",
+  "order": 20,
+  "category": "transition",
+  "name": {
+    "zh": "怪盗结算",
+    "en": "Phantom Results"
+  },
+  "summary": {
+    "zh": "战斗结算画面：一刀斜劈进场，RESULTS 剪报字一个个砸下来，经验和金币滚动计数，经验条灌满后炸出 LEVEL UP!，战利品斜着滑进来，怪盗猫比个胜利。点击或空格跳到结尾，Replay 重播。",
+    "en": "A battle results screen: a diagonal slash cuts in, RESULTS stamps down letter by letter, EXP and coins count up, the level bar fills and bursts into LEVEL UP!, loot slides in on skewed rows and the phantom cat strikes a victory pose. Click or Space to skip, Replay to run it again."
+  },
+  "technique": {
+    "zh": "一条 async 时间线，每一步都能被“跳到结尾”打断。字母砸下：scale 2.6 → .88 → 1 + 旋转，ease-in 落地。计数用 ease-out，每次数字变化都按剩余量做一次缩放“冲击”。升级瞬间整屏抖 200ms。",
+    "en": "One async timeline where any step can be cut to the end state. Letters stamp with scale 2.6 → .88 → 1 plus a twist, eased in. Counting is ease-out and every change punches the scale by how much is left. The whole screen shakes for 200ms on level-up."
+  },
+  "tags": [
+    "results",
+    "count up",
+    "stamp",
+    "persona",
+    "结算"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "SVG",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--exp",
+      "default": "1280",
+      "desc": {
+        "zh": "获得经验",
+        "en": "EXP gained"
+      }
+    },
+    {
+      "name": "--coin",
+      "default": "356",
+      "desc": {
+        "zh": "获得金币",
+        "en": "coins gained"
+      }
+    },
+    {
+      "name": "--count",
+      "default": "900ms",
+      "desc": {
+        "zh": "计数时长",
+        "en": "count-up duration"
+      }
+    },
+    {
+      "name": "--fill",
+      "default": ".72",
+      "desc": {
+        "zh": "经验条起始进度（0-1）",
+        "en": "bar start (0–1)"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "任务完成、年度总结、抽奖结果页。数字和战利品都在 script.js 顶部。",
+    "en": "Task complete screens, year-in-review, prize reveals. Numbers and loot are at the top of script.js."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 5200,
+  "credit": {
+    "kind": "inspired",
+    "author": "Persona 5 UI"
+  }
+}

@@ -1,0 +1,65 @@
+/* Dynamic Tier Toggle — 原作：Jhey Tompkins https://codepen.io/jh3y/pen/vEEZxOM （MIT，见同目录 LICENSE）
+   纯 CSS：[type=radio] + :has()。选到“高级”里的某一档时，“高级”字样往上让位缩小，两个子选项从“挤在一起的小字”长成正常大小，
+   指示块从一条细线（clip-path）展开成药丸。这里只改了配色、尺寸单位，加了自动演示和中英文。 */
+:root {
+  --primary: #17151c;        /* 选中块 / 文字 */
+  --secondary: #fff;         /* 底色 */
+  --inactive: #9a97a3;
+  --border: #dedbe5;
+  --shadow-color: 260deg 10% 62%;
+  --duration: .22;           /* 秒 */
+  --drop-off: .4;            /* 未选中“免费”时它的透明度 */
+  --ease: linear(0 0%, .2342 12.49%, .4374 24.99%, .6093 37.49%, .6835 43.74%, .7499 49.99%, .8086 56.25%, .8593 62.5%, .9023 68.75%, .9375 75%, .9648 81.25%, .9844 87.5%, .9961 93.75%, 1 100%);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(4.2vw, 5.6vh); }
+body { margin: 0; min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 1.6rem; background: #f6f5f8;
+  font-family: Inter, "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background: linear-gradient(90deg, rgba(23, 21, 28, .07) 1px, transparent 1px 2.4rem) 50% 50% / 2.4rem 2.4rem, linear-gradient(rgba(23, 21, 28, .07) 1px, transparent 1px 2.4rem) 50% 50% / 2.4rem 2.4rem;
+  mask: linear-gradient(-20deg, transparent 50%, #fff); -webkit-mask: linear-gradient(-20deg, transparent 50%, #fff); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+
+/* —— 以下结构与选择器来自原作（保留了原作的 @layer 顺序：flip 覆盖 demo） —— */
+@layer demo, flip;
+@layer flip {
+.premium:has(:checked)::before { translate: -50% -250%; scale: .85; }
+.premium:has(:checked) label span { scale: 1; }
+.premium:has(:checked) .indicator { background: var(--secondary); clip-path: inset(0 0 0 0 round 100px); }
+.premium:has(:checked) label { color: var(--inactive); opacity: .75; }
+.premium:has(:nth-of-type(1):checked) label:nth-of-type(1),
+.premium:has(:nth-of-type(2):checked) label:nth-of-type(2) { color: var(--primary); opacity: 1; }
+.premium:has(:nth-of-type(1):checked) .indicator { translate: -100% 0; }
+.premium:has(:nth-of-type(2):checked) .indicator { translate: 0 0; }
+.control label { transition-property: color, opacity; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease); }
+.control__track:not(:has(> :checked)) > label { color: var(--primary); opacity: var(--drop-off); }
+.control__track:not(:has(> :checked)) > .indicator { translate: 100% 0; }
+.indicator { transition: translate calc(var(--duration) * 1s) var(--ease); }
+.premium .indicator { transition-property: translate, clip-path, background; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease);
+  clip-path: inset(73cqh calc(50% + 1px) calc(27cqh - 2px) calc(50% - 3px) round 100px); }
+.premium::before { transition-property: scale, translate; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease); }
+.control__track:has(> :checked) .premium .indicator { background: var(--inactive); }
+.control__track:has(> :checked) .premium label { color: var(--inactive); }
+
+}
+@layer demo {
+.indicator { position: absolute; width: 50%; left: 0; top: 0; bottom: 0; background: var(--primary); border-radius: 100px; }
+.premium .indicator { background: var(--primary); left: 50%; top: 0; translate: -50% 0; }
+.control { position: relative; width: 16.25rem; height: 2.4rem; background: var(--secondary); border-radius: 100px; border: 1px solid var(--border); padding: 2px; letter-spacing: .5px;
+  box-shadow: -0.1px 1px 1px hsl(var(--shadow-color) / .39), -0.2px 3.2px 3.1px -0.4px hsl(var(--shadow-color) / .36), -0.3px 5.7px 5.5px -0.8px hsl(var(--shadow-color) / .34), -0.5px 9.3px 8.9px -1.2px hsl(var(--shadow-color) / .32), -0.8px 14.8px 14.2px -1.6px hsl(var(--shadow-color) / .29), -1.3px 23.1px 22.2px -2px hsl(var(--shadow-color) / .27), -2px 35px 33.7px -2.4px hsl(var(--shadow-color) / .24); }
+.control__track { display: grid; place-items: center; grid-template-columns: repeat(4, 1fr); width: 100%; height: 100%; position: relative; }
+.premium::before { content: attr(data-label); position: absolute; left: 50%; top: 50%; translate: -50% -80%; color: var(--primary); font-size: .75rem; z-index: 2; white-space: nowrap; }
+.control label { height: 100%; width: 100%; display: grid; place-items: center; cursor: pointer; font-size: .75rem; color: var(--primary); z-index: 2; }
+.control__track > label { color: var(--secondary); }
+.premium { width: 100%; height: 100%; display: grid; position: relative; grid-template-columns: 1fr 1fr; border: 1px solid #0000; container-type: size; }
+.premium, .control__track > label:nth-of-type(1) { grid-column: span 2; }
+label span { display: grid; place-items: center; height: 100%; width: 100%; transition: scale calc(var(--duration) * 1s) var(--ease); }
+.premium label:nth-of-type(1) span { scale: .75; transform-origin: 150% 150%; border-radius: 100px; }
+.premium label:nth-of-type(2) span { scale: .75; transform-origin: -65% 150%; border-radius: 100px; }
+}
+/* —— 原作结束 —— */
+
+.control:has(:focus-visible) { outline: 2px solid #5b5bd6; outline-offset: 4px; }
+.price { margin: 0; font-size: .8rem; color: #6d6a76; font-variant-numeric: tabular-nums; min-height: 1.2em; }
+.price b { color: var(--primary); font-size: 1.3rem; font-weight: 650; margin-right: .2rem; }
+@media (prefers-reduced-motion: reduce) { :root { --duration: 0; } }

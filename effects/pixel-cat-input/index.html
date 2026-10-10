@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pixel Cat Input · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 交互灵感：Rauno Freiberg 的 “lil pix”（https://x.com/raunofreiberg/status/2060034871263703452）。角色、像素图和代码都是 AniMuse 原创 -->
+  <label class="pill" id="pill">
+    <span class="slot" id="slot" aria-hidden="true">
+      <svg class="line" id="line" viewBox="0 0 24 24"><path d="M12 3.5 L13.6 9.2 L19.5 10.8 L13.6 12.4 L12 18.5 L10.4 12.4 L4.5 10.8 L10.4 9.2 Z"/><path d="M18.5 3.5 v3 M17 5 h3"/></svg>
+      <canvas class="cat" id="cat"></canvas>
+    </span>
+    <span class="field">
+      <input id="input" type="text" autocomplete="off" spellcheck="false" aria-label="Ask Agent">
+      <i class="caret" id="caret" aria-hidden="true"></i>
+    </span>
+    <span class="chips" aria-hidden="true">
+      <span class="chip k" id="chipK"><kbd>⌘</kbd><kbd>I</kbd></span>
+      <span class="chip e" id="chipE"><kbd>Esc</kbd></span>
+    </span>
+  </label>
+  <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <script src="script.js"></script>
+</body>
+</html>

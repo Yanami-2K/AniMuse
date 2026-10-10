@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dynamic Tier Toggle · AniMuse</title>
+<!--
+  Original by Jhey Tompkins — https://codepen.io/jh3y/pen/vEEZxOM (MIT, see LICENSE in this folder)
+  Copyright (c) Jhey Tompkins
+-->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="control" id="control">
+    <div class="control__track">
+      <div class="indicator"></div>
+      <label for="free" data-en="Free">免费</label>
+      <input class="sr-only" type="radio" name="tier" id="free" checked>
+      <div class="premium" data-label="高级" data-label-en="Premium">
+        <div class="indicator"></div>
+        <label for="solo"><span data-en="Solo">个人</span></label>
+        <input class="sr-only" type="radio" name="tier" id="solo">
+        <label for="team"><span data-en="Team">团队</span></label>
+        <input class="sr-only" type="radio" name="tier" id="team">
+      </div>
+    </div>
+  </div>
+  <p class="price" id="price" aria-live="polite"></p>
+  <script src="script.js"></script>
+</body>
+</html>

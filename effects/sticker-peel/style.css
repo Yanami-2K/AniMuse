@@ -1,0 +1,61 @@
+/* Sticker Peel — 从贴纸页上把贴纸一角掀起来（能看到背面）、整张揭下、甩到笔记本盖子上“啪”地贴住 */
+:root {
+  --bg: #fdf6ea;
+  --ink: #3a3346;
+  --sheet: #e8eef8;       /* 贴纸底纸 */
+  --lid: #cfc8f3;         /* 笔记本盖子 */
+  --size: 5rem;           /* 贴纸尺寸 */
+  --peel: .4;             /* 掀起多少（相对贴纸尺寸） */
+  --lift: 1.14;           /* 拿起来时放大多少（离镜头更近） */
+  --slap: .88;            /* 贴上那一下压扁到多少 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(3.45vw, 4.6vh); }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; touch-action: none;
+  background: radial-gradient(36rem 20rem at 50% 115%, #f7e6cf, transparent 70%), var(--bg); color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
+}
+.stage { position: relative; width: 28rem; height: 18rem; }
+.sheet { position: absolute; left: .6rem; top: 1.2rem; width: 11rem; height: 15.4rem; border-radius: .9rem; background: var(--sheet); border: .18rem solid var(--ink); box-shadow: .3rem .36rem 0 var(--ink); overflow: hidden; }
+.sheet::before { content: ""; position: absolute; inset: 3.1rem .5rem .5rem; border-radius: .6rem; background: repeating-linear-gradient(-45deg, rgba(58, 51, 70, .035) 0 .3rem, transparent .3rem .6rem); }
+.sheet header { position: relative; height: 2.6rem; padding: .55rem .8rem 0; background: #ff8fab; border-bottom: .18rem solid var(--ink); color: #fff; }
+.sheet header b { display: block; font-size: 1.05rem; letter-spacing: .06em; -webkit-text-stroke: .1rem var(--ink); paint-order: stroke fill; line-height: 1; }
+.sheet header small { display: block; margin-top: .25rem; font: 800 .42rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .18em; color: var(--ink); opacity: .7; }
+.hole { position: absolute; right: .8rem; top: .7rem; width: 1.1rem; height: .5rem; border-radius: 1rem; background: var(--bg); border: .16rem solid var(--ink); }
+.lid { position: absolute; left: 13.2rem; top: 1.6rem; width: 14.2rem; height: 10.6rem; border-radius: 1.1rem; background: linear-gradient(160deg, #ddd7fb, var(--lid)); border: .18rem solid var(--ink); box-shadow: .3rem .36rem 0 var(--ink), inset .5rem .5rem 0 rgba(255, 255, 255, .35); }
+.cam { position: absolute; left: 50%; top: .5rem; width: .4rem; height: .4rem; margin-left: -.2rem; border-radius: 50%; background: rgba(58, 51, 70, .3); }
+.logo { position: absolute; left: 50%; top: 50%; width: 1.8rem; height: 1.8rem; margin: -.9rem; border-radius: 50%; background: rgba(255, 255, 255, .45); }
+.base { position: absolute; left: 12.5rem; top: 12.4rem; width: 15.6rem; height: 1.1rem; border-radius: .3rem .3rem .9rem .9rem; background: #e6e2f7; border: .18rem solid var(--ink); box-shadow: .3rem .3rem 0 var(--ink); }
+/* 贴纸 */
+.stk, .slot { position: absolute; left: 0; top: 0; width: var(--size); height: var(--size); }
+.stk { cursor: grab; will-change: transform; z-index: 2; }
+.stk.held { cursor: grabbing; z-index: 5; }
+.stk svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.stk .front { filter: drop-shadow(0 calc(var(--l, 0) * .5rem + .06rem) calc(var(--l, 0) * .5rem + .05rem) rgba(58, 51, 70, calc(.16 + var(--l, 0) * .12))); }
+.stk .back { transform-origin: 0 0; filter: drop-shadow(0 .1rem .16rem rgba(58, 51, 70, .3)); }
+.cut path { fill: #fff; stroke: #fff; stroke-width: 14; stroke-linejoin: round; }
+.back .cut path { fill: #f7f5f1; stroke: #f7f5f1; }
+.back > :not(.cut) { display: none; }
+.fill { stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+.ink { fill: var(--ink); }
+.line { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.line.thin { stroke-width: 3; }
+.blush { fill: #ff8fab; opacity: .55; }
+.hi { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; opacity: .7; }
+.inner { stroke: var(--ink); stroke-width: 3.5; }
+.txt { font: 900 19px/1 ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif; fill: #fff; stroke: var(--ink); stroke-width: 4; paint-order: stroke fill; letter-spacing: .5px; }
+/* 揭走后底纸上留下的模切印 */
+.slot svg { width: 100%; height: 100%; overflow: visible; }
+.slot .cut path { fill: rgba(58, 51, 70, .05); stroke: rgba(58, 51, 70, .14); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.slot > svg > :not(.cut) { display: none; }
+#fx i { position: absolute; width: .22rem; height: .9rem; margin: -.45rem 0 0 -.11rem; border-radius: 1rem; background: var(--ink); pointer-events: none; }
+.finger {
+  position: fixed; left: 0; top: 0; width: 2.2rem; height: 2.2rem; margin: -1.1rem 0 0 -1.1rem; border-radius: 50%;
+  background: rgba(28, 26, 33, .16); border: .14rem solid rgba(255, 255, 255, .9); box-shadow: 0 .3rem .8rem rgba(28, 26, 33, .2);
+  opacity: 0; pointer-events: none; transition: opacity .25s, scale .18s; z-index: 100;
+}
+.finger.on { opacity: 1; }
+.finger.down { scale: .78; background: rgba(28, 26, 33, .28); }
+@media (prefers-reduced-motion: reduce) { .finger { display: none; } }

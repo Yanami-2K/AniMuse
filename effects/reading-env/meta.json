@@ -1,0 +1,71 @@
+{
+  "slug": "reading-env",
+  "order": 18,
+  "category": "micro",
+  "name": {
+    "zh": "阅读环境",
+    "en": "Reading Environment"
+  },
+  "summary": {
+    "zh": "一张安静的阅读页。右键弹出菜单，选下雨或下雪：细细的灰色雨丝、慢慢飘的小雪点，都不挡字；还能打开 Web Audio 现场合成的雨声 / 风声，切换时画面和声音一起交叉淡化。",
+    "en": "A quiet reading page. Right-click for a menu and pick rain or snow: thin grey streaks or slowly drifting dots that never get in the way of the text. Turn on audio for rain or wind synthesised live with Web Audio; switching crossfades both picture and sound."
+  },
+  "technique": {
+    "zh": "天气画在一张 pointer-events: none 的 canvas 上，DPR 适配，标签页隐藏就停。每个粒子有个深度 z：越近越长、越快、越实。声音是滤波噪声：雨 = 白噪声过高通 + 低通，风 = 布朗噪声过一个被 LFO 慢慢扫动的低通；只有用户点了 Audio 才创建 AudioContext。",
+    "en": "Weather is drawn on a pointer-events: none canvas, DPR-aware, paused when the tab is hidden. Each particle has a depth z: nearer means longer, faster, more opaque. Sound is filtered noise: rain = white noise through high-pass + low-pass; wind = brown noise through a low-pass swept slowly by an LFO. The AudioContext is created only after the user enables Audio."
+  },
+  "tags": [
+    "context menu",
+    "rain",
+    "snow",
+    "ambient",
+    "阅读"
+  ],
+  "tech": [
+    "Canvas",
+    "Web Audio",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--rain",
+      "default": "120",
+      "desc": {
+        "zh": "雨丝数量（按 1000px 宽折算）",
+        "en": "raindrops per 1000px of width"
+      }
+    },
+    {
+      "name": "--snow",
+      "default": "90",
+      "desc": {
+        "zh": "雪花数量",
+        "en": "snowflakes per 1000px"
+      }
+    },
+    {
+      "name": "--fade",
+      "default": "400ms",
+      "desc": {
+        "zh": "切换天气时画面 + 声音的交叉淡化",
+        "en": "visual + audio crossfade"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "博客、文档、长文页面的小彩蛋。菜单本身就是一个完整的无障碍右键菜单（方向键、Esc），可以单独拿去用。",
+    "en": "A small delight for blogs, docs and long reads. The menu is a complete accessible context menu (arrow keys, Esc) you can lift on its own."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 6600,
+  "credit": {
+    "kind": "idea",
+    "author": "Paco Coursey",
+    "url": "https://x.com/pacocoursey/status/1460760109009752066"
+  }
+}

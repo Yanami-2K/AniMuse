@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Fold & Send Letter — 真 3D 折纸（rotateX + backface-visibility）+ 一条 async WAAPI 时间线
 (function () {
   var css = getComputedStyle(document.documentElement);
@@ -7,7 +10,7 @@
   var letter = $('letter'), pt = $('pt'), pb = $('pb'), eb = $('eb'), pk = $('pk'), fp = $('fp'), seal = $('seal'), fly = $('fly'), sent = $('sent');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // 三块面板的正面都放同一张信纸，各自往上偏移，拼起来就是完整的一页
-  document.querySelectorAll('.front').forEach(function (f) { f.appendChild($('sheetTpl').content.cloneNode(true)); });
+  document.querySelectorAll('.front').forEach(function (f) { var c = $('sheetTpl').content.cloneNode(true); if (LANG === 'en') [].forEach.call(c.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); f.appendChild(c); });
 
   var run = 0, anims = [];
   var sleep = function (t, id) { return new Promise(function (r) { setTimeout(function () { if (id === run) r(); }, t); }); };

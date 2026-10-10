@@ -25,7 +25,8 @@
       hintRef: 'AI 能联网就用这个：Prompt 很短，附上固定版本的源码链接，让它自己去读。',
       hintInline: 'AI 上不了网（或者公司内网）就用这个：源码直接贴在 Prompt 里，长一点但最稳。',
       toast: '复制好了，粘贴到 Cursor / Claude Code / Codex 试试', toastQuick: '已复制「{n}」的 Prompt', live: 'LIVE', quick: '复制 Prompt',
-      chars: '{n} 字', pinned: '源码固定在 {r}'
+      chars: '{n} 字', pinned: '源码固定在 {r}',
+      credit_original: '原作', credit_idea: '交互想法', credit_inspired: '灵感来自'
     },
     en: {
       brandZh: 'Motion muse', navGallery: 'Effects', navContribute: 'Contribute', eyebrow: 'Open source · vanilla HTML / CSS / JS · MIT',
@@ -40,7 +41,8 @@
       hintRef: 'For agents with web access: a short prompt plus links to the source, pinned to an exact commit.',
       hintInline: 'For agents without web access: the full source is pasted in. Longer, but bulletproof.',
       toast: 'Copied. Paste it into Cursor / Claude Code / Codex', toastQuick: 'Copied the prompt for “{n}”', live: 'LIVE', quick: 'Copy prompt',
-      chars: '{n} chars', pinned: 'source pinned to {r}'
+      chars: '{n} chars', pinned: 'source pinned to {r}',
+      credit_original: 'Original by', credit_idea: 'Interaction idea:', credit_inspired: 'Inspired by'
     }
   };
   var lang = localStorage.getItem('animuse.lang') || ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
@@ -57,6 +59,8 @@
     document.title = lang === 'zh' ? 'AniMuse · 动效灵感' : 'AniMuse · Motion inspiration you can copy';
     renderChips(); cards.forEach(fillCard);
     if (current) fillDetail(current, true);
+    // Demo 里的文字也跟着换语言：已经挂上的 iframe 换成新 ?lang= 重新加载
+    $$('iframe').forEach(function (f) { var u = f.getAttribute('src'); if (u && u.indexOf('effects/') === 0) { var nu = u.replace(/\?lang=\w+$/, '') + '?lang=' + lang; if (nu !== u) { f.classList.remove('ready'); f.src = nu; } } });
   }
   $('#lang').addEventListener('click', function () {
     lang = lang === 'zh' ? 'en' : 'zh'; localStorage.setItem('animuse.lang', lang); applyLang();
@@ -84,6 +88,7 @@
         lines.push('下面是完整的参考实现（来自 AniMuse 开源仓库 ' + D.repo + '，版本 ' + D.ref.slice(0, 7) + '），请先读完再动手：', '');
         e.files.forEach(function (f) { lines.push('```' + ext(f) + ' title="' + f + '"', (e.source[f] || '').trimEnd(), '```', ''); });
       }
+      if (e.credit && e.credit.kind === 'original') lines.push('版权：原作是 ' + e.credit.author + '（' + e.credit.url + '，' + e.credit.license + '）。移植时保留同目录 LICENSE 里的版权声明。', '');
       lines.push('要求：');
       lines.push('1. 跟着我项目现有的技术栈写（React / Vue / Svelte / 原生都行），别为了这个引入新的动画库。');
       lines.push('2. 时长、缓动曲线、错峰、弹簧参数照参考实现来，这些数字就是这个效果的手感。');
@@ -105,6 +110,7 @@
         lines.push('Here is the full reference implementation (AniMuse, ' + D.repo + ' @ ' + D.ref.slice(0, 7) + '). Read it all first:', '');
         e.files.forEach(function (f) { lines.push('```' + ext(f) + ' title="' + f + '"', (e.source[f] || '').trimEnd(), '```', ''); });
       }
+      if (e.credit && e.credit.kind === 'original') lines.push('License: original by ' + e.credit.author + ' (' + e.credit.url + ', ' + e.credit.license + '). Keep the copyright notice from the LICENSE file in that folder.', '');
       lines.push('Requirements:');
       lines.push('1. Use my project’s existing stack (React / Vue / Svelte / vanilla — follow the codebase). Don’t add an animation library for this.');
       lines.push('2. Keep durations, easing curves, staggers and spring values identical to the reference; those numbers are the feel.');
@@ -267,7 +273,7 @@
     // 用 div[role=link] 而不是 <a>：避免浏览器左下角的链接预览条挡住画面；键盘和 ⌘/中键点击另行处理
     var a = document.createElement('div'); a.className = 'card pre'; a.tabIndex = 0; a.setAttribute('role', 'link'); a.dataset.slug = e.slug;
     a.innerHTML = '<i class="tick t1"></i><i class="tick t2"></i><i class="tick t3"></i><i class="tick t4"></i>' +
-      '<div class="stage"><img alt="" loading="lazy" decoding="async" src="effects/' + e.slug + '/preview.png"><span class="live"><i></i>LIVE</span></div>' +
+      '<div class="stage"><img alt="" loading="lazy" decoding="async" src="' + poster(e) + '"><span class="live"><i></i>LIVE</span></div>' +
       '<div class="meta"><span class="no">' + String(e.order).padStart(2, '0') + '</span><span class="nm"><b></b><small></small></span><span class="cat"></span>' +
       '<button class="qcopy" type="button">' + ICON_COPY + '</button></div>';
     a.querySelector('.qcopy').addEventListener('click', function (ev) {
@@ -285,11 +291,13 @@
     grid.appendChild(a); cards.push(a); fillCard(a);
   });
   function fillCard(a) {
-    var e = bySlug(a.dataset.slug);
+    var e = bySlug(a.dataset.slug), im = $('.stage img', a);
+    if (im && im.getAttribute('src') !== poster(e)) im.src = poster(e);
     $('.nm b', a).textContent = L(e.name); $('.nm small', a).textContent = lang === 'zh' ? e.name.en : L(D.categories[e.category]);
     $('.cat', a).textContent = catName(e.category); $('.cat', a).style.display = lang === 'zh' ? '' : 'none';
     var q = $('.qcopy', a); q.title = t('quick'); q.setAttribute('aria-label', t('quick') + ' · ' + L(e.name));
   }
+  function poster(e) { return 'effects/' + e.slug + '/' + (lang === 'en' && e.posterEn ? 'preview.en.png' : 'preview.png'); }
   function bySlug(s) { for (var i = 0; i < FX.length; i++) if (FX[i].slug === s) return FX[i]; }
   var lastReplay = new WeakMap();
   function replay(a) {
@@ -306,7 +314,7 @@
         clearTimeout(a._unload);
         if (!$('iframe', st)) {
           var f = document.createElement('iframe'); f.loading = 'lazy'; f.tabIndex = -1; f.title = a.dataset.slug; f.setAttribute('aria-hidden', 'true');
-          f.src = 'effects/' + a.dataset.slug + '/index.html';
+          f.src = 'effects/' + a.dataset.slug + '/index.html?lang=' + lang;
           f.onload = function () { setTimeout(function () { f.classList.add('ready'); st.classList.add('on'); }, 120); };
           st.appendChild(f);
         }
@@ -379,28 +387,41 @@
   }
 
   /* ---------------- detail ---------------- */
-  var pending = null;
   var detail = $('#detail'), dStage = $('#dStage'), current = null, variant = 'ref', lastCard = null;
-  function stageImg(e) { return '<img alt="" src="effects/' + e.slug + '/preview.png">'; }
+  function stageImg(e) { return '<img alt="" src="' + poster(e) + '">'; }
   function fillDetail(e, keepStage) {
     var idx = FX.indexOf(e);
     $('#dCrumb').textContent = 'effects/' + e.slug + '  ·  ' + String(idx + 1).padStart(2, '0') + ' / ' + String(FX.length).padStart(2, '0');
     $('#dNo').textContent = 'No.' + String(e.order).padStart(2, '0') + ' · ' + catName(e.category);
     $('#dTitle').textContent = L(e.name);
-    $('#dEn').textContent = lang === 'zh' ? e.name.en : e.name.zh;
+    $('#dEn').textContent = lang === 'zh' ? e.name.en : '';
+    $('#dEn').hidden = lang !== 'zh';
+    var cr = e.credit, ce = $('#dCredit');
+    if (cr) { var who = cr.url ? '<a href="' + cr.url + '" target="_blank" rel="noopener">' + esc(cr.author) + ' ↗</a>' : esc(cr.author);
+      ce.innerHTML = '<span>' + t('credit_' + cr.kind) + '</span> ' + who + (cr.license ? ' <em>' + esc(cr.license) + '</em>' : ''); ce.hidden = false; } else { ce.hidden = true; ce.innerHTML = ''; }
     $('#dSum').textContent = L(e.summary);
     $('#dHow').textContent = L(e.technique);
     $('#dTech').innerHTML = e.tech.concat(['no deps']).map(function (x) { return '<span>' + x + '</span>'; }).join('');
     $('#dParams').innerHTML = e.params.map(function (p) { return '<tr><td><code>' + esc(p.name) + '</code></td><td class="dv">' + esc(p['default']) + '</td><td>' + esc(L(p.desc)) + '</td></tr>'; }).join('');
-    $('#dOpen').href = 'effects/' + e.slug + '/index.html';
+    $('#dOpen').href = 'effects/' + e.slug + '/index.html?lang=' + lang;
     $('#dSrc').href = BLOB(e.slug);
     if (!keepStage) { dStage.innerHTML = stageImg(e); }
     renderPrompt(false);
   }
   function loadStageFrame(e) {
     if ($('iframe', dStage)) return;
-    var f = document.createElement('iframe'); f.title = L(e.name); f.src = 'effects/' + e.slug + '/index.html';
-    f.onload = function () { setTimeout(function () { f.classList.add('ready'); }, 80); };
+    var f = document.createElement('iframe'); f.title = L(e.name); f.src = 'effects/' + e.slug + '/index.html?lang=' + lang;
+    f.onload = function () {
+      setTimeout(function () { f.classList.add('ready'); }, 80);
+      // 焦点在 Demo 里时 Esc / 左右键到不了父页面：同源 iframe 直接转发。
+      // Demo 自己用掉了 Esc（关菜单、退出子面板）会 preventDefault，那就不关窗口。
+      try {
+        f.contentWindow.addEventListener('keydown', function (ev) {
+          if (ev.defaultPrevented || detail.hidden) return;
+          if (ev.key === 'Escape') close();
+        });
+      } catch (err) { /* 跨域部署时拿不到，忽略 */ }
+    };
     dStage.appendChild(f);
   }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -422,85 +443,124 @@
   }
   $$('#seg button').forEach(function (b) { b.addEventListener('click', function () { if (variant === b.dataset.v) return; variant = b.dataset.v; renderPrompt(true); }); });
 
-  function withVT(fn) {
-    if (document.startViewTransition && !reduce) { var vt = document.startViewTransition(fn); vt.ready.catch(function () {}); vt.updateCallbackDone.catch(function () {}); return vt.finished.catch(function () {}); }
-    fn(); return Promise.resolve();
+  /* ---- 详情窗口：像 macOS 窗口一样从卡片里“放大”出来，关掉时缩回同一张卡片 ----
+     窗口外壳用 FLIP（卡片矩形 → 窗口矩形，transform-origin 0 0，弹簧 linear() 带一点过冲）；
+     内容在缩放走到 ~60% 时才淡入，所以看不到被拉伸的文字。上一个 / 下一个只换内容，窗口不动。 */
+  var sheet = $('#sheet'), scrim = $('.detail-scrim'), sheetTop = $('.sheet-top'), sheetBody = $('.sheet-body');
+  var OPEN_MS = 380, CLOSE_MS = 340, winAnims = [], closing = false;
+  var SPRING_OPEN = springEase(170, 19, 1);     // 约 380ms 落定，过冲 ~3%
+  function springEase(k, c, m) {                // 把阻尼振动采样成 CSS linear()
+    var pts = [], x = 0, v = 0, dt = 1 / 240, n = Math.round(OPEN_MS / 1000 / dt);
+    for (var i = 0; i <= n; i++) { if (i % 4 === 0) pts.push(x.toFixed(4)); var a = (k * (1 - x) - c * v) / m; v += a * dt; x += v * dt; }
+    pts[pts.length - 1] = '1';
+    return CSS.supports('animation-timing-function', 'linear(0, 1)') ? 'linear(' + pts.join(',') + ')' : 'cubic-bezier(.3,1.25,.5,1)';
   }
-  function open(slug, fromCard, viaHash) {
+  var dimmed = null, dimAnim = null;
+  function undim() { if (dimAnim) dimAnim.cancel(); dimmed = dimAnim = null; }
+  function stopWin() { winAnims.forEach(function (an) { an.cancel(); }); winAnims = []; }
+  function W(el, k, o) { var an = el.animate(k, o); winAnims.push(an); return an; }
+  function fromRect(card) {   // 卡片当前的屏幕矩形；卡片滚出视口时，取它那一侧视口边缘上的一个同尺寸矩形
+    if (!card || card.hidden) return null;
+    var r = card.getBoundingClientRect(), x = r.left, y = r.top, w = r.width, h = r.height;
+    if (r.bottom < 0) y = -h * .55; else if (r.top > innerHeight) y = innerHeight - h * .45;
+    return { x: x, y: y, w: w, h: h };
+  }
+  function shellFrames(c, R, rad) {   // 卡片矩形 c → 窗口矩形 R 的 transform；圆角按缩放反算，避免被拉成椭圆
+    var sx = c.w / R.width, sy = c.h / R.height;
+    return { t: 'translate(' + (c.x - R.left) + 'px,' + (c.y - R.top) + 'px) scale(' + sx + ',' + sy + ')', r: (rad / sx).toFixed(1) + 'px / ' + (rad / sy).toFixed(1) + 'px' };
+  }
+  function openWindow(card) {
+    stopWin(); closing = false;
+    if (reduce) { W(detail, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, easing: 'ease-out' }); return Promise.resolve(); }
+    var R = sheet.getBoundingClientRect(), c = fromRect(card);
+    W(scrim, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease-out' });
+    if (!c) {   // 直接打开链接：没有来源卡片，从中间轻轻浮出来
+      W(sheet, [{ opacity: 0, transform: 'translateY(14px) scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: OPEN_MS, easing: SPRING_OPEN });
+      return new Promise(function (r) { setTimeout(r, OPEN_MS); });
+    }
+    var f = shellFrames(c, R, 14);
+    sheet.style.transformOrigin = '0 0';
+    W(sheet, [{ transform: f.t, borderRadius: f.r, boxShadow: '0 0 0 rgba(24,23,28,0)' }, { transform: 'none', borderRadius: '20px', boxShadow: '0 40px 80px -40px rgba(24,23,28,.45)' }], { duration: OPEN_MS, easing: SPRING_OPEN });
+    W(sheet, [{ opacity: 0 }, { opacity: 1 }], { duration: 90, easing: 'linear' });   // 外壳头 90ms 淡入，免得白块“啪”地盖住卡片
+    [sheetTop, sheetBody].forEach(function (el) { W(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: OPEN_MS * .6, easing: 'ease-out', fill: 'backwards' }); });
+    if (card) { undim(); dimmed = card; dimAnim = card.animate([{ opacity: 1 }, { opacity: .35, offset: .3 }, { opacity: .35 }], { duration: OPEN_MS, fill: 'forwards' }); }   // 卡片“让出”自己，像窗口是从它身上拿起来的
+    return new Promise(function (r) { setTimeout(function () { sheet.style.transformOrigin = ''; r(); }, OPEN_MS + 20); });
+  }
+  function closeWindow(card) {
+    stopWin(); closing = true;
+    var done = function () { closing = false; detail.hidden = true; document.body.classList.remove('lock'); sheet.style.transformOrigin = ''; stopWin(); };
+    if (reduce) { var an = W(detail, [{ opacity: 1 }, { opacity: 0 }], { duration: 180, easing: 'ease-in', fill: 'forwards' }); return an.finished.catch(function () {}).then(done); }
+    var R = sheet.getBoundingClientRect(), c = fromRect(card);
+    W(scrim, [{ opacity: 1 }, { opacity: 0 }], { duration: CLOSE_MS, easing: 'ease-in', fill: 'forwards' });
+    [sheetTop, sheetBody].forEach(function (el) { W(el, [{ opacity: 1 }, { opacity: 0 }], { duration: CLOSE_MS * .35, easing: 'ease-in', fill: 'forwards' }); });
+    var main;
+    if (!c) {
+      main = W(sheet, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px) scale(.96)' }], { duration: CLOSE_MS * .8, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+    } else {
+      var f = shellFrames(c, R, 14);
+      sheet.style.transformOrigin = '0 0';
+      main = W(sheet, [{ transform: 'none', borderRadius: '20px' }, { transform: f.t, borderRadius: f.r, opacity: 1, offset: .9 }, { transform: f.t, borderRadius: f.r, opacity: 0 }], { duration: CLOSE_MS, easing: 'cubic-bezier(.5,0,.2,1)', fill: 'forwards' });
+    }
+    return main.finished.catch(function () {}).then(function () {
+      done();
+      undim();
+      if (card && !card.hidden) {   // 窗口落回卡片：卡片轻轻“接住”一下
+        card.animate([{ transform: 'scale(.985)' }, { transform: 'none' }], { duration: 420, easing: SPRING });
+      }
+    });
+  }
+  function swapContent(dir, fill) {   // 上一个 / 下一个：窗口不动，内容按方向滑出、再从另一侧滑入
+    if (reduce || !dir) { fill(); return; }
+    var d = dir > 0 ? 1 : -1;
+    sheetBody.getAnimations().forEach(function (an) { an.cancel(); });
+    sheetBody.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(' + (-28 * d) + 'px)' }], { duration: 140, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' }).finished.catch(function () {}).then(function () {
+      fill();
+      sheetBody.getAnimations().forEach(function (an) { an.cancel(); });
+      sheetBody.animate([{ opacity: 0, transform: 'translateX(' + (28 * d) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: EASE });
+    });
+  }
+  function open(slug, fromCard, viaHash, dir) {
     var e = bySlug(slug); if (!e) return;
-    var wasOpen = !detail.hidden;
-    if (!wasOpen && pending === slug) return;
+    var wasOpen = !detail.hidden && !closing;
     current = e; lastCard = fromCard || $('.card[data-slug="' + slug + '"]');
     if (!viaHash && location.hash !== '#/fx/' + slug) history.pushState(null, '', '#/fx/' + slug);
-    if (wasOpen) {   // 详情内切换：内容淡入
-      fillDetail(e); loadStageFrame(e);
-      if (!reduce) dStage.animate([{ opacity: 0, transform: 'scale(.98)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: EASE });
-      staggerInfo(0);
-      $('.sheet-body').scrollTop = 0; return;
-    }
-    if (viaHash) {   // 直接打开链接：没有来源卡片，整块淡入即可
-      fillDetail(e); detail.hidden = false; document.body.classList.add('lock'); placeSeg(); loadStageFrame(e);
-      if (!reduce) { $('#sheet').animate([{ opacity: 0, transform: 'translateY(18px) scale(.99)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: EASE }); staggerInfo(100); }
+    if (wasOpen) {
+      undim();
+      swapContent(dir || 1, function () { fillDetail(e); loadStageFrame(e); sheetBody.scrollTop = 0; placeSeg(); });
       return;
     }
-    pending = slug;
-    var srcStage = lastCard && $('.stage', lastCard);
-    var usedVT = !!document.startViewTransition && !reduce;
-    var rect = srcStage && srcStage.getBoundingClientRect();
-    // 先把详情页的海报解码好，否则 View Transition 抓到的新画面是空白
-    var img = new Image(); img.alt = ''; img.src = 'effects/' + e.slug + '/preview.png';
-    var ready = img.decode ? img.decode().catch(function () {}) : Promise.resolve();
-    Promise.race([ready, new Promise(function (r) { setTimeout(r, 250); })]).then(function () {
-    if (current !== e) return;
-    if (srcStage) srcStage.style.viewTransitionName = 'fx-stage';
-    withVT(function () {
-      if (srcStage) srcStage.style.viewTransitionName = '';
-      fillDetail(e); dStage.innerHTML = ''; dStage.appendChild(img);
-      detail.hidden = false; document.body.classList.add('lock');
-      dStage.style.viewTransitionName = 'fx-stage';
-      placeSeg(); staggerInfo(80);
-    }).then(function () {
-      pending = null;
-      dStage.style.viewTransitionName = '';
+    stopWin(); fillDetail(e);
+    detail.hidden = false; document.body.classList.add('lock'); placeSeg();
+    sheetBody.scrollTop = 0;
+    openWindow(viaHash ? null : lastCard).then(function () {
+      if (current !== e || detail.hidden) return;
       loadStageFrame(e);
-      $('#sheet').focus({ preventScroll: true });
-    });
-    if (!usedVT && !reduce && rect) flipIn(rect);
-    });
-  }
-  function staggerInfo(base) {   // 右侧信息逐行落位
-    if (reduce) return;
-    $$('.d-info > *').concat($$('.d-stage-tools, .d-prompt')).forEach(function (el, i) {
-      el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 640, delay: base + i * 35, easing: EASE, fill: 'backwards' });
-    });
-  }
-  function flipIn(rect) {   // 不支持 View Transitions 时的兜底：舞台从卡片位置飞过来
-    requestAnimationFrame(function () {
-      var r = dStage.getBoundingClientRect();
-      dStage.animate([{ transform: 'translate(' + (rect.left - r.left) + 'px,' + (rect.top - r.top) + 'px) scale(' + rect.width / r.width + ')', transformOrigin: '0 0' }, { transform: 'none', transformOrigin: '0 0' }], { duration: 560, easing: EASE });
-      $('.detail-scrim').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400 });
-      staggerInfo(120);
+      sheet.focus({ preventScroll: true });
     });
   }
   function close(viaHash) {
-    if (detail.hidden) return;
+    if (detail.hidden || closing) return;
     if (!viaHash) history.pushState(null, '', location.pathname + location.search);
     var card = current && $('.card[data-slug="' + current.slug + '"]');
-    if (card && !card.hidden) { var r = card.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) card.scrollIntoView({ block: 'center' }); }
     var f = $('iframe', dStage); if (f) f.remove();
-    dStage.style.viewTransitionName = 'fx-stage';
-    var cs = card && !card.hidden ? $('.stage', card) : null;
-    withVT(function () {
-      dStage.style.viewTransitionName = '';
-      detail.hidden = true; document.body.classList.remove('lock');
-      if (cs) cs.style.viewTransitionName = 'fx-stage';
-    }).then(function () { if (cs) cs.style.viewTransitionName = ''; if (card) card.focus({ preventScroll: true }); current = null; });
-    if (!document.startViewTransition) current = null;
+    closeWindow(card).then(function () {
+      if (card && !card.hidden) card.focus({ preventScroll: true });
+      current = null;
+    });
   }
+  // 焦点困在窗口里：Tab / Shift+Tab 在窗口内循环
+  detail.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Tab') return;
+    var f = $$('button, [href], input, [tabindex]:not([tabindex="-1"]), pre', sheet).filter(function (el) { return el.offsetParent !== null && !el.disabled; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (ev.shiftKey && (document.activeElement === first || document.activeElement === sheet)) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+  });
   $$('[data-close]').forEach(function (b) { b.addEventListener('click', function () { close(); }); });
   $('#dPrev').addEventListener('click', function () { step(-1); });
   $('#dNext').addEventListener('click', function () { step(1); });
-  function step(d) { if (!current) return; var list = FX.filter(function (e) { return match(e); }); if (list.indexOf(current) < 0) list = FX; var i = (list.indexOf(current) + d + list.length) % list.length; open(list[i].slug); }
+  function step(d) { if (!current || closing) return; var list = FX.filter(function (e) { return match(e); }); if (list.indexOf(current) < 0) list = FX; var i = (list.indexOf(current) + d + list.length) % list.length; open(list[i].slug, null, false, d); }
   $('#dReplay').addEventListener('click', function () {
     var f = $('iframe', dStage); if (f) f.contentWindow.postMessage('animuse:replay', '*');
     var b = this; b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin');

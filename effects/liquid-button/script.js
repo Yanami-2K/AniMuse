@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Liquid Magnetic Button — 四个弹簧体（本体 / 伸出的液体 / 更远的一滴 / 文字）+ SVG goo 滤镜
 (function () {
   var root = document.documentElement, css = getComputedStyle(root);
@@ -54,8 +57,8 @@
       setTimeout(function () { d.k = 34 + Math.random() * 20; d.c = 7; d.tx = 0; d.ty = 0; d.ts = .2; }, 420 + Math.random() * 260);
       setTimeout(function () { d.ts = 0; }, 1500);
     });
-    txt.textContent = '收到！'; arrow.style.opacity = 0;
-    clearTimeout(burst.t); burst.t = setTimeout(function () { txt.textContent = '靠近一点'; arrow.style.opacity = 1; }, 1500);
+    txt.textContent = LANG === 'en' ? 'Got it!' : '收到！'; arrow.style.opacity = 0;
+    clearTimeout(burst.t); burst.t = setTimeout(function () { txt.textContent = LANG === 'en' ? 'Come closer' : '靠近一点'; arrow.style.opacity = 1; }, 1500);
   }
 
   function render() {
@@ -104,6 +107,6 @@
   function setBlur() { blur.setAttribute('stdDeviation', (GOO * rem()).toFixed(2)); }
   addEventListener('resize', setBlur); setBlur();
   addEventListener('message', function (e) { if (e.data === 'animuse:replay') { real = false; demoT0 = null; demo.clicked = false; } });
-  if (reduce) { tip.s = tip2.s = .3; render(); btn.addEventListener('click', function () { txt.textContent = '收到！'; }); return; }
+  if (reduce) { tip.s = tip2.s = .3; render(); btn.addEventListener('click', function () { txt.textContent = LANG === 'en' ? 'Got it!' : '收到！'; }); return; }
   requestAnimationFrame(frame);
 })();

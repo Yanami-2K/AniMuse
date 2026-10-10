@@ -1,0 +1,87 @@
+{
+  "slug": "pixel-cat-input",
+  "order": 16,
+  "category": "character",
+  "name": {
+    "zh": "像素猫输入框",
+    "en": "Pixel Cat Input"
+  },
+  "summary": {
+    "zh": "指令输入框左边住着一只 1-bit 像素幽灵猫：眼睛跟着指针转，按下会被压扁，聚焦后输入框弹开、出现光标；你半天不打字，它就在格子里来回踱步，一打字就停下来看着光标。",
+    "en": "A 1-bit pixel ghost cat lives in the command bar’s icon slot: its eyes follow your pointer, it squishes when you press, the bar springs open on focus; leave it idle and the cat paces back and forth, start typing and it stops to watch the caret."
+  },
+  "technique": {
+    "zh": "精灵帧是离散的：canvas 逐像素画、image-rendering: pixelated，从不补间；位置是连续的：弹簧驱动的亚像素 translate。眼睛按指针方向分 8 个方位换像素位置。输入框宽度、猫的位移、Esc 回中都是同一个弹簧。",
+    "en": "Sprite frames are discrete: drawn pixel by pixel on canvas with image-rendering: pixelated, never tweened. Position is continuous: a spring-driven sub-pixel translate. Eyes snap to one of 8 directions toward the pointer. The bar width, the cat’s travel and the Esc recentre all share one spring."
+  },
+  "tags": [
+    "input",
+    "pixel",
+    "command",
+    "mascot",
+    "输入框"
+  ],
+  "tech": [
+    "Canvas",
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--w",
+      "default": "15rem",
+      "desc": {
+        "zh": "收起时的宽度",
+        "en": "collapsed width"
+      }
+    },
+    {
+      "name": "--w-open",
+      "default": "23rem",
+      "desc": {
+        "zh": "聚焦后的宽度",
+        "en": "focused width"
+      }
+    },
+    {
+      "name": "--stiffness",
+      "default": "320",
+      "desc": {
+        "zh": "弹簧刚度",
+        "en": "spring stiffness"
+      }
+    },
+    {
+      "name": "--damping",
+      "default": "28",
+      "desc": {
+        "zh": "弹簧阻尼",
+        "en": "spring damping"
+      }
+    },
+    {
+      "name": "--bored",
+      "default": "1500ms",
+      "desc": {
+        "zh": "聚焦后多久没打字就开始踱步",
+        "en": "idle time before pacing"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "放在搜索框、⌘K 面板、AI 输入框里。猫的像素图在 script.js 顶部，可以换成自己的吉祥物。",
+    "en": "Drop it into a search bar, ⌘K palette or AI prompt box. The pixel art lives at the top of script.js; swap in your own mascot."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 5200,
+  "credit": {
+    "kind": "idea",
+    "author": "Rauno Freiberg",
+    "url": "https://x.com/raunofreiberg/status/2060034871263703452"
+  }
+}

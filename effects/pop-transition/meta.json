@@ -1,0 +1,79 @@
+{
+  "slug": "pop-transition",
+  "order": 13,
+  "category": "transition",
+  "name": {
+    "zh": "啵啵转场",
+    "en": "Pop Shape Transition"
+  },
+  "summary": {
+    "zh": "换页时，一波圆形、方块、花形从左上角“啵啵啵”弹出来铺满屏幕，底下偷偷换好页面，再按同样的顺序缩回去；新标题一个字一个字跳进来。",
+    "en": "On page change a wave of circles, squares and flowers pops out from the top-left and covers the screen, the page swaps underneath, then they shrink away in the same order while the new title hops in letter by letter."
+  },
+  "technique": {
+    "zh": "屏幕切成网格，每格一个形状，延迟 = (列 + 行) × stagger，所以是一道斜着推过去的波。弹出用弹簧 linear() 缓动带一点过冲，收回用 ease-in。形状全遮住的那一帧换内容。",
+    "en": "The screen is a grid with one shape per cell; delay = (col + row) × stagger, so it reads as a diagonal wave. Pop-in uses a spring linear() easing with a little overshoot, the exit an ease-in. Content swaps on the frame where everything is covered."
+  },
+  "tags": [
+    "page transition",
+    "wipe",
+    "stagger",
+    "shapes",
+    "转场"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--cell",
+      "default": "7",
+      "desc": {
+        "zh": "横向大约铺几格（越大形状越小、越碎）",
+        "en": "cells across (more = smaller shapes)"
+      }
+    },
+    {
+      "name": "--stagger",
+      "default": "26ms",
+      "desc": {
+        "zh": "相邻格子的错峰，决定波的速度",
+        "en": "per-cell stagger = wave speed"
+      }
+    },
+    {
+      "name": "--pop",
+      "default": "460ms",
+      "desc": {
+        "zh": "单个形状弹出的时长",
+        "en": "pop duration per shape"
+      }
+    },
+    {
+      "name": "--hold",
+      "default": "2600ms",
+      "desc": {
+        "zh": "演示时每页停留多久",
+        "en": "demo hold per page"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "用在路由切换、引导页翻页。颜色跟着目标页面走会更好看。",
+    "en": "Use it for route changes or onboarding steps. Tint the wave with the destination page’s color."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1800,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://x.com/yui540"
+  }
+}

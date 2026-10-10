@@ -3,30 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rubber Stamp Approve · AniMuse</title>
+<title>Kitty Stamp · AniMuse</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-    <!-- 印泥颗粒感：用噪声在印记上抠掉一些小点 -->
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
-      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -4.2 3.7" result="m"/>
-      <feComposite in="SourceGraphic" in2="m" operator="in"/>
+    <!-- 印泥边缘：低频噪声把轮廓推歪一点 + 高频噪声抠掉几粒小点，像手盖的、不太匀的印 -->
+    <filter id="inky" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="3" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="3.2" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="11" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -5 4.15" result="m"/>
+      <feComposite in="d" in2="m" operator="in"/>
     </filter>
   </svg>
-  <div class="scene" id="scene">
+
+  <main class="stage" id="stage">
     <article class="doc" id="doc">
-      <header><span class="tag">PR #42</span><b>订单列表加状态筛选</b></header>
-      <i class="sk" style="--w:92%"></i><i class="sk" style="--w:78%"></i><i class="sk" style="--w:64%"></i>
-      <footer><span class="who">2 files · +48 −6</span><button class="btn" id="btn" type="button">Approve</button></footer>
-      <div class="mark" id="mark" aria-hidden="true"><span>已通过</span><small>APPROVED · 2026</small></div>
-      <i class="specks" id="specks"></i>
-      <i class="shadow" id="shadow"></i>
+      <header><span class="tag">PR #42</span><b data-en="Add status filter to orders">订单列表加状态筛选</b></header>
+      <i class="sk" style="--w:92%"></i><i class="sk" style="--w:76%"></i><i class="sk" style="--w:60%"></i>
+      <footer><span class="who">2 files · +48 −6</span><button class="btn" id="btn" type="button"><span id="btnTxt" data-en="Approve">批准</span></button></footer>
     </article>
-    <div class="tool" id="tool" aria-hidden="true"><i class="knob"></i><i class="neck"></i><i class="block"></i><i class="rubber"></i></div>
-    <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
-  </div>
+    <div class="marks" id="marks" aria-hidden="true"></div>
+
+    <!-- 印章小猫：圆脑袋（手柄）+ 小耳朵 + 圆滚滚的章身 + 珊瑚色橡胶垫。全部纯色 + 同一粗细的描边 -->
+    <div class="stamp" id="stamp" aria-hidden="true">
+      <i class="ground" id="ground"></i>
+      <div class="lift"><div class="tilt" id="tilt"><div class="hop" id="hop"><div class="bob" id="bob">
+        <svg viewBox="-6 -6 112 118" class="kitty">
+          <g stroke="var(--line)" stroke-width="4.2" stroke-linejoin="round" stroke-linecap="round">
+            <!-- 耳朵 -->
+            <path d="M27 21 L28.5 5.5 Q29 2 32 4 L44 11.5" fill="var(--handle)"/>
+            <path d="M73 21 L71.5 5.5 Q71 2 68 4 L56 11.5" fill="var(--handle)"/>
+            <path d="M31 11 L32 8 L38 12" fill="var(--blush)" stroke="none"/>
+            <path d="M69 11 L68 8 L62 12" fill="var(--blush)" stroke="none"/>
+            <!-- 脖子 -->
+            <path d="M41 56 H59 V74 H41 Z" fill="var(--handle)"/>
+            <!-- 脑袋 = 手柄圆钮 -->
+            <ellipse cx="50" cy="35" rx="29" ry="25" fill="var(--handle)"/>
+            <path d="M70.5 22 Q80 36 70 50 Q61 58.5 47 59.6 Q66 52 70.5 22 Z" fill="var(--handle-2)" stroke="none"/>
+            <!-- 章身：圆滚滚的木块，下沿一条平涂的暗面 -->
+            <rect x="2" y="70" width="96" height="27" rx="12" fill="var(--body)"/>
+            <path d="M4.2 88 Q6 95 14 95 H86 Q94 95 95.8 88 Z" fill="var(--body-2)" stroke="none"/>
+            <rect x="2" y="70" width="96" height="27" rx="12" fill="none"/>
+            <!-- 橡胶垫 -->
+            <rect x="6" y="96" width="88" height="14" rx="5" fill="var(--pad)"/>
+            <path d="M13 101.5 H30" stroke="#fff" stroke-opacity=".55" stroke-width="2.6"/>
+          </g>
+          <!-- 脸 -->
+          <g class="face">
+            <ellipse cx="34" cy="45" rx="5.6" ry="3.4" fill="var(--blush)"/>
+            <ellipse cx="66" cy="45" rx="5.6" ry="3.4" fill="var(--blush)"/>
+            <g class="eyes" id="eyes"><ellipse cx="40" cy="36" rx="3.3" ry="4.1" fill="var(--line)"/><ellipse cx="60" cy="36" rx="3.3" ry="4.1" fill="var(--line)"/>
+              <circle cx="41.2" cy="34.4" r="1.1" fill="#fff"/><circle cx="61.2" cy="34.4" r="1.1" fill="#fff"/></g>
+            <g class="squint" fill="none" stroke="var(--line)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M36 32 L43 36 L36 40"/><path d="M64 32 L57 36 L64 40"/></g>
+            <path class="mouth" d="M45.5 42.5 Q47.8 45.4 50 42.8 Q52.2 45.4 54.5 42.5" fill="none" stroke="var(--line)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <ellipse class="oh" cx="50" cy="44.5" rx="2.6" ry="3" fill="var(--line)"/>
+          </g>
+        </svg>
+      </div></div></div></div>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
