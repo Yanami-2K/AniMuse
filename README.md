@@ -44,11 +44,9 @@ AniMuse 是一个开源的网页动效库。每个效果都是一份能直接双
 | 16 | [像素猫输入框](effects/pixel-cat-input/) | Pixel Cat Input | 角色 | Canvas / CSS / JS | 想法 [Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452) |
 | 17 | [导航里回答 Agent](effects/agent-preview/) | Agent Preview Card | 卡片 | CSS / JS / WAAPI | 想法 [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129) |
 | 18 | [阅读环境](effects/reading-env/) | Reading Environment | 微交互 | Canvas / Web Audio / JS | 想法 [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066) |
-| 19 | [怪盗菜单](effects/p5-menu/) | Phantom Menu | 微交互 | CSS / JS / SVG / WAAPI | 灵感 Persona 5 UI |
-| 20 | [怪盗结算](effects/p5-results/) | Phantom Results | 转场 | CSS / JS / SVG / WAAPI | 灵感 Persona 5 UI |
-| 21 | [会变形的套餐切换](effects/tier-toggle/) | Dynamic Tier Toggle | 微交互 | CSS / :has() | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/vEEZxOM) |
-| 22 | [靠近发光的卡片](effects/glow-cards/) | Proximity Glow Cards | 卡片 | CSS / JS / conic-gradient | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/QWYPaax) |
-| 23 | [闪光按钮](effects/sparkle-button/) | Sparkle Button | 按钮 | CSS / JS | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/LYJMPBL) |
+| 19 | [会变形的套餐切换](effects/tier-toggle/) | Dynamic Tier Toggle | 微交互 | CSS / :has() | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/vEEZxOM) |
+| 20 | [靠近发光的卡片](effects/glow-cards/) | Proximity Glow Cards | 卡片 | CSS / JS / conic-gradient | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/QWYPaax) |
+| 21 | [闪光按钮](effects/sparkle-button/) | Sparkle Button | 按钮 | CSS / JS | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/LYJMPBL) |
 
 ## 目录结构
 
@@ -98,7 +96,6 @@ npx serve dist              # 或者 python3 -m http.server -d dist
 - **[Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452)**：像素猫输入框的交互想法来自他的 “lil pix”。像素猫与代码为原创。
 - **[Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066)**：阅读环境的想法来自他的 “Reading environment”。代码、声音合成与文案为原创。
 - **[Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129)**：导航里回答 Agent 的交互想法来自她的设计。代码与文案为原创。
-- **Persona 5 UI**：怪盗菜单、怪盗结算的灵感来自《女神异闻录 5》的界面语言（斜切、红黑白、剪报字）。所有图形、角色、代码均为原创，没有使用任何 Atlus 的素材、Logo、字体或截图。
 
 ## 部署
 
@@ -125,7 +122,7 @@ Either way the agent is asked to rebuild the effect in your project's existing s
 
 **Contributing:** add `effects/<slug>/` with `index.html`, `style.css`, optional `script.js`, a `meta.json` (copy an existing one) and a `README.md`; run `npm run previews -- <slug>` and `node scripts/build.mjs`; open a PR. No external libraries, params as CSS variables, reduced-motion support, and listen for the `'animuse:replay'` message if your demo needs to restart on hover.
 
-**Credits:** three effects are ports of [Jhey Tompkins](https://codepen.io/jh3y)’ CodePens ([Dynamic Tier Toggle](https://codepen.io/jh3y/pen/vEEZxOM), [Proximity Glow Cards](https://codepen.io/jh3y/pen/QWYPaax), [Sparkle Button](https://codepen.io/jh3y/pen/LYJMPBL); public Pens are MIT, notices kept in each folder’s `LICENSE`). Sleepy Toggle, Pop Shape Transition, Hop Loader and Sticker Peel are inspired by [yui540](https://x.com/yui540)’s playful CSS animation style (original code and art, no assets copied). Interaction ideas: Pixel Cat Input — [Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452) (“lil pix”); Reading Environment — [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066); Agent Preview Card — [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129). Phantom Menu and Phantom Results are inspired by the Persona 5 UI; all art and code are original, no Atlus assets, logos, fonts or screenshots.
+**Credits:** three effects are ports of [Jhey Tompkins](https://codepen.io/jh3y)’ CodePens ([Dynamic Tier Toggle](https://codepen.io/jh3y/pen/vEEZxOM), [Proximity Glow Cards](https://codepen.io/jh3y/pen/QWYPaax), [Sparkle Button](https://codepen.io/jh3y/pen/LYJMPBL); public Pens are MIT, notices kept in each folder’s `LICENSE`). Sleepy Toggle, Pop Shape Transition, Hop Loader and Sticker Peel are inspired by [yui540](https://x.com/yui540)’s playful CSS animation style (original code and art, no assets copied). Interaction ideas: Pixel Cat Input — [Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452) (“lil pix”); Reading Environment — [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066); Agent Preview Card — [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129).
 
 **i18n:** demos receive `?lang=zh|en`; `npm run check:i18n` fails if any Chinese shows up in English mode.
 
