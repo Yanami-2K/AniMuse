@@ -26,21 +26,17 @@ AniMuse 是一个开源的网页动效库。每个效果都是一份能直接双
 
 | # | 名字 | English | 分类 | 技术 |
 | --- | --- | --- | --- | --- |
-| 01 | [真人节奏打字](effects/typing-rhythm/) | Typing Rhythm | 文字 | CSS / JS |
-| 02 | [里程表数字滚动](effects/count-up/) | Odometer Count-up | 文字 | CSS / JS |
-| 03 | [遮罩逐行升起](effects/line-reveal/) | Masked Line Reveal | 滚动 | CSS / JS |
-| 04 | [测试逐条变绿](effects/tests-tick/) | Tests Ticking Green | 加载 | CSS / JS |
-| 05 | [光标点击 + 盖章](effects/cursor-stamp/) | Cursor Click & Stamp | 微交互 | CSS / JS / WAAPI |
-| 06 | [会伸缩的 Tab 滑块](effects/tab-slide/) | Stretchy Tab Indicator | 微交互 | CSS / JS / WAAPI |
-| 07 | [文件掉进文件夹](effects/folder-drop/) | Folder Drop Bounce | 微交互 | CSS / JS / WAAPI |
-| 08 | [荧光笔 + 评论图钉](effects/review-pin/) | Review Pin Drop | 卡片 | CSS / JS / WAAPI |
-| 09 | [视差倾斜卡片](effects/tilt-card/) | Parallax Tilt Card | 卡片 | CSS / JS |
-| 10 | [有厚度的按压按钮](effects/press-button/) | Squishy Press Button | 按钮 | CSS / JS |
-| 11 | [复制按钮变形](effects/copy-morph/) | Copy Button Morph | 按钮 | CSS / JS / WAAPI |
-| 12 | [弹簧点阵背景](effects/dot-grid/) | Spring Dot Grid | 背景 | Canvas / JS |
-| 13 | [老电视关机](effects/crt-off/) | CRT Power Off | 转场 | CSS / JS / WAAPI |
-| 14 | [飘飘幽灵猫](effects/ghost-cat/) | Floating Ghost Cat | 角色 | SVG / CSS / JS |
-| 15 | [怪盗猫的预告函](effects/phantom-cat/) | Phantom Thief Cat | 角色 | SVG / CSS / JS / WAAPI |
+| 01 | [果冻卡片堆](effects/jelly-stack/) | Jelly Card Stack | 卡片 | CSS / JS |
+| 02 | [液态磁吸按钮](effects/liquid-button/) | Liquid Magnetic Button | 按钮 | SVG filter / CSS / JS |
+| 03 | [机械翻牌](effects/split-flap/) | Split-flap Board | 文字 | CSS / JS / WAAPI |
+| 04 | [挂绳工牌](effects/lanyard-badge/) | Lanyard Badge | 物理 | Canvas / CSS / JS |
+| 05 | [幽灵猫和萤火虫](effects/ghost-cat/) | Ghost Cat & Firefly | 角色 | SVG / JS |
+| 06 | [折信寄出](effects/letter-fold/) | Fold & Send Letter | 转场 | CSS 3D / JS / WAAPI |
+| 07 | [会变形的下载按钮](effects/morph-download/) | Morphing Download Button | 微交互 | SVG / JS |
+| 08 | [橡皮膜下拉刷新](effects/elastic-refresh/) | Elastic Pull-to-Refresh | 加载 | SVG / JS |
+| 09 | [橡皮章盖“已通过”](effects/cursor-stamp/) | Rubber Stamp Approve | 微交互 | CSS / JS / WAAPI / SVG filter |
+| 10 | [老电视关机](effects/crt-off/) | CRT Power Off | 转场 | CSS / JS / WAAPI / Canvas |
+| 11 | [怪盗猫的预告函](effects/phantom-cat/) | Phantom Thief Cat | 角色 | SVG / CSS / JS / WAAPI |
 
 ## 目录结构
 

@@ -1,28 +1,29 @@
 {
   "slug": "ghost-cat",
-  "order": 14,
+  "order": 5,
   "category": "character",
   "name": {
-    "zh": "飘飘幽灵猫",
-    "en": "Floating Ghost Cat"
+    "zh": "幽灵猫和萤火虫",
+    "en": "Ghost Cat & Firefly"
   },
   "summary": {
-    "zh": "一只纯 SVG 的幽灵猫：上下飘、尾巴摇、随机眨眼（偶尔连眨两下），影子跟着一缩一放，旁边的星星一闪一闪。点它会吓一跳。",
-    "en": "A pure-SVG ghost cat: it floats, wags its tail, blinks at random (sometimes twice), its shadow breathes and stars twinkle. Tap it for a little jump-scare."
+    "zh": "一段角色小表演：幽灵猫的眼珠追着萤火虫转，萤火虫落在它头上，它斗鸡眼往上看、憋气、打了个喷嚏（那一瞬间身体变透明），萤火虫被喷飞，它不好意思地眯眼笑。指针就是萤火虫，停在它头上也会触发。",
+    "en": "A tiny piece of character acting: the ghost cat’s eyes follow a firefly, it lands on its head, the cat goes cross-eyed, inhales, sneezes (turning see-through for an instant), the firefly gets blown away and the cat squints, embarrassed. Your pointer is the firefly; hover on its head to trigger it."
   },
   "technique": {
-    "zh": "SVG 部件用 transform-box: fill-box 设各自的旋转中心；身体 float 和影子 shadow 用同一个周期反向缩放；眨眼是 scaleY(.1) 的 0.18s 动画，间隔随机 2~5 秒。",
-    "en": "SVG parts use transform-box: fill-box for their own pivots; body float and shadow share a period with inverse scaling; a blink is a 0.18s scaleY(.1), every 2–5s at random."
+    "zh": "一个 rAF 状态机：wander → approach → land → inhale → achoo → shy。每个阶段只改目标值（身体缩放、位移、角度、眼皮、张嘴、透明度），全部挂在弹簧上，所以切换自带过冲和余震。眼珠偏移 = 指向萤火虫的单位向量 × 4.2，落在头上时自然变成斗鸡眼。",
+    "en": "One rAF state machine: wander → approach → land → inhale → achoo → shy. Each beat only sets targets (body scale, offset, tilt, eyelids, mouth, opacity), all on springs, so every change overshoots and settles. Pupil offset = unit vector to the firefly × 4.2, which turns into cross-eyes once it lands on the head."
   },
   "tags": [
     "mascot",
+    "character",
+    "acting",
     "svg",
-    "idle",
-    "角色"
+    "角色",
+    "表演"
   ],
   "tech": [
     "SVG",
-    "CSS",
     "JS"
   ],
   "params": [
@@ -30,38 +31,46 @@
       "name": "--float",
       "default": "3.2s",
       "desc": {
-        "zh": "上下飘一次的周期",
+        "zh": "上下飘的周期",
         "en": "float period"
       }
     },
     {
       "name": "--amp",
-      "default": "9px",
+      "default": "6",
       "desc": {
-        "zh": "飘动幅度",
-        "en": "float amplitude"
+        "zh": "飘动幅度（SVG 单位）",
+        "en": "float amplitude (SVG units)"
+      }
+    },
+    {
+      "name": "--track",
+      "default": "9",
+      "desc": {
+        "zh": "眼珠追踪灵敏度",
+        "en": "pupil tracking stiffness"
       }
     },
     {
       "name": "--body",
-      "default": "#e9e3ff",
+      "default": "#ece6ff",
       "desc": {
         "zh": "身体颜色",
         "en": "body color"
       }
     },
     {
-      "name": "--ink",
-      "default": "#3b2f4a",
+      "name": "--firefly",
+      "default": "#ffd84a",
       "desc": {
-        "zh": "描边颜色",
-        "en": "stroke color"
+        "zh": "萤火虫颜色",
+        "en": "firefly color"
       }
     }
   ],
   "adapt": {
-    "zh": "改 --body 就能换一只颜色；可以拿来当 404 页或空状态的吉祥物。",
-    "en": "Change --body for a new colorway; works as a 404 or empty-state mascot."
+    "zh": "适合 404、空状态、加载页。想换成自己的角色，保留“目标值 + 弹簧”这套结构，把 SVG 换掉、改各阶段的目标值就行。",
+    "en": "Great for 404s, empty states and loading screens. To use your own character keep the targets-on-springs structure, swap the SVG and retune each beat."
   },
   "files": [
     "index.html",
@@ -69,5 +78,5 @@
     "script.js"
   ],
   "preview": "preview.png",
-  "posterAt": 1000
+  "posterAt": 5600
 }

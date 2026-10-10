@@ -1,0 +1,74 @@
+{
+  "slug": "morph-download",
+  "order": 7,
+  "category": "micro",
+  "name": {
+    "zh": "会变形的下载按钮",
+    "en": "Morphing Download Button"
+  },
+  "summary": {
+    "zh": "一个按钮四种状态：下载 → 下载中（暂停图标 + 进度环）→ 已暂停（播放图标）→ 完成（对勾 + 迸出小点）。图标不是淡入淡出换的，是每个顶点挂着弹簧变过去，还会拧一下。进度也不是匀速的。",
+    "en": "One button, four states: download → downloading (pause icon + progress ring) → paused (play icon) → done (tick + burst). Icons do not crossfade; every vertex springs to its new spot with a little twist. Progress is not linear either."
+  },
+  "technique": {
+    "zh": "所有图标都由两个四边形（8 个顶点）组成，粗线段用 bar(x1,y1,x2,y2,w) 算出四个角，三角形就重复一个点。切换时每个顶点独立弹到新形状的对应点，并错峰 14ms；整组再加一个旋转冲量。用 fill + 同色粗 stroke 做圆角。",
+    "en": "Every icon is two quads (8 vertices); thick strokes come from bar(x1,y1,x2,y2,w), triangles repeat a vertex. On change each vertex springs to its counterpart with a 14ms stagger, plus an angular kick on the group. Rounded corners come from fill plus a same-colour thick stroke."
+  },
+  "tags": [
+    "icon",
+    "morph",
+    "state",
+    "download",
+    "图标",
+    "状态"
+  ],
+  "tech": [
+    "SVG",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--stiffness",
+      "default": "320",
+      "desc": {
+        "zh": "顶点弹簧刚度",
+        "en": "vertex spring stiffness"
+      }
+    },
+    {
+      "name": "--damping",
+      "default": "17",
+      "desc": {
+        "zh": "顶点弹簧阻尼，越小越抖",
+        "en": "vertex damping"
+      }
+    },
+    {
+      "name": "--stagger",
+      "default": "14ms",
+      "desc": {
+        "zh": "顶点之间的错峰",
+        "en": "stagger between vertices"
+      }
+    },
+    {
+      "name": "--load",
+      "default": "2600ms",
+      "desc": {
+        "zh": "演示里下载一次多久",
+        "en": "demo download time"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "接真实下载：进度写进 prog（0~100），完成时调 go('done')。想加新图标，只要再写一组 8 个点。",
+    "en": "For real downloads write progress into prog (0–100) and call go('done') at the end. A new icon is just another set of 8 points."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1700
+}

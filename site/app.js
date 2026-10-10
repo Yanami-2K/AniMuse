@@ -16,7 +16,7 @@
       brandZh: '动效灵感', navGallery: '效果', navContribute: '投稿', eyebrow: '开源 · 原生 HTML / CSS / JS · MIT',
       lede: '看到喜欢的动效却说不清？\n挑一个，复制 Prompt，丢给你的 AI。',
       sub: '每个效果都是能直接打开的源码。Prompt 里写清楚时长、曲线、错峰，再把源码链接附上，AI 照着抄就不会走样。',
-      ctaBrowse: '逛逛效果', countUnit: '个效果，持续更新', curveCap: '全站只用这一条曲线', searchPh: '搜一下：打字、按钮、猫…',
+      ctaBrowse: '逛逛效果', countUnit: '个效果，持续更新', curveCap: '全站只用这一条曲线', searchPh: '搜一下：弹簧、按钮、猫…',
       all: '全部', empty: '没找到。换个词试试，或者', emptyLink: '投一个进来',
       contribEyebrow: '投稿', contribTitle: '你也做了一个好看的动效？', contribText: '建一个目录，放 index.html、style.css、script.js 和 meta.json，提个 PR 就行。不需要构建工具，不需要框架。',
       treeHtml: '# 双击就能打开的 Demo', treeCss: '# 参数都放在 :root 变量里', treeJs: '# 可选', treeMeta: '# 名字、分类、参数',
@@ -31,7 +31,7 @@
       brandZh: 'Motion muse', navGallery: 'Effects', navContribute: 'Contribute', eyebrow: 'Open source · vanilla HTML / CSS / JS · MIT',
       lede: 'Saw a motion you love but can’t describe it?\nPick one, copy the prompt, hand it to your AI.',
       sub: 'Every effect is real, runnable source. The prompt spells out durations, curves and staggers, and links the exact source, so the AI copies instead of guessing.',
-      ctaBrowse: 'Browse effects', countUnit: 'effects and counting', curveCap: 'One easing curve, everywhere', searchPh: 'Search: typing, button, cat…',
+      ctaBrowse: 'Browse effects', countUnit: 'effects and counting', curveCap: 'One easing curve, everywhere', searchPh: 'Search: spring, button, cat…',
       all: 'All', empty: 'Nothing here. Try another word, or', emptyLink: 'contribute one',
       contribEyebrow: 'Contribute', contribTitle: 'Made a beautiful motion too?', contribText: 'Add a folder with index.html, style.css, script.js and meta.json, then open a PR. No build tools, no framework.',
       treeHtml: '# a demo you can double-click', treeCss: '# params live in :root vars', treeJs: '# optional', treeMeta: '# name, category, params',
@@ -221,7 +221,7 @@
     idot.animate([{ translate: '0 0' }, { translate: '0 -.6em', offset: .4, easing: 'cubic-bezier(.2,.8,.4,1)' }, { translate: '0 0', offset: .8, easing: 'cubic-bezier(.6,0,1,.6)' }, { translate: '0 0', scale: '1.2 .8', offset: .9 }, { translate: '0 0', scale: '1 1' }], { duration: 700 });
   });
 
-  /* ---------------- chips (stretchy pill, 同 effects/tab-slide) ---------------- */
+  /* ---------------- chips (stretchy pill：滑块先伸长盖住起点和终点，再收回到目标) ---------------- */
   var chipsEl = $('#chips'), pill = $('#chipPill'), cat = 'all', q = '', pillAnim;
   function counts() { var c = { all: FX.length }; FX.forEach(function (e) { c[e.category] = (c[e.category] || 0) + 1; }); return c; }
   function renderChips() {

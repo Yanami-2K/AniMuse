@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elastic Pull-to-Refresh · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="phone">
+    <div class="screen" id="screen">
+      <header><span class="time">9:41</span><b>收件箱</b><i class="dot"></i></header>
+      <div class="vp" id="vp">
+        <ul class="list" id="list">
+          <li><i style="--c:#ffd65a">林</i><p><b>小林</b><span>设计稿更新了，看下第 3 页</span></p></li>
+          <li><i style="--c:#7fe0c0">周</i><p><b>周周</b><span>接口文档已同步到 wiki</span></p></li>
+          <li><i style="--c:#b9a6ff">Q</i><p><b>QA 小分队</b><span>回归通过 ✓ 可以发版</span></p></li>
+          <li><i style="--c:#ff9db5">阿</i><p><b>阿晴</b><span>周五下午茶点什么？</span></p></li>
+          <li><i style="--c:#9fd8ff">M</i><p><b>Mia</b><span>Figma 链接发你了</span></p></li>
+          <li><i style="--c:#ffc8a8">陈</i><p><b>老陈</b><span>明早 10 点评审</span></p></li>
+        </ul>
+        <svg class="goo" id="goo" aria-hidden="true"><path id="mem"/></svg>
+        <div class="knob" id="knob" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><g id="arrow"><path d="M12 5v13M6.5 12.5 12 18l5.5-5.5"/></g><circle id="spin" cx="12" cy="12" r="7.5" pathLength="100"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <i class="finger" id="finger" aria-hidden="true"></i>
+  <script src="script.js"></script>
+</body>
+</html>

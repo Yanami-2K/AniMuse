@@ -1,0 +1,46 @@
+/* Jelly Card Stack — 可以拖、可以甩的卡片堆：弹簧跟手，速度越快越“果冻”，甩出去的卡片绕回最底下 */
+:root {
+  --bg: #efeaff;
+  --ink: #1c1a21;
+  --stiffness: 220;       /* 弹簧刚度：越大回位越快 */
+  --damping: 17;          /* 阻尼：越小越晃 */
+  --jelly: .00042;        /* 果冻强度：每 px/s 速度拉伸多少 */
+  --throw: 650;           /* 甩出去的速度阈值（px/s） */
+  --gap: .9rem;           /* 卡片之间的错落距离 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(3.333vw, 4.444vh); }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(60rem 30rem at 50% 120%, #ddd3ff, transparent 60%), var(--bg); color: var(--ink);
+  font-family: ui-sans-serif, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.deck { position: relative; width: 13rem; height: 16.4rem; margin-top: 2rem; }
+.card {
+  position: absolute; inset: 0; border-radius: 1.4rem; padding: 1.3rem 1.3rem 1.2rem; overflow: hidden;
+  border: .16rem solid var(--ink); box-shadow: 0 .9rem 1.6rem -1rem rgba(28, 26, 33, .45), 0 .2rem 0 var(--ink);
+  display: flex; flex-direction: column; justify-content: space-between; cursor: grab; will-change: transform;
+  transform-origin: 50% 50%;
+}
+.card.grab { cursor: grabbing; }
+.card small { font: 800 .7rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .14em; opacity: .7; }
+.card b { position: relative; z-index: 1; font-size: 2.7rem; line-height: 1.02; font-weight: 900; letter-spacing: -.02em; }
+.card em { position: relative; z-index: 1; font-style: normal; font: 700 .72rem/1 ui-monospace, "SF Mono", Menlo, monospace; }
+.c1 { background: #ff6a45; color: #fff; }
+.c2 { background: #ffd65a; }
+.c3 { background: #7fe0c0; }
+.c4 { background: #fff; }
+.shape { position: absolute; right: -1.6rem; bottom: -1.6rem; width: 9rem; height: 9rem; border: .16rem solid var(--ink); }
+.s-circle { border-radius: 50%; background: #ffb199; }
+.s-blob { border-radius: 58% 42% 46% 54% / 50% 60% 40% 50%; background: #ff9db5; transform: rotate(-20deg); }
+.s-tri { border: 0; background: var(--ink); clip-path: polygon(50% 8%, 100% 92%, 0 92%); width: 8rem; height: 8rem; right: -.6rem; bottom: -1rem; transform: rotate(14deg); }
+.s-ring { border-radius: 50%; border-width: 1.6rem; border-color: #b9a6ff; }
+.finger {
+  position: fixed; left: 0; top: 0; width: 2.2rem; height: 2.2rem; margin: -1.1rem 0 0 -1.1rem; border-radius: 50%;
+  background: rgba(28, 26, 33, .16); border: .14rem solid rgba(255, 255, 255, .9); box-shadow: 0 .3rem .8rem rgba(28, 26, 33, .2);
+  opacity: 0; pointer-events: none; transition: opacity .25s, scale .18s; z-index: 100;
+}
+.finger.on { opacity: 1; }
+.finger.down { scale: .78; background: rgba(28, 26, 33, .28); }
+@media (prefers-reduced-motion: reduce) { .finger { display: none; } }

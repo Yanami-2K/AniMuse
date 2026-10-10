@@ -1,39 +1,30 @@
-/* Floating Ghost Cat — 幽灵猫上下飘、尾巴摇、随机眨眼，影子跟着呼吸；点一下会吓你一跳 */
+/* Ghost Cat & Firefly — 一段角色小表演：眼睛追着萤火虫转，萤火虫落在头上，斗鸡眼，憋气，打喷嚏，害羞。指针就是萤火虫 */
 :root {
-  --bg: #f7f5f0;
-  --ink: #3b2f4a;         /* 描边颜色 */
-  --body: #e9e3ff;        /* 身体颜色 */
-  --float: 3.2s;          /* 一次上下飘的周期 */
-  --amp: 9px;             /* 飘动幅度 */
+  --bg: #221d36;
+  --ink: #2b2240;         /* 描边颜色 */
+  --body: #ece6ff;        /* 身体颜色 */
   --blush: #ff9db5;
+  --firefly: #ffd84a;
+  --float: 3.2s;          /* 上下飘的周期 */
+  --amp: 6;               /* 飘动幅度（SVG 单位） */
+  --track: 9;             /* 眼珠追踪的灵敏度：越大越跟手 */
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: min(3.333vw, 4.444vh); }
-body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--bg); overflow: hidden; }
-.spot { position: relative; width: 15rem; height: 17rem; display: grid; justify-items: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.cat { width: 15rem; height: 15rem; overflow: visible; }
-.shell { fill: var(--body); }
-.shell, .tail, .mouth { stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; stroke-linecap: round; }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; cursor: none;
+  background: radial-gradient(32rem 22rem at 50% 62%, #3a3160, transparent 70%), var(--bg); }
+.scene { width: 24rem; height: 22rem; overflow: visible; }
+.sky circle { fill: #fff; opacity: .5; }
+.pool { fill: #cbbcff; opacity: .16; }
+.shell, .ear { fill: var(--body); }
+.shell, .tail, .mouth, .ear { stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; stroke-linecap: round; }
+.ear { fill: #d9cfff; stroke-width: 0; }
 .tail, .mouth { fill: none; }
-.eyes { fill: var(--ink); }
-.blush { fill: var(--blush); opacity: .85; }
-.star { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
-.s1 { fill: #ffd36e; } .s2 { fill: #9fe3ff; } .s3 { fill: #ff9db5; }
-
-/* 飘：身体 translate + 微微旋转；影子反向缩放 */
-.body { transform-box: fill-box; transform-origin: 50% 100%; animation: float var(--float) ease-in-out infinite; }
-.tail { transform-box: fill-box; transform-origin: 0% 100%; animation: wag calc(var(--float) / 2) ease-in-out infinite alternate; }
-.eyes { transform-box: fill-box; transform-origin: 50% 50%; }
-.eyes.blink { animation: blink .18s ease-in-out; }
-.star { transform-box: fill-box; transform-origin: 50% 50%; animation: twinkle 2.4s ease-in-out infinite; }
-.s2 { animation-delay: -.8s; } .s3 { animation-delay: -1.6s; }
-.shadow { width: 6.4rem; height: .9rem; margin-top: -.8rem; border-radius: 50%; background: rgba(59, 47, 74, .14); animation: shadow var(--float) ease-in-out infinite; }
-.spot.boo .cat { animation: boo .7s cubic-bezier(.3, 1.6, .5, 1); }
-
-@keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(calc(var(--amp) * -1)) rotate(2deg); } }
-@keyframes wag { from { transform: rotate(-10deg); } to { transform: rotate(12deg); } }
-@keyframes blink { 50% { transform: scaleY(.1); } }
-@keyframes twinkle { 0%, 100% { transform: scale(.6) rotate(0); opacity: .4; } 50% { transform: scale(1.1) rotate(25deg); opacity: 1; } }
-@keyframes shadow { 0%, 100% { transform: scaleX(1); opacity: 1; } 50% { transform: scaleX(.8); opacity: .6; } }
-@keyframes boo { 0% { transform: none; } 30% { transform: translateY(-14%) scale(1.08, .92); } 60% { transform: translateY(-4%) scale(.96, 1.06) rotate(-6deg); } 100% { transform: none; } }
-@media (prefers-reduced-motion: reduce) { .body, .tail, .star, .shadow, .spot.boo .cat { animation: none; } }
+.eye, .gasp { fill: var(--ink); }
+.happy { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; opacity: 0; }
+.blush { fill: var(--blush); }
+.puff path { stroke: #fff; stroke-width: 3.5; stroke-linecap: round; fill: none; opacity: 0; }
+.gasp { opacity: 0; }
+.flyBody { fill: #fff9d6; }
+.wing { fill: rgba(255, 255, 255, .7); }
+@media (prefers-reduced-motion: reduce) { body { cursor: auto; } }

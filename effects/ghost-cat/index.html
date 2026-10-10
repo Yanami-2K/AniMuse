@@ -3,27 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Floating Ghost Cat · AniMuse</title>
+<title>Ghost Cat &amp; Firefly · AniMuse</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="spot" id="spot">
-    <svg class="cat" id="cat" viewBox="0 0 200 200" role="img" aria-label="一只飘着的幽灵猫">
-      <g class="stars">
-        <g transform="translate(34 56)"><path class="star s1" d="M0 -9 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z"/></g>
-        <g transform="translate(168 44)"><path class="star s2" d="M0 -9 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z"/></g>
-        <g transform="translate(172 132)"><path class="star s3" d="M0 -9 l3 7 7 1 -5 5 1 7 -6 -4 -6 4 1 -7 -5 -5 7 -1z"/></g>
+  <svg class="scene" id="scene" viewBox="6 22 188 186" role="img" aria-label="幽灵猫盯着一只萤火虫，萤火虫落在它头上，它打了个喷嚏">
+    <defs>
+      <radialGradient id="glow"><stop offset="0" stop-color="#fff6b0" stop-opacity=".95"/><stop offset=".35" stop-color="#ffd84a" stop-opacity=".45"/><stop offset="1" stop-color="#ffd84a" stop-opacity="0"/></radialGradient>
+      <radialGradient id="aura"><stop offset="0" stop-color="#cbbcff" stop-opacity=".45"/><stop offset="1" stop-color="#cbbcff" stop-opacity="0"/></radialGradient>
+    </defs>
+    <g class="sky"><circle cx="14" cy="34" r="1.4"/><circle cx="22" cy="150" r="1"/><circle cx="182" cy="32" r="1.6"/><circle cx="186" cy="128" r="1.1"/><circle cx="160" cy="196" r="1"/><circle cx="34" cy="78" r=".9"/></g>
+    <ellipse class="pool" id="pool" cx="100" cy="196" rx="44" ry="7"/>
+    <circle cx="100" cy="112" r="90" fill="url(#aura)"/>
+    <g id="cat">
+      <g id="bodyT">
+        <path class="tail" id="tail" d="M140 146 Q176 140 170 108"/>
+        <path class="shell" d="M58 166 L58 96 L66 58 L84 78 Q100 72 116 78 L134 58 L142 96 L142 166 Q131 156 121 168 Q110 156 100 168 Q90 156 79 168 Q69 156 58 166Z"/>
+        <path class="ear" id="earL" d="M66 58 L84 78 L60 84Z"/><path class="ear" id="earR" d="M134 58 L116 78 L140 84Z"/>
+        <g id="eyes">
+          <ellipse class="eye" id="eyeL" cx="84" cy="112" rx="6.5" ry="8.5"/><ellipse class="eye" id="eyeR" cx="116" cy="112" rx="6.5" ry="8.5"/>
+          <path class="happy" id="happy" d="M77 114 Q84 104 91 114 M109 114 Q116 104 123 114"/>
+        </g>
+        <g class="blush" id="blush"><ellipse cx="71" cy="128" rx="7" ry="5"/><ellipse cx="129" cy="128" rx="7" ry="5"/></g>
+        <path class="mouth" id="mouth" d="M92 126 Q96 132 100 126 Q104 132 108 126"/>
+        <ellipse class="gasp" id="gasp" cx="100" cy="129" rx="3.6" ry="4.4"/>
+        <g class="puff" id="puff"><path d="M100 136 l-14 14"/><path d="M100 138 l0 18"/><path d="M100 136 l14 14"/></g>
       </g>
-      <g class="body">
-        <path class="tail" d="M140 140 Q172 132 166 104"/>
-        <path class="shell" d="M58 160 L58 92 L66 58 L84 76 Q100 70 116 76 L134 58 L142 92 L142 160 Q131 150 121 162 Q110 150 100 162 Q90 150 79 162 Q69 150 58 160Z"/>
-        <g class="eyes"><ellipse cx="84" cy="110" rx="6" ry="8"/><ellipse cx="116" cy="110" rx="6" ry="8"/></g>
-        <g class="blush"><circle cx="72" cy="126" r="6"/><circle cx="128" cy="126" r="6"/></g>
-        <path class="mouth" d="M92 124 Q96 130 100 124 Q104 130 108 124"/>
-      </g>
-    </svg>
-    <i class="shadow"></i>
-  </div>
+    </g>
+    <g id="fly"><circle r="22" fill="url(#glow)" id="flyGlow"/><circle r="3.2" class="flyBody"/><path class="wing" id="wing" d="M-1 -2 q-6 -7 -9 -1 q3 4 9 1z M1 -2 q6 -7 9 -1 q-3 4 -9 1z"/></g>
+  </svg>
   <script src="script.js"></script>
 </body>
 </html>

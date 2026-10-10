@@ -1,31 +1,58 @@
 {
   "slug": "cursor-stamp",
-  "order": 5,
+  "order": 9,
   "category": "micro",
   "name": {
-    "zh": "光标点击 + 盖章",
-    "en": "Cursor Click & Stamp"
+    "zh": "橡皮章盖“已通过”",
+    "en": "Rubber Stamp Approve"
   },
   "summary": {
-    "zh": "假光标沿弧线滑到按钮上，按下、按钮下沉，然后一枚印章从高处加速砸下来，落地那一下整张卡片跟着震。适合做产品演示。",
-    "en": "A fake cursor arcs to the button, presses it down, then a stamp slams in from above and the whole card jolts on impact. Great for product demos."
+    "zh": "光标点了 Approve，一枚真的橡皮章从画面外落下：影子从又大又虚收成又小又实，落地压扁、纸被压一下、溅出几粒印泥，压着左右碾一下，抬起来留下带颗粒感的印。",
+    "en": "The cursor clicks Approve and a real rubber stamp drops in: its shadow shrinks from big and blurry to small and sharp, it squashes on impact, the paper dips, a few ink specks fly, it rocks side to side, and lifts to leave a grainy impression."
   },
   "technique": {
-    "zh": "全部用 element.animate() 串成 async 时间线。光标的中间关键帧偏上形成弧线；印章用 ease-in 曲线（越落越快）从 scale(2.6) rotate(-26deg) 到 scale(1) rotate(-12deg)，mix-blend-mode: multiply 像印泥。",
-    "en": "One async timeline of element.animate() calls. A raised middle keyframe gives the cursor its arc; the stamp falls with an ease-in curve from scale(2.6) rotate(-26deg) to scale(1) rotate(-12deg), multiply-blended like ink."
+    "zh": "一条 async WAAPI 时间线。距离感全靠影子：下落时 scale 1.5→1、blur 1.4rem→.35rem、opacity 0→.26。印记用 SVG feTurbulence 生成噪声，再用 feColorMatrix 把噪声变成 alpha 遮罩抠掉一些小点，加 mix-blend-mode: multiply 就像印泥。",
+    "en": "One async WAAPI timeline. Depth comes from the shadow: scale 1.5→1, blur 1.4rem→.35rem, opacity 0→.26 during the fall. The impression uses SVG feTurbulence noise turned into an alpha mask by feColorMatrix to knock out specks, multiplied like real ink."
   },
   "tags": [
-    "cursor",
     "stamp",
     "approve",
-    "盖章"
+    "cursor",
+    "demo",
+    "盖章",
+    "审批"
   ],
   "tech": [
     "CSS",
     "JS",
-    "WAAPI"
+    "WAAPI",
+    "SVG filter"
   ],
   "params": [
+    {
+      "name": "--drop",
+      "default": "460ms",
+      "desc": {
+        "zh": "印章下落时长（ease-in）",
+        "en": "stamp drop (ease-in)"
+      }
+    },
+    {
+      "name": "--squash",
+      "default": ".84",
+      "desc": {
+        "zh": "落地时纵向压扁到多少",
+        "en": "vertical squash on impact"
+      }
+    },
+    {
+      "name": "--rock",
+      "default": "4deg",
+      "desc": {
+        "zh": "压住后左右碾的角度",
+        "en": "rock angle while pressed"
+      }
+    },
     {
       "name": "--travel",
       "default": "900ms",
@@ -35,33 +62,17 @@
       }
     },
     {
-      "name": "--press",
-      "default": "120ms",
-      "desc": {
-        "zh": "按下时长",
-        "en": "press duration"
-      }
-    },
-    {
-      "name": "--slam",
-      "default": "260ms",
-      "desc": {
-        "zh": "印章落下时长",
-        "en": "stamp slam duration"
-      }
-    },
-    {
       "name": "--accent",
-      "default": "#ff5a36",
+      "default": "#e8452c",
       "desc": {
-        "zh": "印章颜色",
-        "en": "stamp color"
+        "zh": "印泥颜色",
+        "en": "ink color"
       }
     }
   ],
   "adapt": {
-    "zh": "印章文字改 .stamp 里的两行；光标目标是 #btn，换成任何元素都行。",
-    "en": "Change the two lines inside .stamp; the cursor targets #btn, point it at any element."
+    "zh": "印章文字改 .mark 里的两行；做审批、签收、打卡完成的反馈都合适。不要光标就把第 1 步删掉。",
+    "en": "Edit the two lines in .mark; works for approvals, sign-offs, check-ins. Drop step 1 if you do not need the cursor."
   },
   "files": [
     "index.html",
@@ -69,5 +80,5 @@
     "script.js"
   ],
   "preview": "preview.png",
-  "posterAt": 1950
+  "posterAt": 2250
 }

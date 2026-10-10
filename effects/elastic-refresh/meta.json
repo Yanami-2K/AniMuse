@@ -1,0 +1,82 @@
+{
+  "slug": "elastic-refresh",
+  "order": 8,
+  "category": "loader",
+  "name": {
+    "zh": "橡皮膜下拉刷新",
+    "en": "Elastic Pull-to-Refresh"
+  },
+  "summary": {
+    "zh": "往下拉，顶部像一层橡皮膜被手指拽出一个包，手往哪边偏包就往哪边鼓，越拉越难拉。过了阈值松手，膜弹回来晃两下变成加载条，新消息从 0 高度“挤”进列表。",
+    "en": "Pull down and the top behaves like a rubber membrane bulging under your finger, following it sideways and resisting more the further you go. Release past the threshold and it springs back, wobbles into a loading bar, and the new message squeezes into the list."
+  },
+  "technique": {
+    "zh": "膜是一条 SVG path：两侧高度 e、手指处鼓到 d，用两段三次贝塞尔连起来。拉动距离过一遍橡皮筋函数 M·(1 − e^(−x/M))。松手后 d 和 e 各挂一个弹簧，刚度不同，所以中间和两边不同步，看起来在晃。",
+    "en": "The membrane is one SVG path: edges at height e, bulging to d under the finger, joined by two cubic Béziers. Pull distance goes through a rubber-band curve M·(1 − e^(−x/M)). After release d and e each ride their own spring with different stiffness, so the middle and the edges wobble out of sync."
+  },
+  "tags": [
+    "pull",
+    "refresh",
+    "elastic",
+    "mobile",
+    "下拉",
+    "刷新"
+  ],
+  "tech": [
+    "SVG",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--threshold",
+      "default": "5.2rem",
+      "desc": {
+        "zh": "拉过这个距离松手才刷新",
+        "en": "pull distance needed to refresh"
+      }
+    },
+    {
+      "name": "--max-pull",
+      "default": "9rem",
+      "desc": {
+        "zh": "最多拉到多深",
+        "en": "max pull depth"
+      }
+    },
+    {
+      "name": "--bar",
+      "default": "3.4rem",
+      "desc": {
+        "zh": "加载时膜的高度",
+        "en": "membrane height while loading"
+      }
+    },
+    {
+      "name": "--wobble",
+      "default": "9",
+      "desc": {
+        "zh": "回弹阻尼，越小越晃",
+        "en": "wobble damping"
+      }
+    },
+    {
+      "name": "--membrane",
+      "default": "#ff5a36",
+      "desc": {
+        "zh": "膜的颜色",
+        "en": "membrane color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "把 done() 换成你的数据请求回调；膜和列表是分开的两层，列表可以是任何滚动容器（记得只在 scrollTop 为 0 时接管下拉）。",
+    "en": "Replace done() with your fetch callback. Membrane and list are separate layers, so the list can be any scroller (only take over the pull when scrollTop is 0)."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1600
+}

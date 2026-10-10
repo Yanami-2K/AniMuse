@@ -1,0 +1,83 @@
+{
+  "slug": "lanyard-badge",
+  "order": 4,
+  "category": "physics",
+  "name": {
+    "zh": "挂绳工牌",
+    "en": "Lanyard Badge"
+  },
+  "summary": {
+    "zh": "一张挂在绳子上的工牌，可以抓着甩。绳子会松、会绷紧，工牌荡起来时还会因为横向速度轻轻转向侧面，反光跟着走。",
+    "en": "A staff badge on a lanyard you can grab and swing. The strap goes slack and snaps taut, and the badge turns slightly sideways with its horizontal speed, the sheen sliding with it."
+  },
+  "technique": {
+    "zh": "Verlet 积分：每个点只记当前和上一帧位置；每步把相邻点拉回固定距离（迭代 18 次），绳段只在被拉长时约束，所以能松弛。工牌是两个点（夹子 + 重心）连成的刚杆，重心质量更大；角度 = 两点连线方向。绳子画在 canvas 上，工牌是 DOM。",
+    "en": "Verlet integration: each point stores only its current and previous position; each step pulls neighbours back to rest length (18 iterations), and strap links only constrain when stretched so it can go slack. The badge is a rigid stick of two points (clip + heavier centre of mass); its angle is the stick direction. Strap on canvas, badge in the DOM."
+  },
+  "tags": [
+    "verlet",
+    "rope",
+    "drag",
+    "physics",
+    "绳子",
+    "物理"
+  ],
+  "tech": [
+    "Canvas",
+    "CSS",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--rope",
+      "default": "6.4rem",
+      "desc": {
+        "zh": "绳长",
+        "en": "strap length"
+      }
+    },
+    {
+      "name": "--gravity",
+      "default": "150",
+      "desc": {
+        "zh": "重力（rem/s²）",
+        "en": "gravity (rem/s²)"
+      }
+    },
+    {
+      "name": "--air",
+      "default": ".996",
+      "desc": {
+        "zh": "空气阻力，越小停得越快",
+        "en": "air drag (lower settles faster)"
+      }
+    },
+    {
+      "name": "--segments",
+      "default": "14",
+      "desc": {
+        "zh": "绳子分几段",
+        "en": "strap segments"
+      }
+    },
+    {
+      "name": "--strap",
+      "default": "#ff5a36",
+      "desc": {
+        "zh": "挂绳颜色",
+        "en": "strap color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "工牌里的内容就是普通 HTML，随便换；挂件换成吊牌、钥匙扣也一样，只要改 B 点到 A 点的距离。",
+    "en": "The badge is plain HTML; swap it for a tag or keychain and adjust the A→B distance."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2300
+}
