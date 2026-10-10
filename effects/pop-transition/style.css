@@ -1,0 +1,36 @@
+/* Pop Shape Transition — 换页时一波圆形、方块、花形从角落“啵啵啵”弹出来铺满屏幕，底下偷偷换页，再按同样的顺序缩回去；新标题一个字一个字跳进来 */
+:root {
+  --ink: #3a3346;
+  --cell: 7;              /* 横向大约铺几格（越大形状越小、越碎） */
+  --stagger: 26ms;        /* 相邻格子的错峰，决定波的速度 */
+  --pop: 460ms;           /* 单个形状弹出的时长 */
+  --hold: 2600ms;         /* 每页停留多久再自动翻 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(3.333vw, 4.444vh); }
+body { margin: 0; height: 100vh; overflow: hidden; color: var(--ink); -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif; }
+.page { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; background: var(--bg, #ffe9a8); transition: none; }
+.page::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(58, 51, 70, .08) .12rem, transparent .14rem); background-size: 1.6rem 1.6rem; pointer-events: none; }
+.kicker { position: relative; margin: 0 0 .3rem; font: 800 .8rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .3em; padding-left: .3em; opacity: .55; }
+.title { position: relative; margin: 0; display: flex; gap: .05em; font-size: 7.2rem; line-height: .95; font-weight: 900; letter-spacing: -.02em; }
+.title span { display: inline-block; color: #fff; -webkit-text-stroke: .26rem var(--ink); paint-order: stroke fill; text-shadow: .22rem .3rem 0 var(--ink); transform-origin: 50% 100%; }
+.title span:nth-child(2n) { color: var(--hi, #ff8fab); }
+.sub { position: relative; margin: 1rem 0 1.4rem; font-size: 1.3rem; font-weight: 800; letter-spacing: .12em; }
+.next { position: relative; font-family: inherit; font-weight: 800; font-size: .85rem; line-height: 1; color: var(--ink); background: #fff; border: .18rem solid var(--ink); border-radius: 2rem; padding: .6rem 1.1rem; cursor: pointer; box-shadow: 0 .22rem 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+.next:hover { transform: translateY(-.1rem); box-shadow: 0 .32rem 0 var(--ink); }
+.next:active { transform: translateY(.18rem); box-shadow: 0 .04rem 0 var(--ink); }
+.next:focus-visible { outline: .2rem solid var(--ink); outline-offset: .2rem; }
+/* 角落的装饰形状，每页不同 */
+.deco { position: absolute; inset: 0; pointer-events: none; }
+.deco i { position: absolute; border: .2rem solid var(--ink); background: var(--c); box-shadow: .16rem .22rem 0 var(--ink); }
+.d-circle { border-radius: 50%; }
+.d-pill { border-radius: 2rem; }
+.d-tri { border: 0 !important; box-shadow: none !important; background: none !important; }
+.d-tri svg { width: 100%; height: 100%; overflow: visible; }
+/* 转场层：一格一个形状，大小是格子的 1.5 倍，保证长满后没有缝 */
+.wipe { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.wipe i { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); background: var(--fill); transform: scale(0); will-change: transform; }
+.wipe .circle { border-radius: 50%; }
+.wipe .square { border-radius: 26%; }
+.wipe .flower { border-radius: 50% 0; }

@@ -1,0 +1,79 @@
+{
+  "slug": "agent-preview",
+  "order": 17,
+  "category": "card",
+  "name": {
+    "zh": "导航里回答 Agent",
+    "en": "Agent Preview Card"
+  },
+  "summary": {
+    "zh": "侧边栏里的 Agent 冒了个蓝点等你回话。悬停弹出深色卡片，直接在卡片里一步步回答（单选、多选、文字），卡片高度跟着每一步的内容弹簧伸缩；提交后按钮变成对勾，卡片收回导航项，蓝点变绿消失。",
+    "en": "An agent in the sidebar pings you with a blue dot. Hover to open a dark card and answer its questions right there (single choice, multi-select, free text); the card’s height springs to fit each step. On submit the button morphs into a check, the card tucks back into the nav item and the dot turns green and fades."
+  },
+  "technique": {
+    "zh": "高度单独用 JS 弹簧动（ResizeObserver 量出每一步的真实高度），内容用 WAAPI 交叉淡化 + 方向滑动（前进从右进、后退从左进）。头部和底部固定，Back 按钮和 Next/Submit 文案预留宽度，所以切换不跳。",
+    "en": "Height is animated on its own JS spring (ResizeObserver measures each step’s natural height); content crossfades with a directional WAAPI slide (forward enters from the right, back from the left). Header and footer stay pinned and the Back / Next / Submit labels reserve their space, so nothing jumps."
+  },
+  "tags": [
+    "popover",
+    "agent",
+    "form",
+    "spring height",
+    "卡片"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--k",
+      "default": "420",
+      "desc": {
+        "zh": "高度弹簧刚度",
+        "en": "height spring stiffness"
+      }
+    },
+    {
+      "name": "--c",
+      "default": "36",
+      "desc": {
+        "zh": "高度弹簧阻尼",
+        "en": "height spring damping"
+      }
+    },
+    {
+      "name": "--slide",
+      "default": "1.1rem",
+      "desc": {
+        "zh": "换题时内容横向滑动距离",
+        "en": "slide distance between steps"
+      }
+    },
+    {
+      "name": "--accent",
+      "default": "#3b82f6",
+      "desc": {
+        "zh": "提醒点 / “等你确认”的颜色",
+        "en": "attention dot color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "任何“需要用户补一句话”的异步任务都能用：审批、表单补全、Agent 追问。",
+    "en": "Any async task that needs a quick answer: approvals, missing form fields, agent follow-ups."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 3900,
+  "credit": {
+    "kind": "idea",
+    "author": "Mariana Castilho (Profound)",
+    "url": "https://x.com/mrncst/status/2107936011560837129"
+  }
+}

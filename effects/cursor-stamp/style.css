@@ -3,11 +3,10 @@
   --bg: #f4efe6;
   --ink: #1c1a21;
   --accent: #e8452c;      /* 印泥颜色 */
-  --wood: #c98b55;        /* 章身木头色 */
-  --travel: 900ms;        /* 光标移动时长 */
-  --drop: 460ms;          /* 印章下落时长（ease-in，越落越快） */
-  --squash: .84;          /* 落地时章身纵向压扁到多少 */
-  --rock: 4deg;           /* 压住后左右碾的角度 */
+    --travel: 900ms;        /* 光标移动时长 */
+  --drop: 420ms;          /* 印章下落时长（ease-in，越落越快） */
+  --squash: .55;          /* 落地时海绵垫被压到原厚度的多少 */
+  --rock: 2.5deg;           /* 压住后左右碾的角度 */
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: min(3.9vw, 5.2vh); }
@@ -36,17 +35,15 @@ footer { display: flex; justify-content: space-between; align-items: center; mar
   border: .2rem solid var(--accent); border-radius: .5rem; box-shadow: inset 0 0 0 .16rem #fff, inset 0 0 0 .3rem var(--accent);
   color: var(--accent); display: grid; place-content: center; text-align: center; gap: .15rem;
   filter: url(#grain); mix-blend-mode: multiply; opacity: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.72), #000 38%, #000 72%, rgba(0,0,0,.86)); mask-image: linear-gradient(100deg, rgba(0,0,0,.72), #000 38%, #000 72%, rgba(0,0,0,.86));
 }
 .mark span { font-size: 1.45rem; font-weight: 900; letter-spacing: .2em; line-height: 1; padding-left: .2em; }
 .mark small { font: 800 .46rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .2em; }
 .specks { position: absolute; left: 50%; top: 46%; width: 0; height: 0; opacity: 0; pointer-events: none;
   box-shadow: -5.4rem -1.4rem 0 .08rem var(--accent), 5.2rem 1.6rem 0 .05rem var(--accent), 4.9rem -2rem 0 .04rem var(--accent), -4.6rem 2.1rem 0 .06rem var(--accent), 1rem 2.9rem 0 .03rem var(--accent); }
-.shadow { position: absolute; left: 50%; top: 46%; width: 9.4rem; height: 4.4rem; margin: -2rem 0 0 -4.7rem; border-radius: 1rem; background: rgba(40, 25, 10, .9); opacity: 0; pointer-events: none; transform: rotate(-8deg); }
-/* 章：圆把手 + 脖子 + 木块 + 红色橡胶底，正面看 */
-.tool { position: absolute; left: 50%; top: 46%; width: 9rem; height: 9rem; margin: -6.6rem 0 0 -4.5rem; transform-origin: 50% 100%; opacity: 0; pointer-events: none; will-change: transform; z-index: 3; }
-.tool i { position: absolute; left: 50%; border: .14rem solid var(--ink); }
-.knob { top: 0; width: 4rem; height: 3.6rem; margin-left: -2rem; border-radius: 50% 50% 46% 46%; background: radial-gradient(circle at 34% 28%, #f0b98a, #a8653a 70%); }
-.neck { top: 3.3rem; width: 1.8rem; height: 1.9rem; margin-left: -.9rem; background: linear-gradient(90deg, #9a5c34, #d39a68 45%, #9a5c34); border-top: 0; border-bottom: 0; }
-.block { top: 5.1rem; width: 9rem; height: 2.6rem; margin-left: -4.5rem; border-radius: .5rem; background: linear-gradient(#e2a874, var(--wood) 40%, #a8693c); }
-.rubber { top: 7.55rem; width: 8.6rem; height: .9rem; margin-left: -4.3rem; border-radius: 0 0 .35rem .35rem; background: var(--accent); border-top: 0; }
+.shadow { position: absolute; left: 50%; top: 46%; width: 9.2rem; height: 4.2rem; margin: -2rem 0 0 -4.6rem; border-radius: .6rem; background: rgba(40, 25, 10, .9); opacity: 0; pointer-events: none; transform: rotate(-8deg); }
+/* 章：SVG 画的实木橡皮章；底边对齐印记底边，transform-origin 在印面上 */
+.tool { position: absolute; left: 50%; top: 46%; width: 9.6rem; height: 9.6rem; margin: -7.3rem 0 0 -4.8rem; transform-origin: 50% 98%; opacity: 0; pointer-events: none; will-change: transform; z-index: 3; overflow: visible;
+  filter: drop-shadow(0 .1rem .12rem rgba(40, 25, 10, .18)); }
+.t-pad { transform-box: fill-box; transform-origin: 50% 100%; }
 .cursor { position: absolute; left: 0; top: 0; width: 1.4rem; height: 1.4rem; filter: drop-shadow(0 .15rem .2rem rgba(0, 0, 0, .18)); transform-origin: 4px 3px; will-change: transform; z-index: 4; }

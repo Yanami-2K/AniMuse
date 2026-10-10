@@ -1,0 +1,90 @@
+/* Agent Preview Card — 侧边栏里的 Agent 冒了个蓝点等你回话；悬停弹出深色卡片，直接在卡片里一步步回答，高度跟着每一步的内容用弹簧伸缩 */
+:root {
+  --bg: #ffffff;
+  --side: #f7f7f6;
+  --accent: #3b82f6;       /* 提醒点 / “等你确认”的蓝 */
+  --done: #22c55e;         /* 提交后变绿 */
+  --card: #161616;
+  --line: #2a2a2a;
+  --k: 420;                /* 高度弹簧刚度 */
+  --c: 36;                 /* 高度弹簧阻尼 */
+  --slide: 1.1rem;         /* 换题时内容横向滑动距离 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(3.333vw, 4.444vh); }
+body { margin: 0; height: 100vh; overflow: hidden; background: var(--bg); color: #1c1c1c; -webkit-font-smoothing: antialiased;
+  font-family: Inter, ui-sans-serif, -apple-system, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif; }
+button { font: inherit; color: inherit; }
+.app { position: absolute; inset: 0; display: grid; grid-template-columns: 10.4rem 1fr; }
+.side { background: var(--side); border-right: 1px solid #ececea; padding: 1rem .55rem; display: flex; flex-direction: column; gap: .1rem; }
+.cap { display: flex; justify-content: space-between; margin: 0 .5rem .5rem; font-size: .62rem; font-weight: 600; color: #8b8b88; }
+.item { position: relative; display: flex; align-items: center; gap: .45rem; height: 1.75rem; padding: 0 .5rem; border: 0; border-radius: .45rem; background: none; font-size: .68rem; text-align: left; cursor: pointer; white-space: nowrap; color: #3b3b39; transition: background-color .1s; }
+.item:hover, .item[aria-expanded="true"] { background: #ececea; }
+.item span { overflow: hidden; text-overflow: ellipsis; }
+.more span { color: #8b8b88; }
+.ic { flex: none; width: .8rem; height: .8rem; fill: none; stroke: #e0703a; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ic.g { stroke: #2a9d6b; }
+.item:nth-of-type(2) .ic { stroke: #4f7cf7; }
+/* 提醒点：本体 + 一圈向外扩散的光环 */
+.dot { position: relative; flex: none; margin-left: auto; width: .42rem; height: .42rem; border-radius: 50%; background: var(--accent); transition: background-color .3s, opacity .4s, transform .4s; }
+.dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; animation: aura 2s ease-out infinite; }
+@keyframes aura { 0% { transform: scale(1); opacity: .55; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
+.dot.ok { background: var(--done); }
+.dot.ok::after { animation: none; opacity: 0; }
+.dot.gone { opacity: 0; transform: scale(.3); }
+.main { padding: 2.2rem 2.4rem; display: flex; flex-direction: column; gap: .7rem; }
+.main i { display: block; height: .55rem; width: var(--w); border-radius: 1rem; background: #f1f1ef; }
+.main b { display: block; height: 5rem; margin: .5rem 0; border-radius: .8rem; background: #f6f6f4; border: 1px solid #efefed; }
+/* 深色卡片 */
+.card {
+  position: fixed; left: 0; top: 0; width: 15.6rem; border-radius: 1.1rem; background: var(--card); border: 1px solid var(--line); color: #ededed; font-size: .62rem;
+  box-shadow: 0 1.6rem 3.4rem -.8rem rgba(0, 0, 0, .45), 0 .3rem .8rem rgba(0, 0, 0, .18); transform-origin: 0 1.1rem; z-index: 5; overflow: hidden;
+}
+.card[hidden] { display: block; visibility: hidden; pointer-events: none; }
+.head { padding: .8rem .85rem .7rem; border-bottom: 1px solid var(--line); }
+.row1 { display: flex; justify-content: space-between; align-items: center; gap: .4rem; font-size: .66rem; }
+.need { display: inline-flex; align-items: center; gap: .25rem; padding: .18rem .45rem; border-radius: 1rem; background: rgba(59, 130, 246, .16); color: #7fb0ff; font-size: .56rem; font-weight: 600; white-space: nowrap; transition: background-color .3s, color .3s; }
+.need i { width: .32rem; height: .32rem; border-radius: 50%; background: currentColor; }
+.need.ok { background: rgba(34, 197, 94, .16); color: #6ee7a0; }
+.ctx { margin: .45rem 0 .55rem; color: #9a9a9a; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.meta { display: flex; justify-content: space-between; color: #9a9a9a; font-size: .56rem; }
+.meta span { display: inline-flex; align-items: center; gap: .3rem; }
+.ic.o { width: .7rem; height: .7rem; }
+.who i { display: grid; place-items: center; width: .85rem; height: .85rem; border-radius: 50%; background: #3a3a3a; color: #ddd; font-size: .45rem; font-style: normal; font-weight: 700; }
+.body { padding: .7rem .55rem .2rem; }
+.qs { display: flex; justify-content: space-between; margin: 0 .3rem .45rem; color: #8a8a8a; font-size: .56rem; }
+.qs b { color: #ededed; font-weight: 600; }
+/* 高度单独用弹簧动画；里面的步骤绝对定位，进出时交叉淡化 + 横向滑动 */
+.viewport { position: relative; overflow: hidden; }
+.step { position: absolute; left: 0; right: 0; top: 0; padding: 0 0 .2rem; }
+.step h3 { margin: 0 .3rem .5rem; font-size: .68rem; font-weight: 600; color: #f2f2f2; }
+.opt { display: flex; align-items: center; gap: .5rem; width: 100%; height: 1.42rem; padding: 0 .3rem; border: 0; border-radius: .5rem; background: transparent; color: #d9d9d9; text-align: left; cursor: pointer; transition: background-color .1s; white-space: nowrap; overflow: hidden; }
+.opt:hover, .opt.hl { background: #232323; }
+.opt .num { flex: none; display: grid; place-items: center; width: .95rem; height: .95rem; border-radius: 50%; background: #2c2c2c; color: #b5b5b5; font-size: .5rem; font-weight: 600; transition: background-color .12s, color .12s; }
+.opt.on .num { background: #fff; color: #111; }
+.opt .box { flex: none; display: grid; place-items: center; width: .85rem; height: .85rem; border-radius: .22rem; border: 1px solid #4a4a4a; transition: background-color .12s, border-color .12s; }
+.opt .box svg { width: .6rem; height: .6rem; fill: none; stroke: #111; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.5); transition: opacity .12s, transform .18s cubic-bezier(.3, 1.6, .5, 1); }
+.opt.on .box { background: #fff; border-color: #fff; }
+.opt.on .box svg { opacity: 1; transform: none; }
+.opt.other { color: #8a8a8a; }
+.opt .pen { flex: none; width: .95rem; text-align: center; color: #777; }
+textarea { display: block; width: calc(100% - .4rem); margin: 0 .2rem; height: 3.6rem; resize: none; border-radius: .6rem; border: 1px solid #333; background: #1d1d1d; color: #eee; font: inherit; font-size: .62rem; line-height: 1.5; padding: .45rem .55rem; outline: none; transition: border-color .15s; }
+textarea:focus { border-color: #555; }
+textarea::placeholder { color: #6b6b6b; }
+.foot { display: flex; align-items: center; gap: .3rem; padding: .45rem .7rem .7rem; }
+.sp { flex: 1; }
+.ghost { border: 0; background: none; color: #9a9a9a; padding: .3rem .45rem; border-radius: .45rem; cursor: pointer; font-size: .6rem; transition: background-color .1s, color .1s, opacity .15s; }
+.ghost:hover { background: #232323; color: #ddd; }
+.back.off { opacity: 0; pointer-events: none; }  /* 只是隐藏，不移除：位置一直留着，第二步出现时不会挤动别的按钮 */
+.primary { position: relative; display: grid; place-items: center; place-content: center; height: 1.45rem; padding: 0 .7rem; border: 0; border-radius: 1rem; background: #fff; color: #111; font-size: .6rem; font-weight: 600; cursor: pointer; transition: transform .1s; overflow: hidden; }
+.primary:active { transform: scale(.96); }
+.primary .lb { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; transition: opacity .16s, transform .2s; }
+.primary kbd { font: inherit; font-size: .52rem; padding: .05rem .25rem; border-radius: .25rem; background: #e8e8e8; color: #555; }
+.primary .sb { opacity: 0; transform: translateY(.5rem); }
+.primary.last .nx { opacity: 0; transform: translateY(-.5rem); }
+.primary.last .sb { opacity: 1; transform: none; }
+.primary .ok { grid-area: 1 / 1; width: .8rem; height: .8rem; fill: none; stroke: #111; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 16; stroke-dashoffset: 16; }
+.primary.done .lb { opacity: 0; transform: scale(.6); }
+.cursor { position: fixed; left: 0; top: 0; width: 1.05rem; height: 1.05rem; filter: drop-shadow(0 .12rem .18rem rgba(0, 0, 0, .2)); opacity: 0; pointer-events: none; z-index: 9; transition: opacity .25s; }
+.cursor.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .dot::after { animation: none; } .cursor { display: none; } }

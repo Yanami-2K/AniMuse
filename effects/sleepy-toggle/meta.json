@@ -1,0 +1,87 @@
+{
+  "slug": "sleepy-toggle",
+  "order": 12,
+  "category": "micro",
+  "name": {
+    "zh": "爱睡觉的开关",
+    "en": "Sleepy Toggle"
+  },
+  "summary": {
+    "zh": "开关的圆钮是个会睡觉的小团子。打开时被叫醒：吓一跳、蓄力，弹到另一头变成太阳，天也跟着亮；关上时打个哈欠，慢吞吞挪回去继续睡，头上冒 Zzz。",
+    "en": "The toggle knob is a sleepy little blob. Switch it on and it startles awake, winds up and springs across to become the sun as the sky brightens; switch it off and it yawns, shuffles back slowly and dozes off with a trail of Zzz."
+  },
+  "technique": {
+    "zh": "全部是 WAAPI。位移走弹簧：把阻尼振动采样成 CSS linear() 缓动；身体的挤压拉伸（蓄力压扁 → 空中拉长 → 落地回弹）手写关键帧。白天用 clip-path 圆从圆钮位置扩散出来，关灯时再缩回去。表情是三组 SVG 眼睛切换显隐。",
+    "en": "All WAAPI. Travel uses a spring: a damped oscillation sampled into a CSS linear() easing; the squash & stretch (wind-up squash → mid-air stretch → landing rebound) is hand-keyed. Daylight is a clip-path circle that grows out of the knob and shrinks back at night. Expressions swap between three SVG eye sets."
+  },
+  "tags": [
+    "toggle",
+    "switch",
+    "character",
+    "spring",
+    "开关"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--wake",
+      "default": "520ms",
+      "desc": {
+        "zh": "醒来那一下的总时长（蓄力 + 弹过去）",
+        "en": "wake duration (wind-up + spring)"
+      }
+    },
+    {
+      "name": "--doze",
+      "default": "900ms",
+      "desc": {
+        "zh": "犯困挪回去的时长，故意慢",
+        "en": "doze-off duration, slow on purpose"
+      }
+    },
+    {
+      "name": "--bounce",
+      "default": ".5",
+      "desc": {
+        "zh": "弹簧回弹程度（0 不弹 ~ .8 很弹）",
+        "en": "spring bounciness (0 – .8)"
+      }
+    },
+    {
+      "name": "--sun",
+      "default": "#ffd45c",
+      "desc": {
+        "zh": "醒来后的颜色",
+        "en": "awake color"
+      }
+    },
+    {
+      "name": "--night",
+      "default": "#4a4685",
+      "desc": {
+        "zh": "夜晚轨道颜色",
+        "en": "night track color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "任何开关都能换上：深色模式、通知、静音。换角色只要换 .face 里的 SVG。",
+    "en": "Works for any switch: dark mode, notifications, mute. Swap the SVG inside .face for your own character."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1900,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://x.com/yui540"
+  }
+}

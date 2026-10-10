@@ -7,12 +7,12 @@
     "en": "Rubber Stamp Approve"
   },
   "summary": {
-    "zh": "光标点了 Approve，一枚真的橡皮章从画面外落下：影子从又大又虚收成又小又实，落地压扁、纸被压一下、溅出几粒印泥，压着左右碾一下，抬起来留下带颗粒感的印。",
-    "en": "The cursor clicks Approve and a real rubber stamp drops in: its shadow shrinks from big and blurry to small and sharp, it squashes on impact, the paper dips, a few ink specks fly, it rocks side to side, and lifts to leave a grainy impression."
+    "zh": "光标点了 Approve，一枚真的橡皮章从画面外落下：影子从又大又虚收成又小又实，落地时海绵垫被压薄、纸被压一下、溅出几粒印泥，压着左右碾一下，抬起来留下带颗粒感的印。",
+    "en": "The cursor clicks Approve and a real rubber stamp drops in: its shadow shrinks from big and blurry to small and sharp, its foam pad compresses on impact, the paper dips, a few ink specks fly, it rocks side to side, and lifts to leave a grainy impression."
   },
   "technique": {
-    "zh": "一条 async WAAPI 时间线。距离感全靠影子：下落时 scale 1.5→1、blur 1.4rem→.35rem、opacity 0→.26。印记用 SVG feTurbulence 生成噪声，再用 feColorMatrix 把噪声变成 alpha 遮罩抠掉一些小点，加 mix-blend-mode: multiply 就像印泥。",
-    "en": "One async WAAPI timeline. Depth comes from the shadow: scale 1.5→1, blur 1.4rem→.35rem, opacity 0→.26 during the fall. The impression uses SVG feTurbulence noise turned into an alpha mask by feColorMatrix to knock out specks, multiplied like real ink."
+    "zh": "一条 async WAAPI 时间线。距离感全靠影子：下落时 scale 1.5→1、blur 1.4rem→.35rem、opacity 0→.26。印记用 SVG feTurbulence 生成噪声，再用 feColorMatrix 把噪声变成 alpha 遮罩抠掉一些小点，加 mix-blend-mode: multiply 就像印泥。章本体是一张 SVG：车削木柄（细腰 + 圆头 + 黄铜箍）、有厚度的木块、海绵垫和红色橡胶面；落地时只有海绵垫 scaleY 被压，章身按压掉的高度往下沉，木头本身从不变形。",
+    "en": "One async WAAPI timeline. Depth comes from the shadow: scale 1.5→1, blur 1.4rem→.35rem, opacity 0→.26 during the fall. The impression uses SVG feTurbulence noise turned into an alpha mask by feColorMatrix to knock out specks, multiplied like real ink. The stamp itself is one SVG: a turned-wood handle (slim waist, round knob, brass ferrule), a block with real thickness, a foam pad and a red rubber face; on impact only the pad scales down in Y and the body sinks by exactly that amount, so the wood never deforms."
   },
   "tags": [
     "stamp",
@@ -31,23 +31,23 @@
   "params": [
     {
       "name": "--drop",
-      "default": "460ms",
+      "default": "420ms",
       "desc": {
-        "zh": "印章下落时长（ease-in）",
+        "zh": "印章下落时长（ease-in，越落越快）",
         "en": "stamp drop (ease-in)"
       }
     },
     {
       "name": "--squash",
-      "default": ".84",
+      "default": ".55",
       "desc": {
-        "zh": "落地时纵向压扁到多少",
-        "en": "vertical squash on impact"
+        "zh": "落地时海绵垫被压到原厚度的多少（木头本身不变形）",
+        "en": "how thin the foam pad gets on impact (the wood never deforms)"
       }
     },
     {
       "name": "--rock",
-      "default": "4deg",
+      "default": "2.5deg",
       "desc": {
         "zh": "压住后左右碾的角度",
         "en": "rock angle while pressed"

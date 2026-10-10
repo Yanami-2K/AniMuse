@@ -15,9 +15,9 @@
 
 | 参数 | 默认值 | 说明 |
 | --- | --- | --- |
-| `--drop` | `460ms` | 印章下落时长（ease-in） |
-| `--squash` | `.84` | 落地时纵向压扁到多少 |
-| `--rock` | `4deg` | 压住后左右碾的角度 |
+| `--drop` | `420ms` | 印章下落时长（ease-in，越落越快） |
+| `--squash` | `.55` | 落地时海绵垫被压到原厚度的多少（木头本身不变形） |
+| `--rock` | `2.5deg` | 压住后左右碾的角度 |
 | `--travel` | `900ms` | 光标移动时长 |
 | `--accent` | `#e8452c` | 印泥颜色 |
 
@@ -31,15 +31,15 @@ CSS 变量在 `style.css` 顶部的 `:root` 里，`data-*` 在 `index.html` 上�
 
 ---
 
-**EN** — The cursor clicks Approve and a real rubber stamp drops in: its shadow shrinks from big and blurry to small and sharp, it squashes on impact, the paper dips, a few ink specks fly, it rocks side to side, and lifts to leave a grainy impression.
+**EN** — The cursor clicks Approve and a real rubber stamp drops in: its shadow shrinks from big and blurry to small and sharp, its foam pad compresses on impact, the paper dips, a few ink specks fly, it rocks side to side, and lifts to leave a grainy impression.
 
 One async WAAPI timeline. Depth comes from the shadow: scale 1.5→1, blur 1.4rem→.35rem, opacity 0→.26 during the fall. The impression uses SVG feTurbulence noise turned into an alpha mask by feColorMatrix to knock out specks, multiplied like real ink.
 
 | Param | Default | Notes |
 | --- | --- | --- |
-| `--drop` | `460ms` | stamp drop (ease-in) |
-| `--squash` | `.84` | vertical squash on impact |
-| `--rock` | `4deg` | rock angle while pressed |
+| `--drop` | `420ms` | stamp drop (ease-in) |
+| `--squash` | `.55` | how thin the foam pad gets on impact (the wood never deforms) |
+| `--rock` | `2.5deg` | rock angle while pressed |
 | `--travel` | `900ms` | cursor travel time |
 | `--accent` | `#e8452c` | ink color |
 

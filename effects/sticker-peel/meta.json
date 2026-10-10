@@ -1,0 +1,79 @@
+{
+  "slug": "sticker-peel",
+  "order": 15,
+  "category": "physics",
+  "name": {
+    "zh": "揭贴纸",
+    "en": "Sticker Peel"
+  },
+  "summary": {
+    "zh": "从贴纸页上把贴纸一角掀起来（能看到白色背面），整张揭下，甩到笔记本盖子上“啪”地贴住。可以自己拖，没人碰时有根手指在演示。",
+    "en": "Lift a sticker’s corner off the sheet (you can see its white back), peel it off and slap it onto a laptop lid. Drag them yourself; a ghost finger demos it when idle."
+  },
+  "technique": {
+    "zh": "揭角 = 沿折线把贴纸切成两半：正面用 clip-path 去掉折起的那块，背面是同一张图关于折线的镜像，再裁成同一块。折线跟着手指走，拿起时放大一点（离镜头更近），贴上时压扁回弹。",
+    "en": "Peeling = cutting the sticker along a fold line: the front is clipped to remove the folded part; the back is the same art mirrored across the fold line and clipped to that piece. The fold follows the finger; lifting scales up a touch, slapping squashes and rebounds."
+  },
+  "tags": [
+    "sticker",
+    "peel",
+    "drag",
+    "clip-path",
+    "贴纸"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "SVG"
+  ],
+  "params": [
+    {
+      "name": "--size",
+      "default": "5rem",
+      "desc": {
+        "zh": "贴纸尺寸",
+        "en": "sticker size"
+      }
+    },
+    {
+      "name": "--peel",
+      "default": ".4",
+      "desc": {
+        "zh": "掀起多少（相对贴纸尺寸）",
+        "en": "peel amount (of size)"
+      }
+    },
+    {
+      "name": "--lift",
+      "default": "1.14",
+      "desc": {
+        "zh": "拿起来时放大多少",
+        "en": "scale while lifted"
+      }
+    },
+    {
+      "name": "--slap",
+      "default": ".88",
+      "desc": {
+        "zh": "贴上那一下压扁到多少",
+        "en": "squash on slap"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "适合成就、徽章、个性化页面。折线算法是通用的，换成任何 SVG 都能揭。",
+    "en": "Great for achievements, badges or profile pages. The fold maths works with any SVG."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2600,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://x.com/yui540"
+  }
+}

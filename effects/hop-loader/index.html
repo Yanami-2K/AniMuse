@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hop Loader · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage" role="progressbar" aria-label="加载中" data-en-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="stage">
+    <p class="pct"><b id="pct">0</b><small>%</small></p>
+    <div class="track" id="track">
+      <i class="pad"></i>
+      <i class="tile" style="--c:#ffd45c"></i><i class="tile" style="--c:#ff9cb4"></i><i class="tile" style="--c:#8fd3ff"></i><i class="tile" style="--c:#b9a6ff"></i><i class="tile" style="--c:#7ee0b5"></i>
+      <i class="shadow" id="shadow"></i>
+      <div class="hero" id="hero">
+        <div class="body" id="body">
+          <i class="eye l" id="el"></i><i class="eye r" id="er"></i><i class="cheek l"></i><i class="cheek r"></i><i class="mouth" id="mouth"></i>
+          <i class="sweat" id="sweat"></i>
+        </div>
+      </div>
+      <div class="bits" id="bits"></div>
+    </div>
+    <p class="msg" id="msg">LOADING</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

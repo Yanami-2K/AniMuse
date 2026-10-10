@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Jelly Card Stack — 一个 rAF 循环里做弹簧积分；果冻感 = 沿速度方向拉伸、垂直方向压扁
 (function () {
   var css = getComputedStyle(document.documentElement);
@@ -99,7 +102,7 @@
     while (i < p.length - 2 && p[i + 1][0] <= e) i++;
     var a = p[i], b = p[i + 1], k = Math.min(1, Math.max(0, (e - a[0]) / (b[0] - a[0] || 1)));
     var x = a[1] + (b[1] - a[1]) * ease(k), y = a[2] + (b[2] - a[2]) * ease(k), want = !!a[3];
-    finger.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    finger.style.translate = x + 'px ' + y + 'px'; // 用 translate 属性：.down 的 scale 不会把位移一起缩放
     if (want && !script.pressed) { script.pressed = down(x, y, false); finger.classList.add('down'); }
     if (!want && script.pressed) { up(); script.pressed = false; finger.classList.remove('down'); }
     if (script.pressed) move(x, y);

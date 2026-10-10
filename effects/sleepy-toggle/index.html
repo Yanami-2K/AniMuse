@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sleepy Toggle · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage">
+    <button class="toggle" id="toggle" type="button" role="switch" aria-checked="false" aria-label="早安模式" data-en-label="Morning mode">
+      <span class="sky night"><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i><i class="moon"></i></span>
+      <span class="sky day" id="day"><i class="cloud c1"></i><i class="cloud c2"></i><i class="ray"></i></span>
+      <span class="knob" id="knob">
+        <span class="body" id="body">
+          <svg class="face" viewBox="0 0 100 100" aria-hidden="true">
+            <g class="eyes-closed" id="closed"><path d="M27 50 Q34 56 41 50"/><path d="M59 50 Q66 56 73 50"/></g>
+            <g class="eyes-open" id="open"><ellipse cx="34" cy="49" rx="5.4" ry="6.6"/><ellipse cx="66" cy="49" rx="5.4" ry="6.6"/><circle class="hi" cx="35.8" cy="46.4" r="1.7"/><circle class="hi" cx="67.8" cy="46.4" r="1.7"/></g>
+            <g class="eyes-happy" id="happy"><path d="M27 52 Q34 43 41 52"/><path d="M59 52 Q66 43 73 52"/></g>
+            <ellipse class="blush" cx="24" cy="61" rx="6.5" ry="3.6"/><ellipse class="blush" cx="76" cy="61" rx="6.5" ry="3.6"/>
+            <ellipse class="mouth" id="mouth" cx="50" cy="62" rx="3" ry="2.6"/>
+          </svg>
+        </span>
+        <i class="pop" id="pop">!</i>
+      </span>
+    </button>
+    <div class="zzz" id="zzz" aria-hidden="true"><b>z</b><b>z</b><b>Z</b></div>
+    <p class="label"><span id="lab" data-en="Night night">晚安</span></p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reading Environment · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 想法：Paco Coursey 的 Reading environment（https://x.com/pacocoursey/status/1460760109009752066）；代码、文案、声音合成为 AniMuse 原创 -->
+  <canvas class="weather" id="sky" aria-hidden="true"></canvas>
+  <article class="page" id="page">
+    <aside class="meta"><b>cocofhu</b><span>2026.10.11</span></aside>
+    <div class="text">
+      <h1 data-en="Read slowly">慢一点读</h1>
+      <p class="kind">Writing</p>
+      <p data-en="Lately my attention feels chopped into pieces; by the third paragraph of anything I want to be somewhere else. So I gave my page a little <em>weather</em>. Not to look pretty, but to make reading feel like being somewhere.">最近总觉得注意力被切成了碎片，一篇文章读到第三段就想去看别的。于是我给自己的页面加了点<em>天气</em>：不是为了好看，是想让读的时候有一点“在场”的感觉。</p>
+      <p data-en="Instead of adding more features, I wanted the page to <em>feel quieter</em>. Right-click anywhere, pick rain or snow, turn on the sound if you like, and keep reading.">与其再加功能，不如让页面<em>安静一点</em>。在任意位置右键，选下雨或下雪，想听声音就打开，然后接着读。</p>
+      <p data-en="Rain is thin grey lines, snow is small drifting dots; neither gets in the way of the words. When you’re done, turn it off.">雨是细细的灰线，雪是慢慢飘的小点，都不会挡住字。读完了，关掉就好。</p>
+    </div>
+  </article>
+  <button class="fab" id="fab" type="button" aria-haspopup="menu" data-en="☂ Environment">☂ 环境</button>
+
+  <div class="menu" id="menu" role="menu" aria-label="页面菜单" data-en-label="Page menu" hidden>
+    <button class="mi has-sub" id="miEnv" role="menuitem" aria-haspopup="menu" aria-expanded="false" type="button"><span>Environment</span><svg viewBox="0 0 16 16"><path d="M6 4 L10 8 L6 12"/></svg></button>
+    <button class="mi" id="miAudio" role="menuitemcheckbox" aria-checked="false" aria-disabled="true" type="button"><i class="ck"></i><span>Audio</span></button>
+  </div>
+  <div class="menu sub" id="sub" role="menu" aria-label="Environment" hidden>
+    <button class="mi" role="menuitemradio" data-env="rain" aria-checked="false" type="button"><i class="ck"></i><span>Rain</span></button>
+    <button class="mi" role="menuitemradio" data-env="snow" aria-checked="false" type="button"><i class="ck"></i><span>Snow</span></button>
+    <button class="mi" role="menuitemradio" data-env="off" aria-checked="true" type="button"><i class="ck"></i><span>Off</span></button>
+  </div>
+  <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <script src="script.js"></script>
+</body>
+</html>

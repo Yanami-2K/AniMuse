@@ -1,0 +1,41 @@
+/* Reading Environment — 一张安静的阅读页：右键弹出菜单，选下雨或下雪，还能打开用 Web Audio 现场合成的雨声 / 风声 */
+:root {
+  --bg: #ffffff;
+  --ink: #1f1f1f;
+  --muted: #8d8d8d;
+  --rain: 120;             /* 同时下落的雨丝数（按 1000px 宽折算） */
+  --snow: 90;              /* 同时飘着的雪花数 */
+  --fade: 400ms;           /* 切换天气时画面 + 声音的交叉淡化 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: min(2.9vw, 3.9vh); }
+body { margin: 0; height: 100vh; overflow: hidden; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased;
+  font-family: Inter, ui-sans-serif, -apple-system, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif; }
+.weather { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.page { position: relative; display: grid; grid-template-columns: 7rem 1fr; gap: 1.6rem; max-width: 34rem; margin: 0 auto; padding: 3.2rem 2rem 2rem; z-index: 1; }
+.meta { display: flex; flex-direction: column; gap: .25rem; font-size: .78rem; padding-top: .2rem; }
+.meta b { font-weight: 600; }
+.meta span, .kind { color: var(--muted); }
+h1 { margin: 0; font-size: .98rem; font-weight: 650; letter-spacing: -.01em; }
+.kind { margin: .25rem 0 1.4rem; font-size: .78rem; }
+.text p { font-size: .8rem; line-height: 1.75; margin: 0 0 1.05rem; color: #2b2b2b; }
+em { font-family: Georgia, "Songti SC", serif; font-style: italic; }
+/* 菜单：白底、小圆角、柔和投影；出现 80ms（淡入 + 0.96 → 1） */
+.menu { position: fixed; left: 0; top: 0; min-width: 9.2rem; padding: .3rem; border-radius: .6rem; background: #fff; z-index: 10;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 .4rem 1.2rem rgba(0, 0, 0, .1), 0 .1rem .25rem rgba(0, 0, 0, .06); transform-origin: 0 0; }
+.menu[hidden] { display: none; }
+.mi { display: flex; align-items: center; gap: .45rem; width: 100%; height: 1.75rem; padding: 0 .5rem; border: 0; border-radius: .4rem; background: transparent; font: inherit; font-size: .72rem; color: var(--ink); text-align: left; cursor: default; outline: none; transition: background-color .08s; }
+.mi:hover, .mi:focus-visible, .mi.hl, .mi[aria-expanded="true"] { background: #f1f1f1; }
+.mi span { flex: 1; }
+.mi svg { width: .75rem; height: .75rem; fill: none; stroke: #9a9a9a; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ck { flex: none; width: .75rem; height: .75rem; position: relative; }
+.mi[aria-checked="true"] .ck::after { content: ""; position: absolute; left: .22rem; top: .04rem; width: .24rem; height: .48rem; border: solid var(--ink); border-width: 0 .1rem .1rem 0; transform: rotate(45deg); }
+.mi[aria-disabled="true"] { color: #b9b9b9; }
+.mi[aria-disabled="true"]:hover { background: transparent; }
+.fab { position: fixed; right: 1rem; bottom: 1rem; z-index: 3; border: 0; border-radius: 2rem; padding: .45rem .8rem; background: #f3f3f3; color: #6a6a6a; font: inherit; font-size: .68rem; cursor: pointer; transition: background-color .12s; }
+.fab:hover { background: #ebebeb; color: var(--ink); }
+.cursor { position: fixed; left: 0; top: 0; width: 1.05rem; height: 1.05rem; filter: drop-shadow(0 .12rem .18rem rgba(0, 0, 0, .2)); opacity: 0; pointer-events: none; z-index: 20; transition: opacity .25s; }
+.cursor.on { opacity: 1; }
+.ring { position: fixed; width: 1.6rem; height: 1.6rem; margin: -.8rem 0 0 -.8rem; border-radius: 50%; border: 2px solid rgba(0, 0, 0, .25); pointer-events: none; z-index: 19; }
+@media (prefers-reduced-motion: reduce) { .cursor { display: none; } }
+@media (max-width: 520px) { html { font-size: 4.2vw; } .page { grid-template-columns: 1fr; gap: .6rem; padding-top: 2rem; } .meta { flex-direction: row; gap: .6rem; } }

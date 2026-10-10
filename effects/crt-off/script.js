@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // CRT Power Off — 关键帧：正常 → 纵向压成 2px 亮线（同时变亮）→ 横向收成点 → 熄灭；再加旋钮、余辉亮点和开机雪花
 (function () {
   var css = getComputedStyle(document.documentElement);

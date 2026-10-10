@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Lanyard Badge — Verlet：每个点只记“现在”和“上一帧”的位置，速度是两者之差；再反复把相邻点拉回固定距离
 (function () {
   var root = document.documentElement, css = getComputedStyle(root);
@@ -89,7 +92,7 @@
     else if (e < 1.7) { if (held) { release(); held = false; finger.classList.remove('down'); } }
     else if (e < 2.2) { finger.classList.remove('on'); }
     if (e < .75) { hx = fx; hy = fy; }
-    finger.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
+    finger.style.translate = fx + 'px ' + fy + 'px'; // 用 translate 属性：.down 的 scale 不会把位移一起缩放
     if (e > 5.6) demoT0 = null;
   }
   var fx = 0, fy = 0, hx = 0, hy = 0;

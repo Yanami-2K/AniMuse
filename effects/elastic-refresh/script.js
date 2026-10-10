@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Elastic Pull-to-Refresh — 两个弹簧：膜中心深度 d、两侧深度 e；手指横向位置 px 决定鼓包在哪
 (function () {
   var root = document.documentElement, css = getComputedStyle(root);
@@ -9,7 +12,7 @@
   var WOB = num('--wobble');
   var S = { d: 0, vd: 0, td: 0, e: 0, ve: 0, te: 0, x: .5, vx: 0, tx: .5 };
   var mode = 'idle', drag = null;
-  var NEWS = [['AniMuse', '新动效上线：弹性下拉刷新', '#ff5a36', 'A'], ['小林', '改好了，再看一眼？', '#ffd65a', '林'], ['周周', '今晚上线，记得点赞', '#7fe0c0', '周']], ni = 0;
+  var NEWS = LANG === 'en' ? [['AniMuse', 'New effect: elastic pull-to-refresh', '#ff5a36', 'A'], ['Lin', 'Fixed it, one more look?', '#ffd65a', 'L'], ['Zhou', 'Shipping tonight, go like it', '#7fe0c0', 'Z']] : [['AniMuse', '新动效上线：弹性下拉刷新', '#ff5a36', 'A'], ['小林', '改好了，再看一眼？', '#ffd65a', '林'], ['周周', '今晚上线，记得点赞', '#7fe0c0', '周']], ni = 0;
 
   // 橡皮筋：拉得越多越难拉，永远到不了 max
   function rubber(dy) { var M = num('--max-pull') * rem(); return M * (1 - Math.exp(-Math.max(0, dy) / M)); }
@@ -87,7 +90,7 @@
     else if (e < 1.9) { y = sy + 12 * R; x = sx + 3 * R; }
     else { y = sy + 12 * R; x = sx + 3 * R; if (pressed) { up(); pressed = false; finger.classList.remove('down'); } if (e > 2.1) finger.classList.remove('on'); }
     if (pressed) move(x, y);
-    finger.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    finger.style.translate = x + 'px ' + y + 'px'; // 用 translate 属性：.down 的 scale 不会把位移一起缩放
     if (e > 5.4) t0 = null;
   }
 

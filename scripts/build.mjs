@@ -33,7 +33,7 @@ const effects = readdirSync(join(ROOT, 'effects'))
       if (!existsSync(join(dir, f))) { fail(`${slug}: files 里列了 ${f} 但文件不存在`); continue; }
       source[f] = readFileSync(join(dir, f), 'utf8');
     }
-    return { ...meta, source };
+    return { ...meta, posterEn: existsSync(join(dir, 'preview.en.png')), source };
   })
   .filter(Boolean)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || a.slug.localeCompare(b.slug));

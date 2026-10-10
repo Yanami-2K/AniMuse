@@ -1,0 +1,79 @@
+{
+  "slug": "p5-menu",
+  "order": 19,
+  "category": "micro",
+  "name": {
+    "zh": "怪盗菜单",
+    "en": "Phantom Menu"
+  },
+  "summary": {
+    "zh": "红黑白的斜切菜单。选中时一块红色锯齿碎片“砸”到文字后面，文字反色放大，其它选项抖一下，怪盗猫从右边换个姿势探出来；确认时一道红黑斜楔擦过屏幕进入子面板，Esc 再擦回来。",
+    "en": "A skewed red, black and white menu. Selecting slams a jagged red shard behind the label, the label inverts and scales up, the other items jitter and the phantom cat pops in with a new pose. Confirm and a red-black wedge wipes into a sub-panel; Esc wipes back."
+  },
+  "technique": {
+    "zh": "碎片是两层 clip-path 多边形（红 + 白）。换行时用 WAAPI 从旧行甩到新行，中间那一帧沿竖直方向拉长 + skew 当拖影，落位过冲。擦屏是两块 skewX(-24deg) 的大色块错开 70ms 扫过，黑块盖满全屏的那一刻切换内容。标题是剪报字：每个字母一张不同的“剪纸”。",
+    "en": "The shard is two clip-path polygons (red + white). Switching rows flings it with WAAPI; the middle keyframe stretches it vertically and skews it as a smear, then it overshoots into place. The wipe is two skewX(-24deg) slabs offset by 70ms; content swaps when the black one covers the screen. The title is ransom-note letters, each a different cut-out."
+  },
+  "tags": [
+    "menu",
+    "persona",
+    "skew",
+    "keyboard",
+    "菜单"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "SVG",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--tilt",
+      "default": "-9deg",
+      "desc": {
+        "zh": "整个菜单的倾斜角",
+        "en": "menu tilt"
+      }
+    },
+    {
+      "name": "--slam",
+      "default": "260ms",
+      "desc": {
+        "zh": "碎片砸进来的时长（带过冲）",
+        "en": "shard slam duration"
+      }
+    },
+    {
+      "name": "--wipe",
+      "default": "420ms",
+      "desc": {
+        "zh": "斜楔擦屏时长",
+        "en": "wedge wipe duration"
+      }
+    },
+    {
+      "name": "--red",
+      "default": "#e5191c",
+      "desc": {
+        "zh": "主红色",
+        "en": "primary red"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "游戏化的设置页、彩蛋菜单、活动页。键盘 ↑↓ Enter Esc 都已经接好。",
+    "en": "Gamified settings, easter-egg menus, campaign pages. ↑↓ Enter Esc are wired up."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1300,
+  "credit": {
+    "kind": "inspired",
+    "author": "Persona 5 UI"
+  }
+}

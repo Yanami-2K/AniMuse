@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Preview Card · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 交互想法：Mariana Castilho（Profound）https://x.com/mrncst/status/2107936011560837129 ；代码与文案为 AniMuse 原创 -->
+  <div class="app">
+    <nav class="side" aria-label="最近" data-en-label="Recent">
+      <p class="cap" data-en="Recent <span>⇅</span>">最近 <span>⇅</span></p>
+      <button class="item hot" id="item" type="button" aria-haspopup="dialog" aria-expanded="false">
+        <svg viewBox="0 0 16 16" class="ic"><path d="M3 12.5 L6.5 4 L8 7.5 L11 3.5 L13 12.5" /></svg><span data-en="Agent · New dashboard">Agent · 新建数据看板</span><i class="dot" id="dot"></i>
+      </button>
+      <button class="item" type="button"><svg viewBox="0 0 16 16" class="ic"><rect x="3.5" y="2.5" width="9" height="11" rx="1.5"/><path d="M6 6h4M6 9h4"/></svg><span data-en="Draft: Q3 retro">草稿：Q3 复盘</span></button>
+      <button class="item" type="button"><svg viewBox="0 0 16 16" class="ic"><path d="M3 12.5 L6.5 4 L8 7.5 L11 3.5 L13 12.5" /></svg><span data-en="Competitor research">竞品分析</span></button>
+      <button class="item" type="button"><svg viewBox="0 0 16 16" class="ic g"><rect x="3" y="3" width="10" height="10" rx="2"/><path d="M3 7h10M7 7v6"/></svg><span data-en="Weekly report automation">周报自动化</span></button>
+      <button class="item more" type="button"><span data-en="··· Show more">··· 显示更多</span></button>
+    </nav>
+    <main class="main" aria-hidden="true"><i style="--w:46%"></i><i style="--w:72%"></i><i style="--w:64%"></i><b></b><i style="--w:58%"></i><i style="--w:70%"></i></main>
+  </div>
+
+  <section class="card" id="card" role="dialog" aria-label="Agent 需要你确认" data-en-label="Agent needs your input" hidden>
+    <header class="head">
+      <div class="row1"><b data-en="Agent · New dashboard">Agent · 新建数据看板</b><span class="need" id="need" data-en="<i></i>Needs your input"><i></i>等你确认</span></div>
+      <p class="ctx" data-en="Before I start I’d like to confirm a few things, all at once so I don’t keep pinging you. Using ask_user_batch, not one by one.">开始之前我想先确认几个问题，一次问完，免得来回打扰你。用 ask_user_batch，不分开问。</p>
+      <div class="meta"><span><svg viewBox="0 0 16 16" class="ic o"><path d="M3 12.5 L6.5 4 L8 7.5 L11 3.5 L13 12.5" /></svg>Chat · 44m ago</span><span class="who"><i>C</i>cocofhu</span></div>
+    </header>
+    <div class="body" id="body">
+      <p class="qs"><span>Questions</span><span><b id="n">1</b> of <span id="total">4</span></span></p>
+      <div class="viewport" id="vp"></div>
+    </div>
+    <footer class="foot">
+      <button class="ghost back" id="back" type="button">Back</button>
+      <span class="sp"></span>
+      <button class="ghost" id="skip" type="button">Skip</button>
+      <button class="primary" id="next" type="button"><span class="lb nx">Next <kbd>↵</kbd></span><span class="lb sb">Submit <kbd>➤</kbd></span><svg class="ok" viewBox="0 0 16 16"><path d="M3.5 8.5 L6.5 11.5 L12.5 4.5"/></svg></button>
+    </footer>
+  </section>
+  <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -17,14 +17,52 @@
   </svg>
   <div class="scene" id="scene">
     <article class="doc" id="doc">
-      <header><span class="tag">PR #42</span><b>订单列表加状态筛选</b></header>
+      <header><span class="tag">PR #42</span><b data-en="Add status filter to orders">订单列表加状态筛选</b></header>
       <i class="sk" style="--w:92%"></i><i class="sk" style="--w:78%"></i><i class="sk" style="--w:64%"></i>
       <footer><span class="who">2 files · +48 −6</span><button class="btn" id="btn" type="button">Approve</button></footer>
-      <div class="mark" id="mark" aria-hidden="true"><span>已通过</span><small>APPROVED · 2026</small></div>
+      <div class="mark" id="mark" aria-hidden="true"><span data-en="APPROVED">已通过</span><small data-en="LGTM · 2026">APPROVED · 2026</small></div>
       <i class="specks" id="specks"></i>
       <i class="shadow" id="shadow"></i>
     </article>
-    <div class="tool" id="tool" aria-hidden="true"><i class="knob"></i><i class="neck"></i><i class="block"></i><i class="rubber"></i></div>
+    <!-- 章：车削木柄（圆头 + 细腰 + 铜箍 + 喇叭底座）+ 有厚度的枫木章台 + 海绵垫 + 橡胶印面。3/4 俯视，细描边 + 渐变做体积 -->
+    <svg class="tool" id="tool" viewBox="0 0 192 192" aria-hidden="true">
+      <defs>
+        <linearGradient id="walnut" x1="0" x2="1"><stop offset="0" stop-color="#2e211b"/><stop offset=".3" stop-color="#7a5642"/><stop offset=".42" stop-color="#8d6750"/><stop offset=".7" stop-color="#4a3328"/><stop offset="1" stop-color="#261b16"/></linearGradient>
+        <radialGradient id="knobG" cx=".36" cy=".3" r=".75"><stop offset="0" stop-color="#a77d62"/><stop offset=".35" stop-color="#6e4c3a"/><stop offset=".8" stop-color="#36261f"/><stop offset="1" stop-color="#241914"/></radialGradient>
+        <linearGradient id="brass" x1="0" x2="1"><stop offset="0" stop-color="#8a6a2e"/><stop offset=".32" stop-color="#f1d898"/><stop offset=".5" stop-color="#c9a457"/><stop offset="1" stop-color="#6e5222"/></linearGradient>
+        <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e3c6"/><stop offset="1" stop-color="#e6c99c"/></linearGradient>
+        <linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2bd88"/><stop offset=".55" stop-color="#d3a66e"/><stop offset="1" stop-color="#b9864f"/></linearGradient>
+        <linearGradient id="side" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset=".12" stop-color="#000" stop-opacity="0"/><stop offset=".88" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></linearGradient>
+        <linearGradient id="rub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9493a"/><stop offset=".6" stop-color="#b8352a"/><stop offset="1" stop-color="#8f2620"/></linearGradient>
+      </defs>
+      <g class="t-body" stroke="#3b2a20" stroke-opacity=".38" stroke-width=".9" stroke-linejoin="round">
+        <!-- 章台：顶面（看得到厚度）+ 正面 -->
+        <path d="M20 117.5 H172 Q175 117.5 176.6 120 L186 133 H6 L15.4 120 Q17 117.5 20 117.5 Z" fill="url(#top)"/>
+        <rect x="6" y="133" width="180" height="36" rx="2.5" fill="url(#front)"/>
+        <rect x="6" y="133" width="180" height="36" rx="2.5" fill="url(#side)" stroke="none"/>
+        <path d="M8 133.9 H184" stroke="#fff" stroke-opacity=".55" stroke-width="1"/>
+        <g fill="none" stroke="#8a5a2c" stroke-opacity=".16" stroke-width=".8">
+          <path d="M14 142 C50 139 70 146 110 142 S160 139 180 143"/><path d="M12 151 C44 154 80 148 118 152 S166 155 182 150"/><path d="M20 160 C60 158 92 163 130 160 S170 158 178 161"/>
+        </g>
+        <!-- 手柄底座圆盘 -->
+        <ellipse cx="96" cy="124.5" rx="27" ry="5.2" fill="#3a2a21"/>
+        <ellipse cx="96" cy="123.6" rx="25" ry="4.2" fill="url(#walnut)" stroke="none"/>
+        <!-- 车削木柄：喇叭底座 → 细腰 → 铜箍 → 颈 → 圆头 -->
+        <path d="M74 124 C76.5 114 86 110 89 100 C90 96 90.5 93 90.5 90 H101.5 C101.5 93 102 96 103 100 C106 110 115.5 114 118 124 Q96 128 74 124 Z" fill="url(#walnut)"/>
+        <path d="M88.6 82 C88 78.5 85 76 82 71 H110 C107 76 104 78.5 103.4 82 Z" fill="url(#walnut)"/>
+        <rect x="86.5" y="81.5" width="19" height="9" rx="2.4" fill="url(#brass)"/>
+        <path d="M87.5 84.4 H104.5" stroke="#fff" stroke-opacity=".5" stroke-width=".8"/>
+        <ellipse cx="96" cy="51" rx="24.5" ry="22" fill="url(#knobG)"/>
+        <ellipse cx="86.5" cy="41" rx="8.5" ry="4.6" fill="#fff" fill-opacity=".22" stroke="none" transform="rotate(-24 86.5 41)"/>
+        <path d="M84 106 C82 112 79 117 77.5 121" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- 印面：海绵垫 + 橡胶（落地时只压缩这里） -->
+      <g class="t-pad" id="pad" stroke="#3b2a20" stroke-opacity=".38" stroke-width=".9" stroke-linejoin="round">
+        <rect x="10" y="169" width="172" height="6.5" fill="#efe9de"/>
+        <path d="M12 175.5 H180 V185 Q180 188 177 188 H15 Q12 188 12 185 Z" fill="url(#rub)"/>
+        <path d="M13 176.6 H179" stroke="#fff" stroke-opacity=".28" stroke-width=".8"/>
+      </g>
+    </svg>
     <svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5 L4 19 L8.6 14.9 L11.6 21.4 L14.4 20.1 L11.5 13.8 L17.6 13.6 Z" fill="#1c1a21" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
   <script src="script.js"></script>

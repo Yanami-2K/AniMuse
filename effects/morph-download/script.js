@@ -1,3 +1,6 @@
+/* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
+var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
+if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
 // Morphing Download Button — 状态机 + 顶点弹簧。两个四边形 = 8 个顶点，每个顶点独立弹到新形状的对应点
 (function () {
   var css = getComputedStyle(document.documentElement);
@@ -19,7 +22,7 @@
     pause: [[38, 27], [55, 37], [55, 63], [38, 73], [55, 37], [74, 50], [74, 50], [55, 63]],
     done:  bar(28, 52, 44, 68, 11).concat(bar(44, 68, 73, 35, 11))
   };
-  var LABEL = { idle: '下载', load: '下载中', pause: '已暂停', done: '完成' };
+  var LABEL = LANG === 'en' ? { idle: 'Download', load: 'Downloading', pause: 'Paused', done: 'Done' } : { idle: '下载', load: '下载中', pause: '已暂停', done: '完成' };
   var pts = SHAPES.idle.map(function (p) { return { x: p[0], y: p[1], vx: 0, vy: 0, tx: p[0], ty: p[1], at: 0 }; });
   var rot = 0, vr = 0, sc = 1, vs = 0, state = 'idle', prog = 0, shown = 0;
 
