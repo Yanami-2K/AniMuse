@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tests Ticking Green · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="suite" id="suite" data-step="420">
+    <header>
+      <b>npm test</b>
+      <span class="count"><span id="done">0</span>/<span id="total">0</span></span>
+    </header>
+    <div class="bar"><i id="fill"></i></div>
+    <ul id="list">
+      <li>登录：密码错误给出提示</li>
+      <li>订单列表按状态筛选</li>
+      <li>status 非法值返回 400</li>
+      <li>导出 CSV 保留中文</li>
+      <li>分页最后一页不越界</li>
+    </ul>
+    <footer id="pass">All tests passed</footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

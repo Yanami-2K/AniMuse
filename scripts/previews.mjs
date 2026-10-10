@@ -1,0 +1,30 @@
+// 用 Playwright 给每个效果截一张海报 effects/<slug>/preview.png（960×720）。
+// 用法：npm i && npx playwright install chromium && npm run previews [-- slug ...]
+import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { join, dirname, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const server = createServer((req, res) => {
+  let p = join(ROOT, decodeURIComponent(req.url.split('?')[0]));
+  if (existsSync(p) && statSync(p).isDirectory()) p = join(p, 'index.html');
+  if (!existsSync(p)) { res.writeHead(404); return res.end(); }
+  res.writeHead(200, { 'content-type': TYPES[extname(p)] || 'application/octet-stream' }); res.end(readFileSync(p));
+}).listen(0);
+const port = server.address().port;
+
+const only = process.argv.slice(2);
+const slugs = readdirSync(join(ROOT, 'effects')).filter((s) => existsSync(join(ROOT, 'effects', s, 'meta.json')) && (!only.length || only.includes(s)));
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 960, height: 720 }, deviceScaleFactor: 1 });
+for (const slug of slugs) {
+  const meta = JSON.parse(readFileSync(join(ROOT, 'effects', slug, 'meta.json'), 'utf8'));
+  await page.goto(`http://localhost:${port}/effects/${slug}/index.html`);
+  await page.waitForTimeout(meta.posterAt ?? 2500);   // 在 meta.json 里用 posterAt(ms) 指定截哪一刻
+  await page.screenshot({ path: join(ROOT, 'effects', slug, 'preview.png') });
+  console.log('✓', slug);
+}
+await browser.close(); server.close();

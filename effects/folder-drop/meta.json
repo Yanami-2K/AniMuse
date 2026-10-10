@@ -1,0 +1,65 @@
+{
+  "slug": "folder-drop",
+  "order": 7,
+  "category": "micro",
+  "name": {
+    "zh": "文件掉进文件夹",
+    "en": "Folder Drop Bounce"
+  },
+  "summary": {
+    "zh": "文件夹前盖张开，文件越掉越快地落进去，前盖啪地合上，整个文件夹被压扁再弹回，角标 +1。经典的挤压与拉伸。",
+    "en": "The folder flap swings open, the file accelerates in, the flap snaps shut, the folder squashes and springs back, and the badge ticks +1. Classic squash & stretch."
+  },
+  "technique": {
+    "zh": "前盖 rotateX(-38deg) 张开；文件 ease-in 下落；文件夹以底边为原点 scale(1.14,.86) → scale(.97,1.05) → 1；文件放在 back 和 front 之间，所以会被前盖挡住。",
+    "en": "Flap opens with rotateX(-38deg); the file falls ease-in; the folder scales from its bottom edge 1.14×.86 → .97×1.05 → 1; the file sits between back and front in the DOM so the flap covers it."
+  },
+  "tags": [
+    "upload",
+    "drop",
+    "squash",
+    "上传"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--fall",
+      "default": "520ms",
+      "desc": {
+        "zh": "下落时长",
+        "en": "fall duration"
+      }
+    },
+    {
+      "name": "--squash",
+      "default": ".86",
+      "desc": {
+        "zh": "落地时纵向压扁到多少",
+        "en": "vertical squash on impact"
+      }
+    },
+    {
+      "name": "--folder",
+      "default": "#ffc85a",
+      "desc": {
+        "zh": "文件夹颜色",
+        "en": "folder color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "做上传反馈时，在上传成功回调里调一次下落 + squash 那几步即可。",
+    "en": "For upload feedback, run the fall + squash steps from your upload-success callback."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 700
+}

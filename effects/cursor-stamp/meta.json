@@ -1,0 +1,73 @@
+{
+  "slug": "cursor-stamp",
+  "order": 5,
+  "category": "micro",
+  "name": {
+    "zh": "光标点击 + 盖章",
+    "en": "Cursor Click & Stamp"
+  },
+  "summary": {
+    "zh": "假光标沿弧线滑到按钮上，按下、按钮下沉，然后一枚印章从高处加速砸下来，落地那一下整张卡片跟着震。适合做产品演示。",
+    "en": "A fake cursor arcs to the button, presses it down, then a stamp slams in from above and the whole card jolts on impact. Great for product demos."
+  },
+  "technique": {
+    "zh": "全部用 element.animate() 串成 async 时间线。光标的中间关键帧偏上形成弧线；印章用 ease-in 曲线（越落越快）从 scale(2.6) rotate(-26deg) 到 scale(1) rotate(-12deg)，mix-blend-mode: multiply 像印泥。",
+    "en": "One async timeline of element.animate() calls. A raised middle keyframe gives the cursor its arc; the stamp falls with an ease-in curve from scale(2.6) rotate(-26deg) to scale(1) rotate(-12deg), multiply-blended like ink."
+  },
+  "tags": [
+    "cursor",
+    "stamp",
+    "approve",
+    "盖章"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--travel",
+      "default": "900ms",
+      "desc": {
+        "zh": "光标移动时长",
+        "en": "cursor travel time"
+      }
+    },
+    {
+      "name": "--press",
+      "default": "120ms",
+      "desc": {
+        "zh": "按下时长",
+        "en": "press duration"
+      }
+    },
+    {
+      "name": "--slam",
+      "default": "260ms",
+      "desc": {
+        "zh": "印章落下时长",
+        "en": "stamp slam duration"
+      }
+    },
+    {
+      "name": "--accent",
+      "default": "#ff5a36",
+      "desc": {
+        "zh": "印章颜色",
+        "en": "stamp color"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "印章文字改 .stamp 里的两行；光标目标是 #btn，换成任何元素都行。",
+    "en": "Change the two lines inside .stamp; the cursor targets #btn, point it at any element."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 1950
+}
