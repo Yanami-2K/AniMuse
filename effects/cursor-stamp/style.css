@@ -1,49 +1,65 @@
-/* Rubber Stamp Approve — 光标点了 Approve，一枚真的橡皮章从上面压下来：影子由虚变实、落地压扁、左右碾一下、抬起后留下带颗粒的印 */
+/* Kitty Stamp — 一只圆滚滚的印章小猫跟着指针慢半拍地飘；点一下：蹲、蹦、砸！整只压扁、眼睛挤成 > <，冒烟冒星星，留下一个肉垫印 */
 :root {
-  --bg: #f4efe6;
-  --ink: #1c1a21;
-  --accent: #e8452c;      /* 印泥颜色 */
-    --travel: 900ms;        /* 光标移动时长 */
-  --drop: 420ms;          /* 印章下落时长（ease-in，越落越快） */
-  --squash: .55;          /* 落地时海绵垫被压到原厚度的多少 */
-  --rock: 2.5deg;           /* 压住后左右碾的角度 */
+  --bg: #fff4e8;          /* 背景：奶油色，纯色 */
+  --line: #3a3346;        /* 描边 / 五官：深紫灰，和幽灵猫一家 */
+  --handle: #e4dbff;      /* 脑袋（手柄）：淡紫 */
+  --handle-2: #cfc2fb;    /* 脑袋的平涂暗面 */
+  --body: #ffd977;        /* 章身：奶油黄 */
+  --body-2: #f7c552;      /* 章身暗面 */
+  --pad: #ff8fa0;         /* 橡胶垫 */
+  --blush: #ffaabb;       /* 腮红 */
+  --ink: #ff5c7a;         /* 印泥颜色 */
+  --stiff: 170;           /* 跟随弹簧的刚度：越大跟得越紧 */
+  --damp: 15;             /* 跟随弹簧的阻尼：越小越晃 */
+  --hop: 1.5rem;          /* 砸下去之前往上蹦多高 */
+  --squash: .66;          /* 落地时整只被压到原高度的多少 */
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { font-size: min(3.9vw, 5.2vh); }
+html { font-size: min(3.7vw, 4.4vh); }
 body {
-  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(30rem 20rem at 50% 50%, #fbf8f2, transparent 70%), var(--bg); color: var(--ink);
-  font-family: ui-sans-serif, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--bg); color: var(--line);
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
 }
-.scene { position: relative; margin-top: 2.2rem; }
-.doc { position: relative; width: 19rem; padding: 1.1rem 1.2rem 1rem; background: #fff; border: 1px solid #e4dfd4; border-radius: .9rem; box-shadow: 0 1.2rem 2.2rem -1.4rem rgba(60, 40, 20, .35); will-change: transform; }
+/* 指针在画面里时印章就是光标 */
+body.hand, body.hand * { cursor: none; }
+.stage { position: relative; margin-top: 6.4rem; }
+.doc {
+  position: relative; width: 19rem; padding: 1.1rem 1.2rem 1rem; background: #fff; border: .2rem solid var(--line); border-radius: 1.1rem;
+  box-shadow: 0 .3rem 0 var(--line); will-change: transform;
+}
 header { display: flex; align-items: center; gap: .55rem; margin-bottom: .9rem; font-size: .9rem; }
-.tag { font: 700 .6rem/1 ui-monospace, "SF Mono", Menlo, monospace; padding: .3rem .4rem; border-radius: .3rem; background: #f1eee7; color: #6f6a60; }
-.sk { display: block; height: .5rem; width: var(--w); margin: .5rem 0; border-radius: 9px; background: #efece5; }
+header b { font-weight: 800; }
+.tag { font: 800 .6rem/1 ui-monospace, "SF Mono", Menlo, monospace; padding: .32rem .45rem; border-radius: .45rem; background: var(--handle); color: var(--line); }
+.sk { display: block; height: .5rem; width: var(--w); margin: .52rem 0; border-radius: 9px; background: #f3ece2; }
 footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
-.who { font: 500 .6rem/1 ui-monospace, "SF Mono", Menlo, monospace; color: #9a958a; }
+.who { font: 600 .6rem/1 ui-monospace, "SF Mono", Menlo, monospace; color: #9b93a6; }
 .btn {
-  font: 700 .72rem/1 ui-sans-serif, -apple-system, "PingFang SC", system-ui, sans-serif; color: #fff; background: var(--ink); border: 0; border-radius: .5rem; padding: .55rem .85rem;
-  box-shadow: 0 .16rem 0 #000; transition: transform .1s, box-shadow .1s, background .2s;
+  font: inherit; font-size: .74rem; font-weight: 800; color: var(--line); background: var(--body); border: .16rem solid var(--line); border-radius: .7rem; padding: .45rem .8rem;
+  box-shadow: 0 .2rem 0 var(--line); transition: background .2s;
 }
-.btn.down { transform: translateY(.14rem); box-shadow: 0 .02rem 0 #000; }
-.btn.done { background: #17a34a; box-shadow: 0 .16rem 0 #0f7a35; }
-/* 印记：双线框 + 颗粒滤镜 + multiply 混合，像真的印泥 */
-.mark {
-  position: absolute; left: 50%; top: 46%; width: 9rem; height: 4rem; margin: -2rem 0 0 -4.5rem; transform: rotate(-8deg);
-  border: .2rem solid var(--accent); border-radius: .5rem; box-shadow: inset 0 0 0 .16rem #fff, inset 0 0 0 .3rem var(--accent);
-  color: var(--accent); display: grid; place-content: center; text-align: center; gap: .15rem;
-  filter: url(#grain); mix-blend-mode: multiply; opacity: 0; pointer-events: none;
-  -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,.72), #000 38%, #000 72%, rgba(0,0,0,.86)); mask-image: linear-gradient(100deg, rgba(0,0,0,.72), #000 38%, #000 72%, rgba(0,0,0,.86));
-}
-.mark span { font-size: 1.45rem; font-weight: 900; letter-spacing: .2em; line-height: 1; padding-left: .2em; }
-.mark small { font: 800 .46rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .2em; }
-.specks { position: absolute; left: 50%; top: 46%; width: 0; height: 0; opacity: 0; pointer-events: none;
-  box-shadow: -5.4rem -1.4rem 0 .08rem var(--accent), 5.2rem 1.6rem 0 .05rem var(--accent), 4.9rem -2rem 0 .04rem var(--accent), -4.6rem 2.1rem 0 .06rem var(--accent), 1rem 2.9rem 0 .03rem var(--accent); }
-.shadow { position: absolute; left: 50%; top: 46%; width: 9.2rem; height: 4.2rem; margin: -2rem 0 0 -4.6rem; border-radius: .6rem; background: rgba(40, 25, 10, .9); opacity: 0; pointer-events: none; transform: rotate(-8deg); }
-/* 章：SVG 画的实木橡皮章；底边对齐印记底边，transform-origin 在印面上 */
-.tool { position: absolute; left: 50%; top: 46%; width: 9.6rem; height: 9.6rem; margin: -7.3rem 0 0 -4.8rem; transform-origin: 50% 98%; opacity: 0; pointer-events: none; will-change: transform; z-index: 3; overflow: visible;
-  filter: drop-shadow(0 .1rem .12rem rgba(40, 25, 10, .18)); }
-.t-pad { transform-box: fill-box; transform-origin: 50% 100%; }
-.cursor { position: absolute; left: 0; top: 0; width: 1.4rem; height: 1.4rem; filter: drop-shadow(0 .15rem .2rem rgba(0, 0, 0, .18)); transform-origin: 4px 3px; will-change: transform; z-index: 4; }
+.btn.done { background: #9fe3c4; }
+.btn span { display: inline-block; }
+
+/* 印：每盖一下 JS 生成一个 .mark（SVG），位置 = 落地点 */
+.marks { position: fixed; inset: 0; pointer-events: none; z-index: 2; }
+.mark { position: absolute; left: 0; top: 0; width: 5.6rem; height: 2.56rem; margin: -1.28rem 0 0 -2.8rem; mix-blend-mode: multiply; }
+.mark svg { width: 100%; height: 100%; overflow: visible; filter: url(#inky); }
+
+/* 印章：.stamp 管位置（弹簧），.lift 抬高悬停，.tilt 管倾斜，.hop 管蹦和压扁，.bob 管待机呼吸 */
+.stamp { position: fixed; left: 0; top: 0; width: 6.4rem; height: 6.74rem; margin: -6.74rem 0 0 -3.2rem; pointer-events: none; z-index: 3; will-change: transform; }
+.ground { position: absolute; left: 50%; bottom: -.4rem; width: 5.4rem; height: .8rem; margin-left: -2.7rem; border-radius: 50%; background: var(--line); opacity: .13; }
+.lift { position: absolute; inset: 0; transform: translateY(calc(var(--hop) * -.9)); }
+.tilt, .hop, .bob { position: absolute; inset: 0; transform-origin: 50% 100%; }
+.tilt { will-change: transform; }
+.kitty { width: 100%; height: 100%; overflow: visible; display: block; }
+.eyes { transform-box: fill-box; transform-origin: 50% 50%; }
+.squint, .oh { opacity: 0; }
+.stamp.press .eyes, .stamp.press .mouth { opacity: 0; }
+.stamp.press .squint, .stamp.press .oh { opacity: 1; }
+
+/* 冒烟、星星：落地时 JS 临时生成 */
+.fx { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 4; }
+.puff { width: 1.3rem; height: 1.3rem; margin: -.65rem 0 0 -.65rem; border-radius: 50%; background: #fff; border: .16rem solid var(--line); }
+.star { width: 1.1rem; height: 1.1rem; margin: -.55rem 0 0 -.55rem; }
+.star path { fill: var(--body); stroke: var(--line); stroke-width: 2.4; stroke-linejoin: round; }

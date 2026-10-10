@@ -34,7 +34,7 @@ AniMuse 是一个开源的网页动效库。每个效果都是一份能直接双
 | 06 | [折信寄出](effects/letter-fold/) | Fold & Send Letter | 转场 | CSS 3D / JS / WAAPI |  |
 | 07 | [会变形的下载按钮](effects/morph-download/) | Morphing Download Button | 微交互 | SVG / JS |  |
 | 08 | [橡皮膜下拉刷新](effects/elastic-refresh/) | Elastic Pull-to-Refresh | 加载 | SVG / JS |  |
-| 09 | [橡皮章盖“已通过”](effects/cursor-stamp/) | Rubber Stamp Approve | 微交互 | CSS / JS / WAAPI / SVG filter |  |
+| 09 | [印章小猫](effects/cursor-stamp/) | Kitty Stamp | 微交互 | CSS / JS / WAAPI / SVG |  |
 | 10 | [老电视关机](effects/crt-off/) | CRT Power Off | 转场 | CSS / JS / WAAPI / Canvas |  |
 | 11 | [怪盗猫的预告函](effects/phantom-cat/) | Phantom Thief Cat | 角色 | SVG / CSS / JS / WAAPI |  |
 | 12 | [爱睡觉的开关](effects/sleepy-toggle/) | Sleepy Toggle | 微交互 | CSS / JS / WAAPI | 灵感 [yui540](https://x.com/yui540) |
