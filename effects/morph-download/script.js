@@ -16,19 +16,35 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     var dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy), nx = -dy / l * w / 2, ny = dx / l * w / 2;
     return [[x1 + nx, y1 + ny], [x2 + nx, y2 + ny], [x2 - nx, y2 - ny], [x1 - nx, y1 - ny]];
   }
+  // 折线 A→B→C 加粗成两个四边形，拐点用斜接（miter）点共享同一条边——
+  // 直接拼两根 bar 的话，拐角外侧会缺一个 V 形口子（对勾底部那块缺口就是这么来的）
+  function elbow(ax, ay, bx, by, cx, cy, w) {
+    var s1 = bar(ax, ay, bx, by, w), s2 = bar(bx, by, cx, cy, w);
+    function cross(p, q, r, s) { // 直线 pq 与 rs 的交点
+      var d = (p[0] - q[0]) * (r[1] - s[1]) - (p[1] - q[1]) * (r[0] - s[0]);
+      var t = ((p[0] - r[0]) * (r[1] - s[1]) - (p[1] - r[1]) * (r[0] - s[0])) / d;
+      return [p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])];
+    }
+    var mo = cross(s1[0], s1[1], s2[0], s2[1]), mi = cross(s1[3], s1[2], s2[3], s2[2]);
+    return [s1[0], mo, mi, s1[3], mo, s2[1], s2[2], mi];
+  }
   var SHAPES = {
     idle:  bar(50, 20, 50, 56, 12).concat([[28, 50], [50, 76], [50, 76], [72, 50]]),
     load:  bar(39, 30, 39, 70, 11).concat(bar(61, 30, 61, 70, 11)),
     pause: [[38, 27], [55, 37], [55, 63], [38, 73], [55, 37], [74, 50], [74, 50], [55, 63]],
-    done:  bar(28, 52, 44, 68, 11).concat(bar(44, 68, 73, 35, 11))
+    done:  elbow(28, 52, 44, 68, 73, 35, 11)
   };
   var LABEL = LANG === 'en' ? { idle: 'Download', load: 'Downloading', pause: 'Paused', done: 'Done' } : { idle: '下载', load: '下载中', pause: '已暂停', done: '完成' };
   var pts = SHAPES.idle.map(function (p) { return { x: p[0], y: p[1], vx: 0, vy: 0, tx: p[0], ty: p[1], at: 0 }; });
   var rot = 0, vr = 0, sc = 1, vs = 0, state = 'idle', prog = 0, shown = 0;
+  var welds = [], weldT0 = -1e9, WELD = 160; // 焊接在 160ms 内渐进完成，避免起始帧跳一下
 
   function go(s) {
     var now = performance.now(), from = state; state = s;
     SHAPES[s].forEach(function (p, i) { pts[i].tx = p[0]; pts[i].ty = p[1]; pts[i].at = now + i * STAG; });
+    // 目标形状里重合的顶点（两块拼接处的公共边）要“焊”在一起：各自弹簧+错峰会让它们短暂分开，拼缝处露出尖角或缺口
+    welds = []; SHAPES[s].forEach(function (p, i) { SHAPES[s].forEach(function (q, k) { if (k > i && Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1]) < .01) welds.push([i, k]); }); });
+    weldT0 = now;
     if (from === 'idle' && s === 'load') vr = -720;      // 进入下载：拧一下
     if (s === 'pause' || (from === 'pause' && s === 'load')) vr = 520;
     if (s === 'done') { vr = -360; vs = 3; spark(); }
@@ -49,7 +65,13 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
 
   function poly(a) { return 'M' + a.map(function (p) { return p.x.toFixed(2) + ' ' + p.y.toFixed(2); }).join('L') + 'Z'; }
   function render() {
-    p1.setAttribute('d', poly(pts.slice(0, 4))); p2.setAttribute('d', poly(pts.slice(4)));
+    var v = pts.map(function (p) { return { x: p.x, y: p.y }; });
+    var f = Math.min(1, (performance.now() - weldT0) / (reduce ? 1 : WELD)); f = f * f * (3 - 2 * f);
+    welds.forEach(function (w) {
+      var a = v[w[0]], b = v[w[1]], mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+      a.x += (mx - a.x) * f; a.y += (my - a.y) * f; b.x += (mx - b.x) * f; b.y += (my - b.y) * f;
+    });
+    p1.setAttribute('d', poly(v.slice(0, 4))); p2.setAttribute('d', poly(v.slice(4)));
     icon.setAttribute('transform', 'rotate(' + rot.toFixed(2) + ' 50 50)');
     btn.style.transform = 'scale(' + sc.toFixed(4) + ')';
     ring.style.strokeDasharray = shown.toFixed(2) + ' 100';
