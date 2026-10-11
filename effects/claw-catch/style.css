@@ -1,0 +1,90 @@
+/* Claw Catch — 抓娃娃机当“领取”按钮：爪子带着绳子摆、夹住幽灵猫玩偶、送进出口、从小门里蹦出来 */
+:root {
+  --bg: #fdf6ea;
+  --ink: #3a3346;         /* 描边颜色 */
+  --cab: #cfc8f3;         /* 机身 */
+  --sign: #ff8fab;        /* 灯牌 / 按钮 */
+  --gold: #ffd45c;        /* 导轨、爪子 */
+  --glass: #e6f4fc;       /* 玻璃柜 */
+  --stiff: 55;            /* 小车弹簧刚度（越大越跟手） */
+  --damp: .55;            /* 小车阻尼比（<1 会过冲一点） */
+  --swing: 980;           /* 绳子摆动的“重力”：越大摆得越快 */
+  --drop: 760ms;          /* 爪子下探时长 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(60vmax 30vmax at 50% 110%, #f7e2cb, transparent 70%), var(--bg); color: var(--ink);
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
+}
+.stage { position: relative; width: min(100vw, 133.333vh); aspect-ratio: 4 / 3; container-type: size; }
+.scene { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.k { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.k.thin { stroke-width: 2; fill: none; }
+.floor { fill: var(--ink); opacity: .08; }
+.shadow { fill: var(--ink); }
+.body { fill: var(--cab); }
+.band { fill: #bdb3ef; }
+.sign { fill: var(--sign); }
+.title { font: 900 17px/1 ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif; letter-spacing: 1.5px; fill: #fff; stroke: var(--ink); stroke-width: 3.6px; paint-order: stroke fill; }
+.bulb { fill: #fff6d1; stroke: var(--ink); stroke-width: 1.4; }
+.bulb.on { fill: var(--gold); }
+.glass { fill: var(--glass); }
+.glassEdge { fill: none; stroke: var(--ink); stroke-width: 3; }
+.mound { fill: #cfe8f6; }
+.chute { fill: rgba(255, 255, 255, .45); }
+.chuteTxt { font: 900 12px/1 system-ui, sans-serif; fill: var(--sign); opacity: .8; }
+.rail { fill: var(--gold); }
+.cart { fill: #fff; }
+.cable { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.cap { fill: var(--gold); }
+.hub { fill: #fff; }
+.armBack, .armPath { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.armBack { stroke: var(--ink); stroke-width: 6.4; }
+.armPath { stroke: var(--gold); stroke-width: 2.8; }
+.glare { fill: #fff; opacity: .42; pointer-events: none; }
+.hole { fill: #4a4160; }
+.flap { fill: #ffd6e2; transform-box: fill-box; transform-origin: 50% 0; }
+.flapTxt { font: 900 8px/1 ui-rounded, system-ui, sans-serif; letter-spacing: 1px; fill: var(--ink); opacity: .55; }
+.base { fill: #8d82b8; }
+.coin { fill: #ffd45c; }
+.knob { fill: var(--sign); }
+.ledge { fill: #fff; }
+/* 玩偶 */
+.plush .shell { stroke: var(--ink); stroke-width: 6; stroke-linejoin: round; }
+.plush .earIn { opacity: .55; }
+.plush .eye { fill: var(--ink); }
+.plush .line { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.plush .blush { fill: #ff8fab; opacity: .6; }
+.plush.dark .eye { fill: #fff; }
+.plush.dark .line { stroke: #fff; }
+.plush .x, .plush .h { display: none; }
+.plush[data-face="x"] .n, .plush[data-face="h"] .n { display: none; }
+.plush[data-face="x"] .x, .plush[data-face="h"] .h { display: inline; }
+.spark { fill: var(--gold); stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; }
+/* 按钮（真正的 <button>，用容器单位跟着舞台缩放） */
+.grab {
+  position: absolute; left: 51.5%; top: 75.6%; width: 25%; height: 12.4%;
+  border: .55cqw solid var(--ink); border-radius: 4cqw; background: var(--sign); color: #fff;
+  font-family: inherit; font-weight: 900; font-size: 3cqw; line-height: 1; letter-spacing: .02em; cursor: pointer;
+  box-shadow: .55cqw .7cqw 0 var(--ink); text-shadow: 0 .25cqw 0 rgba(58, 51, 70, .35);
+  transition: transform .18s cubic-bezier(.34, 1.56, .64, 1), box-shadow .18s, background-color .25s;
+}
+.grab:hover { transform: translateY(-.2cqw); }
+.grab:active, .grab.press { transform: translate(.4cqw, .5cqw); box-shadow: .15cqw .2cqw 0 var(--ink); }
+.grab:focus-visible { outline: .5cqw solid #8fd3ff; outline-offset: .5cqw; }
+.grab[aria-busy="true"] { background: #b9a6ff; cursor: progress; }
+.grab.ok { background: #6fd3a5; }
+.grab span { display: inline-block; }
+.hint { position: absolute; left: 0; right: 0; bottom: .4%; margin: 0; text-align: center; font-family: inherit; font-weight: 800; font-size: 1.6cqw; line-height: 1; color: var(--ink); opacity: 0; transition: opacity .3s; }
+.stage:has(.grab:focus-visible) .hint { opacity: .55; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+.finger {
+  position: fixed; left: 0; top: 0; width: 2.4rem; height: 2.4rem; margin: -1.2rem 0 0 -1.2rem; border-radius: 50%;
+  background: rgba(28, 26, 33, .16); border: .14rem solid rgba(255, 255, 255, .9); box-shadow: 0 .3rem .8rem rgba(28, 26, 33, .2);
+  opacity: 0; pointer-events: none; transition: opacity .25s, scale .18s; z-index: 100;
+}
+.finger.on { opacity: 1; }
+.finger.down { scale: .78; background: rgba(28, 26, 33, .28); }
+@media (prefers-reduced-motion: reduce) { .finger { display: none; } .grab { transition: none; } }

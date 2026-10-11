@@ -1,0 +1,78 @@
+{
+  "slug": "zip-reveal",
+  "order": 23,
+  "category": "physics",
+  "name": {
+    "zh": "拉链揭开",
+    "en": "Zip Reveal"
+  },
+  "summary": {
+    "zh": "一个猫咪形状的笔袋。拖动拉链头，齿链沿曲线一颗颗分开、缝越张越大，拉片跟着手甩；拉到一半幽灵猫会探头偷看，拉到底它整只冒出来打招呼。没拉到底就松手，拉链会弹回去。",
+    "en": "A cat-shaped pouch. Drag the zipper pull and the teeth part one by one along a curve while the pull tab swings; halfway the ghost cat peeks out, all the way and it pops up to say hi. Let go too early and the zipper springs back shut."
+  },
+  "technique": {
+    "zh": "缝的宽度 = 最大宽度 × smoothstep(离拉链头的距离) × smoothstep(离起点的距离)，上唇往上抬、下唇往下压，每帧重算两条曲线；齿沿曲线排、按切线旋转，合上的部分上下交错咬合。拉链头是弹簧（跟手时硬、弹回去时软），拉片是挂在拉链头上的单摆。猫被裁在“下唇上方”的区域里，所以只会从缝里出来。",
+    "en": "Gap width = max × smoothstep(distance to the slider) × smoothstep(distance to the start stop); the upper lip lifts and the lower lip drops, both curves rebuilt every frame. Teeth sit along the curves rotated to the tangent and interlock where closed. The slider is a spring (stiff while dragging, softer when snapping back) and the pull tab is a pendulum hanging from it. The cat is clipped to the area above the lower lip, so it can only come out of the gap."
+  },
+  "tags": [
+    "zipper",
+    "drag",
+    "reveal",
+    "spring",
+    "拉链"
+  ],
+  "tech": [
+    "SVG",
+    "JS"
+  ],
+  "params": [
+    {
+      "name": "--gap",
+      "default": "72",
+      "desc": {
+        "zh": "拉开后缝最宽多少（SVG 单位）",
+        "en": "max gap width (SVG units)"
+      }
+    },
+    {
+      "name": "--snap",
+      "default": ".78",
+      "desc": {
+        "zh": "拉过这个比例松手就自动拉到底",
+        "en": "past this fraction it auto-completes on release"
+      }
+    },
+    {
+      "name": "--stiff",
+      "default": "190",
+      "desc": {
+        "zh": "拉链头跟手的弹簧刚度",
+        "en": "slider stiffness while dragging"
+      }
+    },
+    {
+      "name": "--back",
+      "default": "90",
+      "desc": {
+        "zh": "弹回去的弹簧刚度（越小越慢）",
+        "en": "stiffness when springing back"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "适合优惠码、彩蛋、隐藏答案、礼品卡这种“拉开看看”的场景。拉链头是 role=\"slider\"，键盘 ← → / Home / End / 空格都能操作。",
+    "en": "Good for coupon codes, easter eggs, hidden answers or gift cards. The pull is a role=\"slider\": ← → / Home / End / Space all work."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 7600,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://yui540.com/motions/60"
+  }
+}

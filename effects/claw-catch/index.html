@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claw Catch · AniMuse</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage" id="stage">
+    <svg class="scene" id="scene" viewBox="0 0 400 300" role="img" aria-label="抓娃娃机：爪子夹起一只幽灵猫玩偶，送到出口" data-en-label="Claw machine: the claw picks up a ghost cat plush and drops it into the prize chute">
+      <defs>
+        <clipPath id="glassClip"><rect x="90" y="62" width="220" height="146" rx="8"/></clipPath>
+        <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" fill="#3a3346" opacity=".08"/><circle cx="9" cy="9" r="1.3" fill="#3a3346" opacity=".08"/></pattern>
+      </defs>
+      <ellipse class="floor" cx="200" cy="288" rx="150" ry="9"/>
+      <!-- 机身 -->
+      <rect class="shadow" x="81" y="46" width="248" height="244" rx="18"/>
+      <rect class="body k" x="76" y="40" width="248" height="244" rx="18"/>
+      <path class="band" d="M78 214 H322 V266 Q322 282 306 282 H94 Q78 282 78 266 Z"/>
+      <line class="k" x1="76" y1="214" x2="324" y2="214"/>
+      <!-- 灯牌 -->
+      <rect class="shadow" x="94" y="19" width="220" height="40" rx="14"/>
+      <rect class="sign k" x="90" y="14" width="220" height="40" rx="14"/>
+      <g id="bulbs"></g>
+      <text class="title" x="200" y="41.5" text-anchor="middle">GHOST CATCH</text>
+      <!-- 玻璃柜里面 -->
+      <rect class="glass k" x="90" y="62" width="220" height="146" rx="8"/>
+      <g clip-path="url(#glassClip)">
+        <rect x="90" y="62" width="220" height="146" fill="url(#dots)"/>
+        <path class="mound" d="M136 210 Q142 192 170 194 Q210 184 250 191 Q290 186 312 198 V212 H136 Z"/>
+        <g id="pile"></g>
+        <g id="loose"></g>
+        <!-- 出口的亚克力挡板（在玩偶前面） -->
+        <path class="chute" d="M94 148 H136 V210 H94 Z"/>
+        <path class="k thin" d="M136 148 V210 M94 148 H136"/>
+        <text class="chuteTxt" x="115" y="184" text-anchor="middle">▼</text>
+        <rect class="rail k" x="86" y="67" width="228" height="8" rx="4"/>
+        <g id="pend">
+          <line class="cable" id="cable" x1="0" y1="0" x2="0" y2="12"/>
+          <g id="head">
+            <g id="held"></g>
+            <g id="armL" class="arm"><path class="armBack" d="M0 0 Q-13 10 -11 21 Q-9 28 -2 29"/><path class="armPath" d="M0 0 Q-13 10 -11 21 Q-9 28 -2 29"/></g>
+            <g id="armR" class="arm"><path class="armBack" d="M0 0 Q13 10 11 21 Q9 28 2 29"/><path class="armPath" d="M0 0 Q13 10 11 21 Q9 28 2 29"/></g>
+            <rect class="cap k" x="-11" y="-6" width="22" height="13" rx="5"/>
+            <circle class="hub k" cx="0" cy="7" r="4.2"/>
+          </g>
+        </g>
+        <rect class="cart k" id="cart" x="-10" y="64" width="20" height="14" rx="4"/>
+        <path class="glare" d="M108 62 L132 62 L98 208 L90 208 L90 140 Z M262 62 L273 62 L246 208 L235 208 Z"/>
+      </g>
+      <rect class="glassEdge" x="90" y="62" width="220" height="146" rx="8"/>
+      <!-- 出口门 + 托盘 -->
+      <rect class="hole k" x="92" y="224" width="46" height="40" rx="7"/>
+      <rect class="flap k" id="flap" x="92" y="224" width="46" height="40" rx="7"/>
+      <text class="flapTxt" id="flapTxt" x="115" y="248" text-anchor="middle">PRIZE</text>
+      <!-- 投币口 + 摇杆 -->
+      <rect class="k coin" x="152" y="232" width="18" height="26" rx="4"/><line class="k" x1="161" y1="238" x2="161" y2="252" stroke-width="2.6"/>
+      <ellipse class="k base" cx="188" cy="254" rx="11" ry="4.5"/>
+      <g id="stick"><line class="k" x1="188" y1="254" x2="188" y2="234" stroke-width="3.4"/><circle class="knob k" cx="188" cy="232" r="6.5"/></g>
+      <g id="tray"></g>
+      <rect class="ledge k" x="82" y="270" width="66" height="9" rx="4.5"/>
+      <g id="fx"></g>
+    </svg>
+    <button class="grab" id="grab" type="button"><span id="label" data-en="Grab one!">抓一只</span></button>
+    <p class="hint" id="hint" data-en="← → move · Space to grab">← → 移动 · 空格抓</p>
+    <p class="sr" id="live" aria-live="polite"></p>
+  </main>
+  <i class="finger" id="finger" aria-hidden="true"></i>
+  <script src="script.js"></script>
+</body>
+</html>
