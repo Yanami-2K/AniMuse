@@ -1,0 +1,79 @@
+{
+  "slug": "claw-catch",
+  "order": 22,
+  "category": "button",
+  "name": {
+    "zh": "抓娃娃机",
+    "en": "Claw Catch"
+  },
+  "summary": {
+    "zh": "把“领取”按钮做成一台抓娃娃机：爪子挂在绳子上跟着指针跑、会甩，下探夹住一只幽灵猫玩偶（压扁、眯眼），提起来晃着送进出口，玩偶从小门里蹦到托盘上。偶尔会滑掉。没人碰时有根手指在演示。",
+    "en": "A “claim” button as a claw machine: the claw hangs on a cable, chases your pointer and swings, drops to grab a ghost cat plush (it squashes and squints), carries it swaying to the chute, and the plush hops out of the prize door. Sometimes it slips. A ghost finger demos it when idle."
+  },
+  "technique": {
+    "zh": "小车是一根阻尼弹簧（跟着目标 x 走，会过冲一点），爪子是挂在小车上的单摆：角加速度 = −g/L·sinθ − 阻尼·ω − 小车加速度/L·cosθ，所以小车一急停爪子就往前甩。下探 / 提起 / 开合爪用补间，玩偶夹住时挪进爪子的坐标系里一起摆，放开时再换算回场景坐标做自由落体。按钮是真的 <button>，← → 移动、空格抓。",
+    "en": "The carriage is a damped spring (follows the target x with a little overshoot); the claw is a pendulum hanging from it: angular accel = −g/L·sinθ − damping·ω − carriageAccel/L·cosθ, so it swings forward whenever the carriage brakes. Drop / lift / open use tweens; a grabbed plush is re-parented into the claw so it swings along, and on release it’s converted back to scene coordinates and falls freely. The button is a real <button>: ← → to move, Space to grab."
+  },
+  "tags": [
+    "claw machine",
+    "button",
+    "pendulum",
+    "spring",
+    "抓娃娃"
+  ],
+  "tech": [
+    "SVG",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--stiff",
+      "default": "55",
+      "desc": {
+        "zh": "小车弹簧刚度（越大越跟手）",
+        "en": "carriage spring stiffness"
+      }
+    },
+    {
+      "name": "--damp",
+      "default": ".55",
+      "desc": {
+        "zh": "小车阻尼比（<1 会过冲）",
+        "en": "carriage damping ratio (<1 overshoots)"
+      }
+    },
+    {
+      "name": "--swing",
+      "default": "980",
+      "desc": {
+        "zh": "绳子摆动的“重力”，越大摆得越快",
+        "en": "pendulum gravity – higher swings faster"
+      }
+    },
+    {
+      "name": "--drop",
+      "default": "760ms",
+      "desc": {
+        "zh": "爪子下探时长",
+        "en": "claw drop duration"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "适合抽奖、领取优惠券、每日签到这类“领一下”的按钮。真实场景里把结果（抓到 / 滑掉）交给后端，前端只负责把动画演完。",
+    "en": "Great for raffles, coupon claims or daily check-in buttons. In production let the backend decide the result (caught / slipped); the front end just plays it out."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 5100,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://yui540.com/motions/37"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "slug": "dialog-entrances",
+  "order": 25,
+  "category": "transition",
+  "name": {
+    "zh": "可爱弹窗六式",
+    "en": "Dialog Entrances"
+  },
+  "summary": {
+    "zh": "同一个“要保存修改吗？”对话框，六种成对的进场 / 退场：果冻弹出、从一条线展开、从按钮长出来的气泡、三张卡洗牌、从天上掉下来、从 Dock 里吸出来再收回去。幽灵猫趴在对话框上沿，跟着表情变化。",
+    "en": "One “Save your changes?” dialog, six paired entrances and exits: jelly pop, unfold from a line, a bubble that grows out of the button, a shuffled card stack, a drop from the sky, and a genie-ish pop out of (and back into) the Dock. The ghost cat hangs on the top edge and reacts."
+  },
+  "technique": {
+    "zh": "每种方式就是一对 WAAPI 关键帧。果冻：阻尼弹簧采样，scaleY 比 scaleX 晚 3 帧，差出来的那半拍就是“抖”。气泡 / Dock：先量出按钮或图标相对对话框的位移，从那里缩放出来；Dock 再叠一个梯形 clip-path 当“漏斗”。掉落：ease-in 下落、落地压扁、再小跳一下，背景跟着震。焦点在对话框里循环，Esc / 点遮罩关闭，关完焦点回到触发按钮。",
+    "en": "Each style is a pair of WAAPI keyframe sets. Jelly: a sampled damped spring with scaleY lagging scaleX by 3 frames — that half-beat is the wobble. Bubble / Dock: measure the trigger’s offset from the dialog and scale out of it; Dock adds a trapezoid clip-path as the funnel. Drop: ease-in fall, squash on landing, a small hop, the background shakes. Focus is trapped, Esc / scrim click closes, focus returns to the trigger."
+  },
+  "tags": [
+    "dialog",
+    "modal",
+    "entrance",
+    "WAAPI",
+    "弹窗"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--in",
+      "default": "620ms",
+      "desc": {
+        "zh": "进场基准时长（各方式按比例缩放）",
+        "en": "base entrance duration (scaled per style)"
+      }
+    },
+    {
+      "name": "--out",
+      "default": "320ms",
+      "desc": {
+        "zh": "退场基准时长",
+        "en": "base exit duration"
+      }
+    },
+    {
+      "name": "--wobble",
+      "default": "2.1",
+      "desc": {
+        "zh": "果冻回弹频率（Hz）",
+        "en": "jelly rebound frequency (Hz)"
+      }
+    },
+    {
+      "name": "--bounce",
+      "default": ".34",
+      "desc": {
+        "zh": "果冻回弹阻尼比",
+        "en": "jelly damping ratio"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "挑一种喜欢的直接用：每种都是一个 enter() / exit() 函数，换到自己的 <dialog> 上就行。退场一定要比进场短。",
+    "en": "Pick one and use it: every style is just an enter() / exit() pair you can drop onto your own <dialog>. Keep exits shorter than entrances."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2000,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://yui540.com/motions/30"
+  }
+}

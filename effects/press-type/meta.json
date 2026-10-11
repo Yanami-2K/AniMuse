@@ -1,0 +1,87 @@
+{
+  "slug": "press-type",
+  "order": 24,
+  "category": "text",
+  "name": {
+    "zh": "压字机",
+    "en": "Press Type"
+  },
+  "summary": {
+    "zh": "标题入场：一排小压机依次砸下来，每砸一下就从面团里“压”出一个字——先被压扁，再 Q 弹地回到原形，旁边冒两团小烟。最后一台是猫爪印章，压出一只幽灵猫。下面可以输入自己的词再压一遍，点任意一个字也能单独再压一次。",
+    "en": "A headline entrance: a row of little presses slam down one after another, each stamping a letter out of a lump of dough — squashed flat first, then springing back into shape with a puff. The last press is a paw stamp that stamps out a ghost cat. Type your own word to press it again, or click any letter to re-press it."
+  },
+  "technique": {
+    "zh": "压头用 ease-in 加速砸下（150ms），停 60ms 再带一点过冲弹回去。字从 scaleY(0.48) 开始按阻尼弹簧回到 1：x(t)=1+(x₀−1)·e^(−ζωt)(cos ω_d t + ζω/ω_d·sin ω_d t)，采样成 30 个关键帧，scaleX = 1/√scaleY 保持体积。错峰每台 140ms，奇偶交替快慢一点点，听起来更像机器。",
+    "en": "Heads slam down with ease-in (150ms), dwell 60ms and spring back up with a little overshoot. Each letter starts at scaleY(0.48) and returns to 1 along a damped spring: x(t)=1+(x₀−1)·e^(−ζωt)(cos ω_d t + ζω/ω_d·sin ω_d t), sampled into 30 keyframes, with scaleX = 1/√scaleY to keep volume. 140ms stagger, alternating slightly faster/slower so it feels mechanical."
+  },
+  "tags": [
+    "text",
+    "headline",
+    "squash",
+    "stagger",
+    "标题"
+  ],
+  "tech": [
+    "CSS",
+    "JS",
+    "WAAPI"
+  ],
+  "params": [
+    {
+      "name": "--stagger",
+      "default": "140ms",
+      "desc": {
+        "zh": "每台压机之间错开多久",
+        "en": "delay between presses"
+      }
+    },
+    {
+      "name": "--slam",
+      "default": "150ms",
+      "desc": {
+        "zh": "压头砸下来的时长",
+        "en": "slam duration"
+      }
+    },
+    {
+      "name": "--squash",
+      "default": ".48",
+      "desc": {
+        "zh": "字被压到多扁（scaleY）",
+        "en": "squash amount (scaleY)"
+      }
+    },
+    {
+      "name": "--wobble",
+      "default": "2.3",
+      "desc": {
+        "zh": "回弹频率（Hz）",
+        "en": "rebound frequency (Hz)"
+      }
+    },
+    {
+      "name": "--bounce",
+      "default": ".3",
+      "desc": {
+        "zh": "回弹阻尼比，越小弹得越久",
+        "en": "rebound damping ratio"
+      }
+    }
+  ],
+  "adapt": {
+    "zh": "适合活动页标题、欢迎语、空状态大字。中文、英文都能排；每个字是一个按钮，读屏会读整句。",
+    "en": "For event headlines, welcome screens or big empty-state text. Works with Latin and CJK; each letter is a button and screen readers get the whole word."
+  },
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js"
+  ],
+  "preview": "preview.png",
+  "posterAt": 2900,
+  "credit": {
+    "kind": "inspired",
+    "author": "yui540",
+    "url": "https://yui540.com/motions/51"
+  }
+}
