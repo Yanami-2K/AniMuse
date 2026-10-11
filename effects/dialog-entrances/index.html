@@ -11,25 +11,16 @@
     <section class="app" id="app" aria-label="一个笔记应用" data-en-label="A notes app">
       <header class="bar"><i></i><i></i><i></i><b data-en="Untitled note">未命名笔记</b><button type="button" class="close" id="trigger" data-en="Close">关闭</button></header>
       <div class="doc" aria-hidden="true"><p class="h"></p><p></p><p class="s"></p><p></p><p class="s2"></p></div>
-      <nav class="dock" aria-hidden="true"><i class="app1"></i><i class="app2"></i><i class="catApp" id="dockCat"><svg viewBox="48 46 104 128"><path class="shell" d="M58 166 L58 96 L66 58 L84 78 Q100 72 116 78 L134 58 L142 96 L142 166 Q131 156 121 168 Q110 156 100 168 Q90 156 79 168 Q69 156 58 166Z"/><ellipse class="eye" cx="84" cy="114" rx="8" ry="10"/><ellipse class="eye" cx="116" cy="114" rx="8" ry="10"/></svg></i><b class="badge" id="badge">1</b></nav>
+      <nav class="dock" aria-hidden="true"><i class="app1"></i><i class="app2"></i><i class="catApp" id="dockCat"><svg viewBox="0 0 24 24"><path d="M7 4h7l4 4v12H7z M14 4v4h4 M9.5 12h6 M9.5 15h6"/></svg></i><b class="badge" id="badge">1</b></nav>
       <p class="toast" id="toast" role="status" aria-live="polite"></p>
     </section>
     <div class="scrim" id="scrim"></div>
     <div class="decoy d1" id="d1"></div><div class="decoy d2" id="d2"></div>
     <div class="dlg" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgT" aria-describedby="dlgB" hidden>
-      <svg class="dcat" id="dcat" viewBox="48 46 104 80" aria-hidden="true">
-        <path class="shell" d="M58 130 L58 96 L66 58 L84 78 Q100 72 116 78 L134 58 L142 96 L142 130Z"/>
-        <path class="ear" d="M68 70 L80 82 L64 86Z M132 70 L120 82 L136 86Z"/>
-        <g class="n"><ellipse class="eye" cx="84" cy="106" rx="6.5" ry="8.5"/><ellipse class="eye" cx="116" cy="106" rx="6.5" ry="8.5"/></g>
-        <path class="line x" d="M77 99 L89 106 L77 113 M123 99 L111 106 L123 113"/>
-        <path class="line h" d="M76 109 Q84 98 92 109 M108 109 Q116 98 124 109"/>
-        <ellipse class="blush" cx="70" cy="118" rx="7" ry="5"/><ellipse class="blush" cx="130" cy="118" rx="7" ry="5"/>
-      </svg>
-      <i class="paw p1"></i><i class="paw p2"></i>
       <i class="tail" id="tail"></i>
       <div class="in">
         <h2 id="dlgT" data-en="Save your changes?">要保存修改吗？</h2>
-        <p id="dlgB" data-en="If you don’t, the ghost cat will eat them.">不保存的话，幽灵猫会把它们吃掉。</p>
+        <p id="dlgB" data-en="Unsaved changes to this note will be lost.">未保存的修改会丢失。</p>
         <div class="acts"><button type="button" class="ghost" id="no" data-en="Don’t save">不保存</button><button type="button" class="pri" id="yes" data-en="Save">保存</button></div>
       </div>
     </div>

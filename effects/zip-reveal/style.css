@@ -1,11 +1,11 @@
-/* Zip Reveal — 拖动拉链头，齿链沿着曲线分开，从缝里露出幽灵猫；没拉到底松手会弹回去 */
+/* Zip Reveal（黑白线稿）— 拖动拉链头，齿链沿着曲线分开，从缝里升起一张优惠券；没拉到底松手会弹回去 */
 :root {
-  --bg: #f3efff;
-  --ink: #3a3346;         /* 描边颜色 */
-  --pouch: #ffc2d4;       /* 笔袋正面 */
-  --pouch-back: #f5a3bc;  /* 笔袋背面（拉开后上唇） */
-  --inside: #4a3d63;      /* 袋子里面 */
-  --tooth: #fff1a8;       /* 拉链齿 */
+  --bg: #fafaf8;
+  --ink: #111;            /* 线条颜色 */
+  --pouch: #fff;          /* 袋子正面 */
+  --pouch-back: #ededeb;  /* 袋子背面（拉开后上唇） */
+  --inside: #111;         /* 袋子里面 */
+  --tooth: #fff;          /* 拉链齿 */
   --gap: 72;              /* 拉开后缝最宽多少（SVG 单位） */
   --snap: .78;            /* 拉过这个比例松手就自动拉到底，否则弹回去 */
   --stiff: 190;           /* 拉链头跟手的弹簧刚度 */
@@ -14,54 +14,39 @@
 *, *::before, *::after { box-sizing: border-box; }
 body {
   margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; touch-action: none;
-  background: radial-gradient(60vmax 34vmax at 50% 112%, #e4dcff, transparent 70%), var(--bg); color: var(--ink);
-  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
 }
 .stage { position: relative; width: min(100vw, 133.333vh); aspect-ratio: 4 / 3; container-type: size; }
 .scene { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.k { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
-.floor { fill: var(--ink); opacity: .08; }
-.shadow { fill: var(--ink); }
+.k { stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.floor { fill: none; stroke: var(--ink); stroke-width: 1; opacity: .35; }
 .back { fill: var(--pouch-back); }
-.earIn { fill: #ff8fab; opacity: .7; }
-.lens { fill: var(--inside); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+.lens { fill: var(--inside); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
 .lining { fill: url(#stripe); }
 .front { fill: var(--pouch); }
-.stitch { fill: none; stroke: #fff; stroke-width: 2; stroke-dasharray: 5 5; stroke-linecap: round; opacity: .8; }
-.pfEye { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.pfNose { fill: var(--ink); stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; }
-.pfBlush { fill: #ff8fab; opacity: .55; }
-.pfWhisk { stroke: #fff; stroke-width: 2.4; stroke-linecap: round; opacity: .85; }
-.patch rect { fill: #fff; stroke-width: 2.4; }
-.patch text { font: 900 12px/1 ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif; fill: var(--ink); letter-spacing: 1px; }
-.tape { fill: none; stroke: #e98aa8; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
-.tooth { fill: var(--tooth); stroke: var(--ink); stroke-width: 1.2; }
-.shell { fill: #ece6ff; stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
-.catEar { fill: #d9cfff; }
-.tail { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
-.eye { fill: var(--ink); }
-.line { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-.blush { fill: #ff9db5; }
-#eyesX, #eyesH, #mouthO { display: none; }
-.cat-x #eyesN, .cat-h #eyesN { display: none; }
-.cat-x #eyesX, .cat-h #eyesH { display: inline; }
-.cat-o #mouth { display: none; } .cat-o #mouthO { display: inline; }
-.paw { fill: #ece6ff; stroke-width: 2.6; }
-#paws { opacity: 0; }
-.slider { fill: #fff; stroke-width: 2.4; }
-.tabK { fill: #ffd45c; stroke-width: 2.4; }
-.tabHole { fill: var(--pouch); stroke: var(--ink); stroke-width: 1.6; }
+.stitch { fill: none; stroke: var(--ink); stroke-width: 1; stroke-dasharray: 4 4; opacity: .45; }
+.label { font: 500 7.5px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 1.2px; fill: var(--ink); opacity: .6; }
+.tape { fill: none; stroke: var(--ink); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.tooth { fill: var(--tooth); stroke: var(--ink); stroke-width: 1; }
+.tk { fill: #fff; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; }
+.tkS { font: 600 7px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 1.4px; fill: var(--ink); }
+.tkB { font: 800 22px/1 Inter, "Helvetica Neue", Arial, system-ui, sans-serif; letter-spacing: -.5px; fill: var(--ink); }
+.tkD { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+.slider { fill: #fff; stroke-width: 2; }
+.tabK { fill: #fff; stroke-width: 2; }
+.tabHole { fill: var(--bg); stroke: var(--ink); stroke-width: 1.4; }
 .pin { fill: #fff; stroke-width: 1.6; }
 .hit { fill: transparent; cursor: grab; }
 #pull { outline: none; }
 #pull.held .hit { cursor: grabbing; }
-.ring { fill: none; stroke: #8fd3ff; stroke-width: 3; opacity: 0; }
+.ring { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 3 3; opacity: 0; }
 #pull:focus-visible .ring { opacity: 1; }
 .bubble { opacity: 0; pointer-events: none; }
-.bubble path { fill: #fff; stroke-width: 2.6; }
-.bubble text { font: 900 13px/1 ui-rounded, "Arial Rounded MT Bold", "PingFang SC", "Noto Sans SC", system-ui, sans-serif; fill: var(--ink); }
-.hint { position: absolute; left: 0; right: 0; bottom: 1.5%; margin: 0; text-align: center; font-weight: 800; font-size: 1.7cqw; line-height: 1; color: var(--ink); opacity: .42; }
+.bubble path { fill: var(--ink); stroke-width: 1.6; }
+.bubble text { font: 600 11px/1 Inter, "Helvetica Neue", "PingFang SC", "Noto Sans SC", system-ui, sans-serif; fill: #fff; letter-spacing: .3px; }
+.hint { position: absolute; left: 0; right: 0; bottom: 1.5%; margin: 0; text-align: center; font-weight: 500; font-size: 1.7cqw; line-height: 1; color: var(--ink); opacity: .42; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
 .finger {
   position: fixed; left: 0; top: 0; width: 2.4rem; height: 2.4rem; margin: -1.2rem 0 0 -1.2rem; border-radius: 50%;

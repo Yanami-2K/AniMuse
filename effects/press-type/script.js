@@ -1,16 +1,15 @@
 /* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
 var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
 if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); [].forEach.call(document.querySelectorAll('[data-en-ph]'), function (el) { el.placeholder = el.dataset.enPh; }); }
-// Press Type — 压头加速砸下（ease-in），字从 scaleY(--squash) 开始按阻尼弹簧弹回 1；弹簧曲线采样成关键帧，横向按体积守恒反向缩放
+// Press Type（黑白线稿）— 压头加速砸下（ease-in），字从 scaleY(--squash) 开始按阻尼弹簧弹回 1；弹簧曲线采样成关键帧，横向按体积守恒反向缩放
 (function () {
   var css = getComputedStyle(document.documentElement);
   var ms = function (v) { return parseFloat(css.getPropertyValue(v)); };
   var STAGGER = ms('--stagger'), SLAM = ms('--slam'), SQ = ms('--squash'), HZ = ms('--wobble'), ZETA = ms('--bounce');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (id) { return document.getElementById(id); };
-  var row = $('row'), machine = $('machine'), said = $('said'), form = $('form'), input = $('word'), catT = $('catT');
+  var row = $('row'), machine = $('machine'), said = $('said'), form = $('form'), input = $('word');
   var WORDS = LANG === 'en' ? ['HELLO', 'HOWDY', 'MEOW'] : ['你好呀', '开工啦', '喵一下'];
-  var COLORS = ['#ff8fab', '#ffd45c', '#8fd3ff', '#b9a6ff', '#7fe0b0'];
   var units = [], gen = 0, wi = 0, auto = true, autoT = 0;
   var isCJK = function (ch) { return /[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF]/.test(ch); };
 
@@ -33,31 +32,29 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     var chars = Array.from(word.trim()).filter(function (c) { return c.trim(); }).slice(0, 8);
     if (!chars.length) chars = Array.from(WORDS[0]);
     var cjk = chars.some(isCJK), list = chars.map(function (c) { return LANG === 'en' || !isCJK(c) ? c.toUpperCase() : c; });
-    list.push('🐾'); // 最后一格固定是小猫（印章）
     var wsum = 0;
     list.forEach(function (ch, i) {
-      var cat = i === list.length - 1, zh = !cat && isCJK(ch), w = cat ? .92 : zh ? 1 : .8;
+      var zh = isCJK(ch), w = zh ? 1 : .8;
       wsum += w;
-      var u = document.createElement('button'); u.type = 'button'; u.className = 'unit' + (zh ? ' zh' : '') + (cat ? ' cat' : '');
-      u.style.setProperty('--w', w + 'em'); u.style.setProperty('--c', COLORS[i % COLORS.length]); u.style.setProperty('--i', i);
-      u.setAttribute('aria-label', cat ? (LANG === 'en' ? 'Press the cat stamp again' : '再按一次猫爪印章') : (LANG === 'en' ? 'Press “' + ch + '” again' : '再压一次「' + ch + '」'));
-      u.innerHTML = '<span class="press"><i></i></span><span class="dough"></span><span class="glyph' + (cat ? ' cat-g' : '') + '"><span>' + (cat ? '' : ch) + '</span></span>';
-      if (cat) u.querySelector('.glyph span').appendChild(catT.content.firstElementChild.cloneNode(true));
+      var u = document.createElement('button'); u.type = 'button'; u.className = 'unit' + (zh ? ' zh' : '');
+      u.style.setProperty('--w', w + 'em'); u.style.setProperty('--i', i);
+      u.setAttribute('aria-label', LANG === 'en' ? 'Press “' + ch + '” again' : '再压一次「' + ch + '」');
+      u.innerHTML = '<span class="press"><i></i></span><span class="dough"></span><span class="glyph"><span>' + ch + '</span></span>';
       u.addEventListener('click', function () { takeover(); stamp(units[i], 0, true); });
       row.appendChild(u);
-      units.push({ el: u, press: u.querySelector('.press'), glyph: u.querySelector('.glyph'), dough: u.querySelector('.dough'), cat: cat, ch: ch });
+      units.push({ el: u, press: u.querySelector('.press'), glyph: u.querySelector('.glyph'), dough: u.querySelector('.dough'), ch: ch });
     });
     // 字号：一排要放得下（30rem 宽的舞台里留 3rem 边）
     var fs = Math.min(4.1, 25 / (wsum + .16 * (list.length - 1) + .84));
     machine.style.setProperty('--fs', fs.toFixed(3) + 'rem');
-    var text = list.slice(0, -1).join(''); said.textContent = text; row.setAttribute('aria-label', text);
+    var text = list.join(''); said.textContent = text; row.setAttribute('aria-label', text);
   }
 
   // —— 砸一下 ——
   function stamp(u, delay, again) {
     var el = u.el, g = gen, rem = parseFloat(getComputedStyle(machine).fontSize);
     var travel = .62 + 1.12 * (1 - SQ); // 压头从静止位置下到“压扁后的字顶”
-    if (reduce) { setTimeout(function () { if (g !== gen) return; el.classList.add('on'); if (u.cat) el.dataset.face = 'h'; }, delay); return; }
+    if (reduce) { setTimeout(function () { if (g !== gen) return; el.classList.add('on'); }, delay); return; }
     var hit = delay + SLAM;
     u.press.animate([
       { transform: 'translateY(0)', easing: 'cubic-bezier(.55,0,.95,.45)' },
@@ -70,11 +67,8 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
       if (g !== gen) return;
       var first = !el.classList.contains('on');
       el.classList.add('on');
-      if (u.cat) { el.dataset.face = 'x'; setTimeout(function () { if (g === gen) el.dataset.face = 'h'; }, 520); }
       u.glyph.animate(squashFrames(first ? SQ : Math.min(.8, SQ + .22)), { duration: 1000, easing: 'linear' });
-      if (first && !u.cat) u.glyph.animate([{ filter: 'brightness(1.25)' }, { filter: 'brightness(1)' }], { duration: 260 });
-      puffs(el); thump(u.cat ? 1.6 : 1);
-      if (u.cat) hearts(el);
+      puffs(el); thump(1);
     }, hit);
   }
   function puffs(el) {
@@ -86,20 +80,12 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
       }
     });
   }
-  function hearts(el) {
-    for (var k = 0; k < 3; k++) {
-      var h = document.createElement('i'); h.className = 'heart'; h.textContent = '♥'; h.style.left = (40 + k * 16) + '%'; h.style.top = '10%'; h.style.fontSize = (.4 - k * .06) + 'em'; el.appendChild(h);
-      var dx = (k - 1) * .3;
-      h.animate([{ opacity: 0, transform: 'translate(0,0) scale(.3)' }, { opacity: 1, transform: 'translate(' + dx + 'em,-.5em) scale(1.1)', offset: .4 }, { opacity: 0, transform: 'translate(' + dx * 1.3 + 'em,-.9em) scale(.9)' }], { duration: 900, delay: 380 + k * 90, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }).onfinish = (function (h) { return function () { h.remove(); }; })(h);
-    }
-  }
   function thump(f) { row.parentNode.querySelector('.belt').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(' + (.03 * f) + 'em)' }, { transform: 'translateY(0)' }], { duration: 140, easing: 'ease-out' }); }
 
   // —— 一整排：依次砸下，最后的猫爪印章稍微晚一拍 ——
   function stampAll() {
     var t = 0;
     units.forEach(function (u, i) {
-      if (u.cat) t += 200;
       stamp(u, t, false);
       t += STAGGER * (i % 2 ? 1.08 : .92); // 一点点不均匀，听起来更像机器
     });

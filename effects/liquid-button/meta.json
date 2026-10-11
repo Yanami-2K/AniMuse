@@ -62,7 +62,7 @@
     },
     {
       "name": "--liquid",
-      "default": "#ff5a36",
+      "default": "#141414",
       "desc": {
         "zh": "液体颜色",
         "en": "liquid color"

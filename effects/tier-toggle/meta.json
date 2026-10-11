@@ -7,12 +7,12 @@
     "en": "Dynamic Tier Toggle"
   },
   "summary": {
-    "zh": "定价页的套餐切换：免费 / 高级。选到高级时，“高级”字样往上让位，两个子选项（个人 / 团队）从挤在一起的小字长成正常大小，指示块从一条细线展开成药丸。纯 CSS。",
-    "en": "A pricing toggle: Free / Premium. Choose Premium and its label lifts out of the way while the two sub-options (Solo / Team) grow from tiny squeezed text to full size, and the indicator unfolds from a thin line into a pill. Pure CSS."
+    "zh": "定价页的套餐切换：免费 / 高级。选到高级时，“高级”字样升到上方，下面出现一道细括号把两个子选项（个人 / 团队）框在一起；子选项从挤在一起的小字长成正常大小，指示块从一条细线展开成药丸。纯 CSS。",
+    "en": "A pricing toggle: Free / Premium. Choose Premium and its label rises above the control with a thin bracket grouping the two sub-options (Solo / Team), which grow from tiny squeezed text to full size while the indicator unfolds from a thin line into a pill. Pure CSS."
   },
   "technique": {
-    "zh": "原作的思路：三个 radio + :has()。.premium:has(:checked) 一条规则同时改“高级”的位移缩放、子选项的 scale、内层指示块的 clip-path（从 inset 一条线到整颗药丸）。缓动是一条手写的 linear()。",
-    "en": "Jhey’s approach: three radios plus :has(). One .premium:has(:checked) rule moves and scales the Premium label, scales the sub-options and animates the inner indicator’s clip-path from a thin inset line to a full pill. The easing is a hand-written linear()."
+    "zh": "原作的思路：三个 radio + :has()。.premium:has(:checked) 一条规则同时改“高级”的位移缩放、子选项的 scale、内层指示块的 clip-path（从 inset 一条线到整颗药丸）。缓动是一条手写的 linear()。 AniMuse 版把外层指示块在高级档时换成浅灰轨道、选中的子档用实心黑药丸，并加了一道括号，层级更清楚。",
+    "en": "Jhey’s approach: three radios plus :has(). One .premium:has(:checked) rule moves and scales the Premium label, scales the sub-options and animates the inner indicator’s clip-path from a thin inset line to a full pill. The easing is a hand-written linear(). In this version the outer indicator becomes a light track under Premium, the chosen sub-tier is a solid black pill, and a bracket groups the pair, so the hierarchy reads clearly."
   },
   "tags": [
     "toggle",

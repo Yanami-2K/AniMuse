@@ -1,21 +1,21 @@
 /* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
 var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
 if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
-// Dialog Entrances — 每种方式 = 一对 WAAPI 关键帧（进场 / 退场）。果冻用弹簧采样，scaleX/scaleY 差半拍 = 抖；Dock 用 clip-path 梯形 + 缩放模拟“吸进去”
+// Dialog Entrances（黑白线稿）— 每种方式 = 一对 WAAPI 关键帧（进场 / 退场）。果冻用弹簧采样，scaleX/scaleY 差半拍 = 抖；Dock 用 clip-path 梯形 + 缩放模拟“吸进去”
 (function () {
   var css = getComputedStyle(document.documentElement);
   var num = function (v) { return parseFloat(css.getPropertyValue(v)); };
   var IN = num('--in'), OUT = num('--out'), HZ = num('--wobble'), ZETA = num('--bounce');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (id) { return document.getElementById(id); };
-  var dlg = $('dlg'), inner = dlg.querySelector('.in'), dcat = $('dcat'), paws = dlg.querySelectorAll('.paw'), tail = $('tail'), scrim = $('scrim'), d1 = $('d1'), d2 = $('d2');
+  var dlg = $('dlg'), inner = dlg.querySelector('.in'), tail = $('tail'), scrim = $('scrim'), d1 = $('d1'), d2 = $('d2');
   var app = $('app'), picker = $('picker'), pill = $('pill'), trigger = $('trigger'), dockCat = $('dockCat'), badge = $('badge'), toast = $('toast');
   var yes = $('yes'), no = $('no'), finger = $('finger'), stage = $('stage');
   var chips = [].slice.call(picker.querySelectorAll('button'));
   var KEYS = chips.map(function (b) { return b.dataset.k; });
   var cur = 'jelly', isOpen = false, busy = false, userOpened = false, lastFocus = null;
   var demoOn = true, demoId = 0, idleT = 0;
-  var SAVED = LANG === 'en' ? 'Saved ✓' : '已保存 ✓', TOSSED = LANG === 'en' ? 'The ghost cat ate them' : '幽灵猫把修改吃掉了';
+  var SAVED = LANG === 'en' ? 'Saved ✓' : '已保存 ✓', TOSSED = LANG === 'en' ? 'Changes discarded' : '已丢弃修改';
 
   var A = function (el, kf, o) { var a = el.animate(kf, o); return a.finished.catch(function () {}); };
   var EASE = 'cubic-bezier(.2,.8,.2,1)', EIN = 'cubic-bezier(.55,0,.9,.45)';
@@ -29,10 +29,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     for (var i = 0; i <= n; i++) { var t = i / n * dur / 1000; out.push(1 + (from - 1) * Math.exp(-ZETA * w * t) * (Math.cos(wd * t) + ZETA * w / wd * Math.sin(wd * t))); }
     out[n] = 1; return out;
   }
-  function catPeek(delay) { // 猫从上沿后面冒出来，爪子搭上来
-    A(dcat, [{ transform: 'translateY(60%) scale(.8)' }, { transform: 'translateY(-8%) scale(1.04,.96)', offset: .6 }, { transform: 'none' }], { duration: 420, delay: delay, easing: EASE, fill: 'backwards' });
-    [].forEach.call(paws, function (p, i) { A(p, [{ transform: 'translateY(.4rem)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 260, delay: delay + 160 + i * 60, easing: EASE, fill: 'backwards' }); });
-  }
+  function catPeek() {} // 黑白版去掉了猫，保留调用点方便以后加装饰
   function fadeIn(delay) { return [].map.call(inner.children, function (c, i) { return A(c, [{ opacity: 0, transform: 'translateY(.35rem)' }, { opacity: 1, transform: 'none' }], { duration: 280, delay: delay + i * 55, easing: EASE, fill: 'backwards' }); }); }
 
   // —— 六种方式 ——
@@ -87,7 +84,6 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
         var d = IN * 1.3;
         dlg.style.transformOrigin = '50% 100%';
         setTimeout(function () { if (!reduce) A(app, [{ transform: 'none' }, { transform: 'translateY(.18rem)' }, { transform: 'translateY(-.06rem)' }, { transform: 'none' }], { duration: 260, easing: 'ease-out' }); }, d * .4);
-        A(dcat, [{ transform: 'translateY(-1.6rem)', easing: EIN }, { transform: 'translateY(-1.6rem)', offset: .42, easing: EIN }, { transform: 'translateY(0) scale(1.15,.82)', offset: .62 }, { transform: 'translateY(-.3rem) scale(.95,1.06)', offset: .78 }, { transform: 'none' }], { duration: d * 1.15, easing: 'linear' });
         fadeIn(d * .3);
         return A(dlg, [{ transform: 'translateY(-330px) rotate(-5deg)', easing: 'cubic-bezier(.55,0,1,.45)' }, { transform: 'translateY(0) scale(1.08,.86)', offset: .4, easing: 'cubic-bezier(.2,.8,.4,1)' }, { transform: 'translateY(-20px) scale(.97,1.04)', offset: .6, easing: 'cubic-bezier(.6,0,.9,.5)' }, { transform: 'translateY(0) scale(1.03,.97)', offset: .78 }, { transform: 'none' }], { duration: d, easing: 'linear' });
       },
@@ -129,7 +125,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
   function open(k, user) {
     if (isOpen || busy) return Promise.resolve();
     cur = k || cur; busy = isOpen = true; userOpened = !!user; lastFocus = user ? document.activeElement : null;
-    [dlg, dcat, tail, d1, d2, inner].concat([].slice.call(inner.children), [].slice.call(paws)).forEach(function (e) { e.getAnimations().forEach(function (a) { a.cancel(); }); });
+    [dlg, tail, d1, d2, inner].concat([].slice.call(inner.children)).forEach(function (e) { e.getAnimations().forEach(function (a) { a.cancel(); }); });
     dlg.style.transformOrigin = ''; tail.style.display = cur === 'bubble' ? '' : 'none';
     dlg.hidden = false; dlg.dataset.face = 'n'; app.inert = true; picker.inert = true; trigger.setAttribute('aria-expanded', 'true');
     scrim.classList.add('on'); A(scrim, [{ opacity: 0 }, { opacity: 1 }], { duration: reduce ? 160 : 260, fill: 'forwards' });

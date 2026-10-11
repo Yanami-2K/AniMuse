@@ -57,7 +57,8 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     (function f(t) { var p = Math.min(1, (t - t0) / dur); shown = Math.round(from + (to - from) * p); pct.textContent = shown; if (p < 1) requestAnimationFrame(f); })(t0);
     pct.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18) rotate(-4deg)', offset: .35 }, { transform: 'scale(.97)', offset: .7 }, { transform: 'none' }], { duration: 360, easing: 'ease-out' });
   }
-  function look(dir, d) { eyes.forEach(function (e) { A(e, [{ transform: getComputedStyle(e).transform }, { transform: 'translateX(' + dir * .17 + 'rem)' }], { duration: d || 120, easing: 'ease-out' }); }); }
+  function look(dir, d) { // 卡住时方块左右歪一下（黑白版没有脸，用姿态代替“张望”）
+    A(body, [{ transform: getComputedStyle(body).transform }, { transform: 'rotate(' + dir * 7 + 'deg) scale(' + (dir ? '1.04,.94' : '1,1') + ')' }], { duration: d || 120, easing: 'ease-out' }); }
 
   async function play() {
     var id = ++run; document.getAnimations().forEach(function (a) { a.cancel(); }); bits.innerHTML = '';
@@ -84,7 +85,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     var cx = X(4) + tiles[4].offsetWidth / 2;
     ['#ffd45c', '#ff9cb4', '#8fd3ff', '#b9a6ff'].forEach(function (c, i) { setTimeout(function () { if (id === run) burst(cx, tiles[4].offsetTop - rem() * 2.2, c, 4, 2.6, .95); }, i * 60); });
     await wait(1500, id);
-    // 复位：颜色从右往左退掉，小果冻一大步跳回起点
+    // 复位：颜色从右往左退掉，方块一大步跳回起点
     stage.classList.remove('happy'); msg.textContent = 'LOADING'; msg.className = 'msg';
     tiles.slice().reverse().forEach(function (t, i) { t.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(0)' }], { duration: 240, delay: i * 60, easing: 'ease-in', pseudoElement: '::after', fill: 'forwards' }); });
     count(0);

@@ -1,8 +1,8 @@
-/* Hop Loader — 一块小果冻沿着进度格一格格往前跳，每落一格就把那格“踩亮”；卡住时会左右张望、冒汗，到终点翻个跟头 */
+/* Hop Loader（黑白版）— 一个方块沿着进度格一格格往前跳，每落一格就把那格“踩实”；卡住时原地蓄力抖两下，到终点翻个跟头 */
 :root {
-  --bg: #fff3f1;
-  --ink: #3a3346;
-  --hero: #7ee0b5;        /* 小果冻的颜色 */
+  --bg: #fafaf8;
+  --ink: #111;
+  --hero: #111;           /* 方块颜色 */
   --hop: 420ms;           /* 一次跳跃的空中时间 */
   --height: 2.6rem;       /* 跳多高 */
   --squash: .78;          /* 落地压扁到多少 */
@@ -11,35 +11,36 @@
 html { font-size: min(3.7vw, 4.6vh); }
 body {
   margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(40rem 20rem at 50% 110%, #ffe0e6, transparent 70%), var(--bg); color: var(--ink);
-  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", system-ui, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
 }
 .stage { display: grid; justify-items: center; margin-top: -.6rem; }
 .pct { margin: 0 0 6.2rem; font-weight: 900; line-height: 1; display: flex; align-items: baseline; gap: .15rem; }
-.pct b { display: inline-block; font-size: 3.4rem; color: #fff; -webkit-text-stroke: .22rem var(--ink); paint-order: stroke fill; text-shadow: .16rem .22rem 0 var(--ink); min-width: 5.4rem; text-align: right; font-variant-numeric: tabular-nums; }
-.pct small { font-size: 1.4rem; opacity: .6; }
+.pct b { display: inline-block; font-size: 3.4rem; font-weight: 700; letter-spacing: -.04em; color: var(--ink); min-width: 5.4rem; text-align: right; font-variant-numeric: tabular-nums; }
+.pct small { font-size: 1.2rem; font-weight: 500; opacity: .45; }
 .track { position: relative; width: 24.3rem; height: 1.6rem; }
-.pad, .tile { position: absolute; bottom: 0; height: 1.6rem; border: .2rem solid var(--ink); border-radius: .7rem; box-shadow: 0 .26rem 0 var(--ink); }
-.pad { left: 0; width: 3.4rem; background: #efe6e4; }
+.pad, .tile { position: absolute; bottom: 0; height: 1.6rem; border: .1rem solid var(--ink); border-radius: .2rem; }
+.pad { left: 0; width: 3.4rem; background: repeating-linear-gradient(-45deg, var(--ink) 0 .06rem, transparent .06rem .4rem); }
 .tile { width: 3.4rem; background: #fff; overflow: hidden; }
-.tile::after { content: ""; position: absolute; inset: 0; background: var(--c); transform: scaleY(0); transform-origin: 50% 100%; }
+.tile::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform: scaleY(0); transform-origin: 50% 100%; }
 .tile.lit::after { transform: none; }
 .tile:nth-of-type(2) { left: 4.18rem; } .tile:nth-of-type(3) { left: 8.36rem; } .tile:nth-of-type(4) { left: 12.54rem; } .tile:nth-of-type(5) { left: 16.72rem; } .tile:nth-of-type(6) { left: 20.9rem; }
 /* 主角：外层管位置，内层管挤压拉伸（transform-origin 在脚底） */
 .hero { position: absolute; left: 0; bottom: 1.6rem; width: 3.4rem; height: 3.2rem; will-change: transform; z-index: 2; }
-.body { position: absolute; left: .2rem; right: .2rem; bottom: 0; height: 2.8rem; border: .2rem solid var(--ink); border-radius: 1.1rem 1.1rem .9rem .9rem; background: var(--hero);
-  box-shadow: inset -.32rem -.34rem 0 rgba(0, 0, 0, .1), inset .3rem .3rem 0 rgba(255, 255, 255, .45); transform-origin: 50% 100%; will-change: transform; }
+.body { position: absolute; left: .7rem; right: .7rem; bottom: 0; height: 2rem; border-radius: .14rem; background: var(--hero); transform-origin: 50% 100%; will-change: transform; }
+.eye, .cheek, .mouth, .sweat { display: none !important; }
 .eye { position: absolute; top: .9rem; width: .34rem; height: .5rem; border-radius: 50%; background: var(--ink); transition: none; }
 .eye.l { left: .78rem; } .eye.r { right: .78rem; }
 .cheek { position: absolute; top: 1.36rem; width: .5rem; height: .26rem; border-radius: 50%; background: #ff8fab; opacity: .7; }
 .cheek.l { left: .42rem; } .cheek.r { right: .42rem; }
 .mouth { position: absolute; left: 50%; top: 1.34rem; width: .5rem; height: .28rem; margin-left: -.25rem; border: .14rem solid var(--ink); border-top: 0; border-radius: 0 0 .5rem .5rem; }
 .sweat { position: absolute; right: -.75rem; top: -.55rem; width: .7rem; height: .95rem; border: .14rem solid var(--ink); border-radius: 50% 50% 50% 50% / 64% 64% 36% 36%; background: #bfe9ff; opacity: 0; transform-origin: 50% 0; }
-.shadow { position: absolute; left: .5rem; bottom: 1.42rem; width: 2.4rem; height: .5rem; border-radius: 50%; background: rgba(58, 51, 70, .18); will-change: transform; z-index: 1; }
+.shadow { position: absolute; left: .5rem; bottom: 1.42rem; width: 2.4rem; height: .5rem; border-radius: 50%; background: rgba(17, 17, 17, .14); will-change: transform; z-index: 1; }
 .bits { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
-.bits i { position: absolute; width: .6rem; height: .6rem; border: .14rem solid var(--ink); background: var(--c); }
-.msg { margin: 1.5rem 0 0; font: 800 .8rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .32em; padding-left: .32em; color: #a3949a; }
+.bits i { position: absolute; width: .5rem; height: .5rem; border: .1rem solid var(--ink); background: var(--bg); }
+.bits i:nth-child(odd) { background: var(--ink); }
+.msg { margin: 1.5rem 0 0; font: 800 .8rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .32em; padding-left: .32em; color: #9a9a96; }
 .msg.done { color: var(--ink); }
 /* 完成时眯眼笑 */
 .happy .eye { background: none; border: .15rem solid var(--ink); border-bottom: 0; border-radius: .4rem .4rem 0 0; height: .3rem; width: .5rem; top: 1rem; }

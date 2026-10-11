@@ -19,7 +19,7 @@ SVG goo 滤镜：feGaussianBlur 模糊 + feColorMatrix 把 alpha 拉陡（×24 �
 | `--pull` | `.3` | 本体跟过去的比例 |
 | `--reach` | `1.8rem` | 液体最多伸出多远 |
 | `--goo` | `.55` | 粘稠度（模糊半径 = goo × 1rem） |
-| `--liquid` | `#ff5a36` | 液体颜色 |
+| `--liquid` | `#141414` | 液体颜色 |
 
 CSS 变量在 `style.css` 顶部的 `:root` 里，`data-*` 在 `index.html` 上。
 
@@ -41,6 +41,6 @@ SVG goo filter: feGaussianBlur + feColorMatrix steepening alpha (×24 −10) so 
 | `--pull` | `.3` | how far the body follows |
 | `--reach` | `1.8rem` | max reach beyond the edge |
 | `--goo` | `.55` | gooeyness (blur = goo × 1rem) |
-| `--liquid` | `#ff5a36` | liquid color |
+| `--liquid` | `#141414` | liquid color |
 
 Edit #txt for the label; the blur scales with rem so it holds at any size. Keep the goo layer larger than the button or flying droplets get clipped.

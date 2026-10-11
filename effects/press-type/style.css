@@ -1,9 +1,10 @@
-/* Press Type — 一排小压机依次砸下来，每砸一下“压”出一个字：字先被压扁，再弹回原形；最后一台是猫爪印章 */
+/* Press Type（黑白线稿）— 一排压机依次砸下来，每砸一下“压”出一个字：字先被压扁，再按阻尼弹簧弹回原形 */
 :root {
-  --bg: #fdf6ea;
-  --ink: #3a3346;         /* 描边颜色 */
-  --steel: #f3f0ff;       /* 压头颜色 */
-  --beam: #cfc8f3;        /* 横梁颜色 */
+  --bg: #fafaf8;
+  --ink: #111;            /* 线条 / 字的颜色 */
+  --steel: #fff;          /* 压头颜色 */
+  --beam: #fff;           /* 横梁颜色 */
+  --line: .028em;         /* 线宽（跟着字号缩放） */
   --stagger: 140ms;       /* 每台压机之间错开多久 */
   --slam: 150ms;          /* 压头砸下来的时长（越短越狠） */
   --squash: .48;          /* 字被压到多扁（scaleY） */
@@ -14,8 +15,8 @@
 html { font-size: min(3.333vw, 4.444vh); }
 body {
   margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(36rem 18rem at 50% 108%, #f7e2cb, transparent 70%), var(--bg); color: var(--ink);
-  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 .stage { position: relative; width: 30rem; height: 22.5rem; display: grid; place-items: center; }
@@ -23,53 +24,37 @@ body {
 .machine { position: absolute; left: 50%; top: 0; transform: translateX(-50%); margin-top: 2.45em; font-size: var(--fs, 4rem); }
 .row { position: relative; display: flex; gap: .16em; z-index: 1; }
 /* 横梁 */
-.beam { position: absolute; left: -.42em; right: -.42em; top: -2.05em; height: .6em; z-index: 3; border-radius: .2em; background: var(--beam); border: .055em solid var(--ink); box-shadow: .06em .07em 0 var(--ink);
-  background-image: radial-gradient(circle at .26em 50%, var(--ink) .045em, transparent .055em), radial-gradient(circle at calc(100% - .26em) 50%, var(--ink) .045em, transparent .055em); }
-.beam b { position: absolute; inset: 0; display: grid; place-items: center; font: 900 .2em/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .3em; color: var(--ink); opacity: .55; }
+.beam { position: absolute; left: -.42em; right: -.42em; top: -2.05em; height: .5em; z-index: 3; border-radius: .06em; background: var(--beam); border: var(--line) solid var(--ink);
+  background-image: repeating-linear-gradient(-45deg, transparent 0 .1em, rgba(17, 17, 17, .14) .1em calc(.1em + 1px)); }
+.beam b { position: absolute; left: 50%; top: 50%; padding: .1em .5em; transform: translate(-50%, -50%); background: var(--beam); font: 600 .16em/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .3em; color: var(--ink); }
 /* 传送带 + 支脚 */
-.belt { position: absolute; left: -.42em; right: -.42em; top: 1.12em; height: .3em; border-radius: .15em; border: .055em solid var(--ink); box-shadow: .06em .07em 0 var(--ink);
-  background: repeating-linear-gradient(-45deg, #ffd45c 0 .14em, #fff .14em .28em); }
-.legs { position: absolute; left: -.2em; right: -.2em; top: 1.42em; height: .36em; display: flex; justify-content: space-between; }
-.legs i { width: .16em; height: 100%; background: var(--ink); border-radius: 0 0 .05em .05em; }
+.belt { position: absolute; left: -.42em; right: -.42em; top: 1.12em; height: .2em; border-radius: .03em; border: var(--line) solid var(--ink);
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 .07em, var(--bg) .07em .14em); }
+.legs { position: absolute; left: -.2em; right: -.2em; top: 1.32em; height: .36em; display: flex; justify-content: space-between; }
+.legs i { width: var(--line); height: 100%; background: var(--ink); border-radius: 0 0 .05em .05em; }
 /* 每个字一格 */
 .unit { position: relative; width: var(--w, 1em); height: 1.12em; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.unit:focus-visible { outline: .05em solid #8fd3ff; outline-offset: .08em; border-radius: .12em; }
-.glyph { position: absolute; inset: 0; display: grid; place-items: end center; line-height: 1; font-weight: 900; color: var(--c); transform-origin: 50% 100%;
-  -webkit-text-stroke: .07em var(--ink); paint-order: stroke fill; text-shadow: .05em .06em 0 var(--ink); opacity: 0; will-change: transform; }
+.unit:focus-visible { outline: var(--line) dashed var(--ink); outline-offset: .08em; border-radius: .12em; }
+.glyph { position: absolute; inset: 0; display: grid; place-items: end center; line-height: 1; font-weight: 800; letter-spacing: -.02em; color: var(--ink); transform-origin: 50% 100%; opacity: 0; will-change: transform; }
 .glyph span { display: block; padding-bottom: .04em; }
 .unit.zh .glyph { font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; }
 .unit.on .glyph { opacity: 1; }
-.dough { position: absolute; left: 50%; bottom: 0; width: .66em; height: .3em; margin-left: -.33em; border-radius: 50% 50% 42% 42% / 70% 70% 30% 30%; background: var(--c); border: .055em solid var(--ink); box-shadow: .04em .05em 0 var(--ink); transform-origin: 50% 100%; }
+.dough { position: absolute; left: 50%; bottom: 0; width: .6em; height: .22em; margin-left: -.3em; border-radius: .04em; background: repeating-linear-gradient(-45deg, var(--ink) 0 1px, transparent 1px .07em); border: var(--line) solid var(--ink); transform-origin: 50% 100%; }
 .unit.on .dough { opacity: 0; }
 .unit:not(.on) .dough { animation: breathe 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * -.23s); }
 @keyframes breathe { 50% { transform: scale(1.06, .9); } }
 /* 压机：压头 + 一根很长的杆子（杆子上端藏在横梁后面） */
 .press { position: absolute; left: 50%; bottom: calc(100% + .62em); width: .92em; height: .42em; margin-left: -.46em; z-index: 2; will-change: transform; pointer-events: none; }
-.press::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: .13em; height: 3em; margin-left: -.065em; background: var(--ink); border-radius: .06em; }
-.press i { position: absolute; inset: 0; border-radius: .1em .1em .14em .14em; background: var(--steel); border: .055em solid var(--ink); box-shadow: inset 0 -.1em 0 rgba(58, 51, 70, .16); }
-.press i::after { content: ""; position: absolute; left: .1em; right: .1em; top: .08em; height: .06em; border-radius: 1em; background: #fff; }
-.unit.cat .press i { background: #ffd6e2; }
-.unit.cat .press i::before { /* 猫爪印章的肉垫 */ content: ""; position: absolute; left: 50%; bottom: -.02em; width: .5em; height: .12em; margin-left: -.25em; border-radius: 50% 50% 0 0; background: #ff8fab;
-  box-shadow: -.17em -.06em 0 -.03em #ff8fab, .17em -.06em 0 -.03em #ff8fab; }
-.puff { position: absolute; bottom: .02em; width: .16em; height: .16em; margin-left: -.08em; border-radius: 50%; background: #fff; border: .04em solid var(--ink); pointer-events: none; opacity: 0; }
-/* 小猫字 */
-.cat-g { place-items: end center; }
-.cat { width: .86em; height: 1.06em; overflow: visible; display: block; filter: drop-shadow(.05em .06em 0 var(--ink)); }
-.cat .shell { fill: #ece6ff; stroke: var(--ink); stroke-width: 6.5; stroke-linejoin: round; }
-.cat .ear { fill: #d9cfff; }
-.cat .eye { fill: var(--ink); }
-.cat .line { fill: none; stroke: var(--ink); stroke-width: 5.5; stroke-linecap: round; stroke-linejoin: round; }
-.cat .blush { fill: #ff8fab; opacity: .6; }
-.cat .x, .cat .h { display: none; }
-.unit[data-face="x"] .cat .n, .unit[data-face="h"] .cat .n { display: none; }
-.unit[data-face="x"] .cat .x, .unit[data-face="h"] .cat .h { display: inline; }
-.heart { position: absolute; width: .2em; height: .2em; pointer-events: none; color: #ff8fab; font-size: 1em; }
+.press::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: .08em; height: 3em; margin-left: -.04em; background: var(--bg); border-left: var(--line) solid var(--ink); border-right: var(--line) solid var(--ink); }
+.press i { position: absolute; inset: 0; border-radius: .04em; background: var(--steel); border: var(--line) solid var(--ink); }
+.press i::after { content: ""; position: absolute; left: 0; right: 0; bottom: .1em; border-top: var(--line) solid var(--ink); }
+.puff { position: absolute; bottom: .02em; width: .12em; height: .12em; margin-left: -.06em; border-radius: 50%; background: var(--bg); border: var(--line) solid var(--ink); pointer-events: none; opacity: 0; }
 /* 改字的小表单 */
 .retype { position: absolute; left: 50%; bottom: 1.1rem; display: flex; gap: .5rem; transform: translateX(-50%); }
-.retype input, .retype button { font: inherit; font-size: .95rem; font-weight: 800; border: .14rem solid var(--ink); border-radius: 2rem; color: var(--ink); box-shadow: .14rem .18rem 0 var(--ink); }
+.retype input, .retype button { font: inherit; font-size: .9rem; font-weight: 600; border: .08rem solid var(--ink); border-radius: .3rem; color: var(--ink); }
 .retype input { width: 10rem; padding: .45rem .9rem; background: #fff; outline: none; }
-.retype input:focus-visible { box-shadow: .14rem .18rem 0 var(--ink), 0 0 0 .22rem #8fd3ff; }
-.retype button { padding: .45rem 1rem; background: #ff8fab; color: #fff; cursor: pointer; text-shadow: 0 .08rem 0 rgba(58, 51, 70, .35); transition: transform .15s cubic-bezier(.34, 1.56, .64, 1), box-shadow .15s; }
-.retype button:active { transform: translate(.1rem, .14rem); box-shadow: .04rem .04rem 0 var(--ink); }
-.retype button:focus-visible { outline: .2rem solid #8fd3ff; outline-offset: .15rem; }
+.retype input:focus-visible { outline: .08rem dashed var(--ink); outline-offset: .2rem; }
+.retype button { padding: .45rem 1.1rem; background: var(--ink); color: var(--bg); cursor: pointer; transition: transform .15s cubic-bezier(.34, 1.56, .64, 1); }
+.retype button:active { transform: scale(.96); }
+.retype button:focus-visible { outline: .08rem dashed var(--ink); outline-offset: .2rem; }
 @media (prefers-reduced-motion: reduce) { .unit:not(.on) .dough { animation: none; } }

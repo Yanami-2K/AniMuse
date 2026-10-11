@@ -7,17 +7,17 @@
     "en": "Hop Loader"
   },
   "summary": {
-    "zh": "一块小果冻沿着进度格一格格往前跳，每落一格就把那格“踩亮”。进度卡住时它会左右张望、冒汗；到 100% 翻个跟头，撒一把彩纸。",
-    "en": "A little jelly hops along the progress tiles, lighting up each one it lands on. When progress stalls it looks around and sweats; at 100% it does a flip and throws confetti."
+    "zh": "一个黑方块沿着进度格一格格往前跳，每落一格就把那格“踩实”。进度卡住时它原地左右歪两下蓄力；到 100% 翻个跟头，撒出一把小方块。",
+    "en": "A black block hops along the progress tiles, filling each one it lands on. When progress stalls it tilts side to side, winding up; at 100% it flips and scatters a handful of squares."
   },
   "technique": {
-    "zh": "一条 async 时间线串起每一跳：下蹲 → 起跳拉长 → 抛物线（x 线性、y 用两段 ease）→ 落地压扁回弹。被踩的格子下沉一下，颜色从底部灌满。百分比数字跟着落地的瞬间跳。",
-    "en": "One async timeline chains every hop: crouch → stretch on take-off → parabola (linear x, two eased halves on y) → squash and rebound on landing. The tile dips and fills with color from the bottom; the percentage ticks on each landing."
+    "zh": "一条 async 时间线串起每一跳：下蹲 → 起跳拉长 → 抛物线（x 线性、y 用两段 ease）→ 落地压扁回弹。被踩的格子下沉一下，黑色从底部灌满。百分比数字跟着落地的瞬间跳。",
+    "en": "One async timeline chains every hop: crouch → stretch on take-off → parabola (linear x, two eased halves on y) → squash and rebound on landing. The tile dips and fills with ink from the bottom; the percentage ticks on each landing."
   },
   "tags": [
     "progress",
     "loader",
-    "character",
+    "monochrome",
     "squash",
     "加载"
   ],
@@ -53,16 +53,16 @@
     },
     {
       "name": "--hero",
-      "default": "#7ee0b5",
+      "default": "#111",
       "desc": {
-        "zh": "小果冻的颜色",
-        "en": "jelly color"
+        "zh": "方块颜色",
+        "en": "block color"
       }
     }
   ],
   "adapt": {
-    "zh": "接真实进度时，把“跳到第几格”绑到下载 / 上传进度上，卡住超过 1.5 秒再触发张望。",
-    "en": "Bind the target tile to real progress; trigger the look-around only after ~1.5s without change."
+    "zh": "接真实进度时，把“跳到第几格”绑到下载 / 上传进度上，卡住超过 1.5 秒再触发原地歪头。",
+    "en": "Bind the target tile to real progress; trigger the tilt only after ~1.5s without change."
   },
   "files": [
     "index.html",

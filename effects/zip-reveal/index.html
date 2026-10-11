@@ -9,15 +9,13 @@
 <body>
   <main class="stage" id="stage">
     <svg class="scene" id="scene" viewBox="0 0 400 300" aria-labelledby="ttl">
-      <title id="ttl" data-en="A cat-shaped pouch with a zipper. Unzip it to find the ghost cat inside.">一个猫咪形状的笔袋，拉开拉链，里面藏着幽灵猫</title>
+      <title id="ttl" data-en="A canvas pouch with a zipper. Unzip it to reveal the coupon inside.">一个帆布收纳袋，拉开拉链，里面藏着一张优惠券</title>
       <defs>
         <clipPath id="catClip"><path id="catClipPath" d="M0 0Z"/></clipPath>
-        <pattern id="stripe" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="8" height="8" fill="#ffe4ec"/><rect width="4" height="8" fill="#ffd2df"/></pattern>
+        <pattern id="stripe" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#fff"/><rect width="1" height="6" fill="#111" opacity=".35"/></pattern>
       </defs>
-      <ellipse class="floor" cx="200" cy="270" rx="140" ry="10"/>
-      <path class="shadow" d="M86 176 L86 110 Q86 90 98 68 Q102 62 108 66 L144 102 Q206 92 268 102 L304 66 Q310 62 314 68 Q326 90 326 110 L328 234 Q328 270 292 270 L120 270 Q84 270 84 234 Z"/>
-      <path class="back k" d="M80 176 L80 104 Q80 84 92 62 Q96 56 102 60 L138 96 Q200 86 262 96 L298 60 Q304 56 308 62 Q320 84 320 104 L320 176 Z"/>
-      <path class="earIn" d="M99 72 L124 96 L94 100 Z M301 72 L276 96 L306 100 Z"/>
+      <path class="floor" d="M56 264.5 H344"/>
+      <path class="back k" d="M80 176 L80 102 Q80 84 98 84 L302 84 Q320 84 320 102 L320 176 Z"/>
       <path class="lens" id="lens" d="M0 0Z"/>
       <path class="lining" id="lining" d="M0 0Z"/>
       <path class="tape" id="tapeU" d="M0 0Z"/>
@@ -25,33 +23,23 @@
       <g clip-path="url(#catClip)">
         <g id="cat">
           <g id="catInner">
-            <g transform="scale(.68) translate(-100 -168)">
-              <path class="tail" d="M140 146 Q176 140 170 108"/>
-              <path class="shell" d="M58 166 L58 96 L66 58 L84 78 Q100 72 116 78 L134 58 L142 96 L142 166 Q131 156 121 168 Q110 156 100 168 Q90 156 79 168 Q69 156 58 166Z"/>
-              <path class="catEar" d="M68 70 L80 82 L64 86Z M132 70 L120 82 L136 86Z"/>
-              <g id="eyesN"><ellipse class="eye" cx="84" cy="112" rx="6.5" ry="8.5"/><ellipse class="eye" cx="116" cy="112" rx="6.5" ry="8.5"/></g>
-              <path class="line" id="eyesX" d="M77 105 L89 112 L77 119 M123 105 L111 112 L123 119"/>
-              <path class="line" id="eyesH" d="M76 115 Q84 104 92 115 M108 115 Q116 104 124 115"/>
-              <g class="blush"><ellipse cx="70" cy="128" rx="7" ry="5"/><ellipse cx="130" cy="128" rx="7" ry="5"/></g>
-              <path class="line" id="mouth" d="M92 126 Q96 132 100 126 Q104 132 108 126"/>
-              <ellipse class="eye" id="mouthO" cx="100" cy="130" rx="5" ry="6"/>
+            <g class="ticket">
+              <path class="tk" d="M-54 -76 H54 V-30 A6 6 0 0 0 54 -18 V0 H-54 V-18 A6 6 0 0 0 -54 -30 Z"/>
+              <text class="tkS" x="-44" y="-60">COUPON</text><text class="tkS" x="44" y="-60" text-anchor="end">N°01</text>
+              <text class="tkB" x="0" y="-34" text-anchor="middle">−25%</text>
+              <path class="tkD" d="M-44 -24 H44"/>
+              <text class="tkS" x="0" y="-9" text-anchor="middle">ANIMUSE-25</text>
             </g>
           </g>
         </g>
       </g>
       <path class="front k" id="front" d="M0 0Z"/>
       <path class="stitch" d="M90 152 L90 226 Q90 254 118 254 L282 254 Q310 254 310 226 L310 152"/>
-      <g id="pface" class="pface">
-        <path class="pfEye" id="pfEyes" d="M160 196 Q170 204 180 196 M220 196 Q230 204 240 196"/>
-        <ellipse class="pfBlush" cx="150" cy="212" rx="10" ry="6"/><ellipse class="pfBlush" cx="250" cy="212" rx="10" ry="6"/>
-        <path class="pfNose" d="M195 208 H205 L200 213 Z"/>
-        <path class="pfEye" d="M190 218 Q195 223 200 217 Q205 223 210 218"/>
-        <path class="pfWhisk" d="M128 206 L108 202 M128 214 L108 216 M272 206 L292 202 M272 214 L292 216"/>
-      </g>
-      <g class="patch" transform="translate(280 240) rotate(-8)"><rect class="k" x="-22" y="-11" width="44" height="22" rx="7"/><text x="0" y="5" text-anchor="middle">BOO</text></g>
+      <text class="label" x="102" y="244">CANVAS POUCH — 208 MM</text>
+      <text class="label" x="298" y="244" text-anchor="end">N°01</text>
       <path class="tape" id="tapeL" d="M0 0Z"/>
       <g id="teethL"></g>
-      <g id="paws"><ellipse class="paw k" cx="-15" cy="0" rx="8" ry="6"/><ellipse class="paw k" cx="15" cy="0" rx="8" ry="6"/></g>
+      <g id="paws"></g>
       <g id="pull" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="拉链" data-en-label="Zipper">
         <circle class="ring" id="ring" r="22"/>
         <rect class="slider k" id="slider" x="-12" y="-8" width="24" height="16" rx="5"/>
@@ -60,7 +48,7 @@
       </g>
       <g id="bubble" class="bubble">
         <path class="k" id="bubbleBox" d="M0 0Z"/>
-        <text id="bubbleTxt" x="0" y="0" text-anchor="middle" data-en="Boo! You found me">嘿！被你发现啦</text>
+        <text id="bubbleTxt" x="0" y="0" text-anchor="middle" data-en="Coupon unlocked">优惠券已解锁</text>
       </g>
     </svg>
     <p class="hint" data-en="Drag the zipper pull · ← → or Space">拖动拉链头 · ← → 或空格</p>

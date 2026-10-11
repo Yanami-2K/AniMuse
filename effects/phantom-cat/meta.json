@@ -7,8 +7,8 @@
     "en": "Phantom Thief Cat"
   },
   "summary": {
-    "zh": "戴礼帽和眼罩的怪盗猫从墙后冒出来，左看右看，抬帽致意，甩出一张旋转的预告函钉在墙上，然后缩回去。一段 4 秒的小剧情。",
-    "en": "A top-hatted, masked thief cat pops up from behind a wall, glances left and right, tips its hat, flicks a spinning calling card that pins to the wall, then ducks away. A 4-second micro-story."
+    "zh": "戴礼帽和眼罩的怪盗猫从墙后冒出来，左看右看，抬帽致意，甩出一张旋转的预告函钉在墙上，然后缩回墙头只露出眼睛偷看。一段循环的小剧情，舞台永远不空。",
+    "en": "A top-hatted, masked thief cat pops up from behind a wall, glances left and right, tips its hat, flicks a spinning calling card that pins to the wall, then sinks back to peek over the ledge. A looping micro-story that never leaves the stage empty."
   },
   "technique": {
     "zh": "一条 async 时间线串起 6 个动作；冒头带 4% 过冲；只移动瞳孔做「看」；卡片从爪子位置 translate + rotate(2 圈 + 6deg) + scale 飞出，落定瞬间出现图钉并压缩一下。",

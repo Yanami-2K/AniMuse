@@ -72,7 +72,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
   }
 
   // ---- 真实指针 ----
-  addEventListener('pointermove', function (e) { real = true; lastReal = performance.now(); ptr = { x: e.clientX, y: e.clientY }; cursor.classList.remove('on'); });
+  addEventListener('pointermove', function (e) { if (!e.isTrusted || (!e.movementX && !e.movementY)) return; real = true; lastReal = performance.now(); ptr = { x: e.clientX, y: e.clientY }; cursor.classList.remove('on'); });
   document.addEventListener('pointerleave', function () { if (real) ptr = null; });
   btn.addEventListener('click', function () { burst(); });
 

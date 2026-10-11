@@ -1,7 +1,7 @@
-/* Liquid Magnetic Button — 按钮被指针“吸”过去，液体伸出一截去够它；点一下炸成水珠再融回来 */
+/* Liquid Magnetic Button（黑白版）— 按钮被指针“吸”过去，液体伸出一截去够它；点一下炸成水珠再融回来 */
 :root {
-  --bg: #16141c;
-  --liquid: #ff5a36;      /* 液体颜色 */
+  --bg: #f4f3ef;
+  --liquid: #141414;      /* 液体颜色 */
   --text: #fff;
   --field: 11rem;         /* 磁场半径：指针进到这个范围才开始吸 */
   --pull: .3;             /* 按钮本体跟过去的比例 */
@@ -11,7 +11,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: min(3.333vw, 4.444vh); }
 body {
-  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--bg);
+  margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--bg); color: var(--liquid);
   font-family: ui-sans-serif, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
 }
@@ -27,11 +27,10 @@ body {
   background: none; border: 0; border-radius: 99rem; color: var(--text); cursor: pointer; will-change: transform;
   font-family: inherit; font-size: 1.35rem; font-weight: 800; line-height: 1; letter-spacing: .02em; -webkit-tap-highlight-color: transparent;
 }
-.label:focus-visible { outline: .14rem solid #fff; outline-offset: .5rem; }
+.label:focus-visible { outline: .14rem solid var(--liquid); outline-offset: .5rem; }
 .label span { display: inline-block; }
 .arrow { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.glow { position: absolute; left: 50%; top: 50%; width: 40rem; height: 28rem; margin: -14rem 0 0 -20rem; border-radius: 50%; pointer-events: none; will-change: transform;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--liquid) 26%, transparent), color-mix(in srgb, var(--liquid) 9%, transparent) 45%, color-mix(in srgb, var(--liquid) 3%, transparent) 70%, transparent); }
-.cap { position: absolute; bottom: 1.4rem; left: 0; right: 0; margin: 0; text-align: center; font: 700 .62rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .3em; color: rgba(255, 255, 255, .28); }
-.cursor { position: fixed; left: 0; top: 0; width: 1.6rem; height: 1.6rem; opacity: 0; pointer-events: none; filter: drop-shadow(0 .15rem .3rem rgba(0, 0, 0, .5)); transform-origin: 4px 3px; transition: opacity .3s; z-index: 9; }
+.glow { display: none; }
+.cap { position: absolute; bottom: 1.4rem; left: 0; right: 0; margin: 0; text-align: center; font: 700 .62rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .3em; color: rgba(20, 20, 20, .38); }
+.cursor { position: fixed; left: 0; top: 0; width: 1.6rem; height: 1.6rem; opacity: 0; pointer-events: none; filter: drop-shadow(0 .1rem .2rem rgba(0, 0, 0, .25)); transform-origin: 4px 3px; transition: opacity .3s; z-index: 9; }
 .cursor.on { opacity: 1; }

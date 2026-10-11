@@ -13,31 +13,29 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { font-size: min(4.2vw, 5.6vh); }
-body { margin: 0; min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 1.6rem; background: #f6f5f8;
+body { margin: 0; min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 1.6rem; background: #fafafa;
   font-family: Inter, "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
-  background: linear-gradient(90deg, rgba(23, 21, 28, .07) 1px, transparent 1px 2.4rem) 50% 50% / 2.4rem 2.4rem, linear-gradient(rgba(23, 21, 28, .07) 1px, transparent 1px 2.4rem) 50% 50% / 2.4rem 2.4rem;
-  mask: linear-gradient(-20deg, transparent 50%, #fff); -webkit-mask: linear-gradient(-20deg, transparent 50%, #fff); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
 
 /* —— 以下结构与选择器来自原作（保留了原作的 @layer 顺序：flip 覆盖 demo） —— */
 @layer demo, flip;
 @layer flip {
-.premium:has(:checked)::before { translate: -50% -250%; scale: .85; }
+.premium:has(:checked)::before { translate: -50% -265%; scale: .8; color: var(--inactive); }
+.premium:has(:checked)::after { opacity: 1; scale: 1 1; }
 .premium:has(:checked) label span { scale: 1; }
-.premium:has(:checked) .indicator { background: var(--secondary); clip-path: inset(0 0 0 0 round 100px); }
+.premium:has(:checked) .indicator { background: var(--primary); clip-path: inset(0 0 0 0 round 100px); }
 .premium:has(:checked) label { color: var(--inactive); opacity: .75; }
 .premium:has(:nth-of-type(1):checked) label:nth-of-type(1),
-.premium:has(:nth-of-type(2):checked) label:nth-of-type(2) { color: var(--primary); opacity: 1; }
+.premium:has(:nth-of-type(2):checked) label:nth-of-type(2) { color: var(--secondary); opacity: 1; }
 .premium:has(:nth-of-type(1):checked) .indicator { translate: -100% 0; }
 .premium:has(:nth-of-type(2):checked) .indicator { translate: 0 0; }
 .control label { transition-property: color, opacity; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease); }
 .control__track:not(:has(> :checked)) > label { color: var(--primary); opacity: var(--drop-off); }
-.control__track:not(:has(> :checked)) > .indicator { translate: 100% 0; }
-.indicator { transition: translate calc(var(--duration) * 1s) var(--ease); }
+.control__track:not(:has(> :checked)) > .indicator { translate: 100% 0; background: #ecebf0; }
+.indicator { transition: translate calc(var(--duration) * 1s) var(--ease), background calc(var(--duration) * 1s) var(--ease); }
 .premium .indicator { transition-property: translate, clip-path, background; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease);
   clip-path: inset(73cqh calc(50% + 1px) calc(27cqh - 2px) calc(50% - 3px) round 100px); }
-.premium::before { transition-property: scale, translate; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease); }
+.premium::before { transition-property: scale, translate, color; transition-duration: calc(var(--duration) * 1s); transition-timing-function: var(--ease); }
 .control__track:has(> :checked) .premium .indicator { background: var(--inactive); }
 .control__track:has(> :checked) .premium label { color: var(--inactive); }
 
@@ -48,6 +46,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .control { position: relative; width: 16.25rem; height: 2.4rem; background: var(--secondary); border-radius: 100px; border: 1px solid var(--border); padding: 2px; letter-spacing: .5px;
   box-shadow: -0.1px 1px 1px hsl(var(--shadow-color) / .39), -0.2px 3.2px 3.1px -0.4px hsl(var(--shadow-color) / .36), -0.3px 5.7px 5.5px -0.8px hsl(var(--shadow-color) / .34), -0.5px 9.3px 8.9px -1.2px hsl(var(--shadow-color) / .32), -0.8px 14.8px 14.2px -1.6px hsl(var(--shadow-color) / .29), -1.3px 23.1px 22.2px -2px hsl(var(--shadow-color) / .27), -2px 35px 33.7px -2.4px hsl(var(--shadow-color) / .24); }
 .control__track { display: grid; place-items: center; grid-template-columns: repeat(4, 1fr); width: 100%; height: 100%; position: relative; }
+.premium::after { /* 选中高级档时，“高级”下面出现一道括号，把两个子选项框在一起 */ content: ""; position: absolute; left: 12%; right: 12%; top: -.55rem; height: .32rem; border: 1px solid var(--inactive); border-bottom: 0; border-radius: .2rem .2rem 0 0; opacity: 0; scale: .6 1; transition: opacity calc(var(--duration) * 1s), scale calc(var(--duration) * 1s) var(--ease); pointer-events: none; }
 .premium::before { content: attr(data-label); position: absolute; left: 50%; top: 50%; translate: -50% -80%; color: var(--primary); font-size: .75rem; z-index: 2; white-space: nowrap; }
 .control label { height: 100%; width: 100%; display: grid; place-items: center; cursor: pointer; font-size: .75rem; color: var(--primary); z-index: 2; }
 .control__track > label { color: var(--secondary); }

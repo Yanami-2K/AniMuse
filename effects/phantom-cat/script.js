@@ -17,7 +17,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     while (id === run) {
       await sleep(400, id);
       // 冒头：快速上来，过冲一点再落稳
-      A(cat, [{ transform: 'translateY(105%)' }, { transform: 'translateY(-4%)', offset: .7 }, { transform: 'translateY(0)' }], { duration: RISE, easing: 'cubic-bezier(.2,.8,.3,1)' });
+      A(cat, [{ transform: 'translateY(25%)' }, { transform: 'translateY(-4%)', offset: .7 }, { transform: 'translateY(0)' }], { duration: RISE, easing: 'cubic-bezier(.2,.8,.3,1)' });
       await sleep(RISE + 150, id);
       // 左看右看（只动瞳孔）
       A(eyes, [{ transform: 'none' }, { transform: 'translateX(-4px)', offset: .2 }, { transform: 'translateX(-4px)', offset: .45 }, { transform: 'translateX(4px)', offset: .65 }, { transform: 'translateX(4px)', offset: .9 }, { transform: 'none' }], { duration: 1100, easing: 'ease-in-out', fill: 'none' });
@@ -37,9 +37,11 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
       card.style.setProperty('--pin', 1);   // 落定瞬间出现图钉 + 一下压缩
       A(card, [{ transform: 'rotate(6deg) scale(1)' }, { transform: 'rotate(6deg) scale(.94)', offset: .3 }, { transform: 'rotate(6deg) scale(1)' }], { duration: 300, easing: 'ease-out' });
       await sleep(500, id);
-      // 缩回墙后
-      A(cat, [{ transform: 'translateY(0)' }, { transform: 'translateY(-5%)', offset: .25 }, { transform: 'translateY(105%)' }], { duration: 420, easing: 'cubic-bezier(.5,0,.8,.3)' });
-      await sleep(2000, id);
+      // 缩回去一半：只露出眼睛和帽子在墙头上偷看（舞台永远不空）
+      A(cat, [{ transform: 'translateY(0)' }, { transform: 'translateY(-5%)', offset: .25 }, { transform: 'translateY(25%)' }], { duration: 460, easing: 'cubic-bezier(.5,0,.4,1)' });
+      await sleep(700, id);
+      A(eyes, [{ transform: 'none' }, { transform: 'translateX(5px)', offset: .3 }, { transform: 'translateX(5px)', offset: .8 }, { transform: 'none' }], { duration: 1300, easing: 'ease-in-out', fill: 'none' });
+      await sleep(1700, id);
       A(card, [{ opacity: 1, transform: 'rotate(6deg)' }, { opacity: 0, transform: 'translateY(1rem) rotate(14deg)' }], { duration: 420, easing: 'ease-in' });
       await sleep(420, id); card.style.setProperty('--pin', 0);
     }

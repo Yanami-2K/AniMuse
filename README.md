@@ -45,12 +45,10 @@ AniMuse 是一个开源的网页动效库。每个效果都是一份能直接双
 | 17 | [导航里回答 Agent](effects/agent-preview/) | Agent Preview Card | 卡片 | CSS / JS / WAAPI | 想法 [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129) |
 | 18 | [阅读环境](effects/reading-env/) | Reading Environment | 微交互 | Canvas / Web Audio / JS | 想法 [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066) |
 | 19 | [会变形的套餐切换](effects/tier-toggle/) | Dynamic Tier Toggle | 微交互 | CSS / :has() | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/vEEZxOM) |
-| 20 | [靠近发光的卡片](effects/glow-cards/) | Proximity Glow Cards | 卡片 | CSS / JS / conic-gradient | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/QWYPaax) |
-| 21 | [闪光按钮](effects/sparkle-button/) | Sparkle Button | 按钮 | CSS / JS | 原作 [Jhey Tompkins](https://codepen.io/jh3y/pen/LYJMPBL) |
-| 22 | [抓娃娃机](effects/claw-catch/) | Claw Catch | 按钮 | SVG / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/37) |
-| 23 | [拉链揭开](effects/zip-reveal/) | Zip Reveal | 物理 | SVG / JS | 灵感 [yui540](https://yui540.com/motions/60) |
-| 24 | [压字机](effects/press-type/) | Press Type | 文字 | CSS / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/51) |
-| 25 | [可爱弹窗六式](effects/dialog-entrances/) | Dialog Entrances | 转场 | CSS / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/30) |
+| 20 | [抓娃娃机](effects/claw-catch/) | Claw Catch | 按钮 | SVG / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/37) |
+| 21 | [拉链揭开](effects/zip-reveal/) | Zip Reveal | 物理 | SVG / JS | 灵感 [yui540](https://yui540.com/motions/60) |
+| 22 | [压字机](effects/press-type/) | Press Type | 文字 | CSS / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/51) |
+| 23 | [弹窗进出场六式](effects/dialog-entrances/) | Dialog Entrances | 转场 | CSS / JS / WAAPI | 灵感 [yui540](https://yui540.com/motions/30) |
 
 ## 目录结构
 
@@ -95,8 +93,8 @@ npx serve dist              # 或者 python3 -m http.server -d dist
 
 ## 致谢
 
-- **[Jhey Tompkins](https://codepen.io/jh3y)**（[@jh3yy](https://x.com/jh3yy)）：[Dynamic Tier Toggle](https://codepen.io/jh3y/pen/vEEZxOM)、[Proximity Glow Cards](https://codepen.io/jh3y/pen/QWYPaax)、[Sparkle Button](https://codepen.io/jh3y/pen/LYJMPBL) 三个效果移植自他的 CodePen（公开 Pen 默认 MIT 许可）。移植版改成了原生、单目录，调了配色和尺寸，加了自动演示和中英文；原版权声明保留在各效果目录的 `LICENSE` 里。
-- **[yui540](https://x.com/yui540)**：爱睡觉的开关、啵啵转场、跳格子加载、揭贴纸这四个效果的灵感来自 yui540 可爱、弹跳、角色感很强的 CSS 动效风格；抓娃娃机、拉链揭开、压字机、可爱弹窗六式分别受 [yui540.com/motions](https://yui540.com/motions) 里的 [37](https://yui540.com/motions/37)、[60](https://yui540.com/motions/60)、[51](https://yui540.com/motions/51)、[30](https://yui540.com/motions/30) 启发。代码、角色（统一换成 AniMuse 的幽灵猫）和美术都是原创，没有使用任何 yui540 的素材或代码。
+- **[Jhey Tompkins](https://codepen.io/jh3y)**（[@jh3yy](https://x.com/jh3yy)）：[Dynamic Tier Toggle](https://codepen.io/jh3y/pen/vEEZxOM) 移植自他的 CodePen（公开 Pen 默认 MIT 许可）。移植版改成了原生、单目录，调了配色、尺寸和选中态层级，加了自动演示和中英文；原版权声明保留在效果目录的 `LICENSE` 里。
+- **[yui540](https://x.com/yui540)**：爱睡觉的开关、啵啵转场、跳格子加载、揭贴纸这四个效果的灵感来自 yui540 可爱、弹跳、角色感很强的 CSS 动效风格；抓娃娃机、拉链揭开、压字机、弹窗进出场六式分别受 [yui540.com/motions](https://yui540.com/motions) 里的 [37](https://yui540.com/motions/37)、[60](https://yui540.com/motions/60)、[51](https://yui540.com/motions/51)、[30](https://yui540.com/motions/30) 启发。代码和美术都是原创（角色统一换成 AniMuse 的幽灵猫；跳格子加载、拉链揭开、压字机、弹窗进出场六式改成了黑白线稿），没有使用任何 yui540 的素材或代码。
 - **[Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452)**：像素猫输入框的交互想法来自他的 “lil pix”。像素猫与代码为原创。
 - **[Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066)**：阅读环境的想法来自他的 “Reading environment”。代码、声音合成与文案为原创。
 - **[Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129)**：导航里回答 Agent 的交互想法来自她的设计。代码与文案为原创。
@@ -126,7 +124,7 @@ Either way the agent is asked to rebuild the effect in your project's existing s
 
 **Contributing:** add `effects/<slug>/` with `index.html`, `style.css`, optional `script.js`, a `meta.json` (copy an existing one) and a `README.md`; run `npm run previews -- <slug>` and `node scripts/build.mjs`; open a PR. No external libraries, params as CSS variables, reduced-motion support, and listen for the `'animuse:replay'` message if your demo needs to restart on hover.
 
-**Credits:** three effects are ports of [Jhey Tompkins](https://codepen.io/jh3y)’ CodePens ([Dynamic Tier Toggle](https://codepen.io/jh3y/pen/vEEZxOM), [Proximity Glow Cards](https://codepen.io/jh3y/pen/QWYPaax), [Sparkle Button](https://codepen.io/jh3y/pen/LYJMPBL); public Pens are MIT, notices kept in each folder’s `LICENSE`). Sleepy Toggle, Pop Shape Transition, Hop Loader and Sticker Peel are inspired by [yui540](https://x.com/yui540)’s playful CSS animation style; Claw Catch, Zip Reveal, Press Type and Dialog Entrances are inspired by [yui540.com/motions](https://yui540.com/motions) ([37](https://yui540.com/motions/37), [60](https://yui540.com/motions/60), [51](https://yui540.com/motions/51), [30](https://yui540.com/motions/30)) — original code and art with AniMuse’s own ghost cat, no assets or code copied. Interaction ideas: Pixel Cat Input — [Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452) (“lil pix”); Reading Environment — [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066); Agent Preview Card — [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129).
+**Credits:** Dynamic Tier Toggle is a port of [Jhey Tompkins](https://codepen.io/jh3y)’ [CodePen](https://codepen.io/jh3y/pen/vEEZxOM) (public Pens are MIT; the notice is kept in the folder’s `LICENSE`). Sleepy Toggle, Pop Shape Transition, Hop Loader and Sticker Peel are inspired by [yui540](https://x.com/yui540)’s playful CSS animation style; Claw Catch, Zip Reveal, Press Type and Dialog Entrances are inspired by [yui540.com/motions](https://yui540.com/motions) ([37](https://yui540.com/motions/37), [60](https://yui540.com/motions/60), [51](https://yui540.com/motions/51), [30](https://yui540.com/motions/30)) — original code and art (AniMuse’s own ghost cat where there is a character; Hop Loader, Zip Reveal, Press Type and Dialog Entrances are black-and-white line art), no assets or code copied. Interaction ideas: Pixel Cat Input — [Rauno Freiberg](https://x.com/raunofreiberg/status/2060034871263703452) (“lil pix”); Reading Environment — [Paco Coursey](https://x.com/pacocoursey/status/1460760109009752066); Agent Preview Card — [Mariana Castilho (Profound)](https://x.com/mrncst/status/2107936011560837129).
 
 **i18n:** demos receive `?lang=zh|en`; `npm run check:i18n` fails if any Chinese shows up in English mode.
 

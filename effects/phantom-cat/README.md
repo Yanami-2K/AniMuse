@@ -2,7 +2,7 @@
 
 ![preview](preview.png)
 
-戴礼帽和眼罩的怪盗猫从墙后冒出来，左看右看，抬帽致意，甩出一张旋转的预告函钉在墙上，然后缩回去。一段 4 秒的小剧情。
+戴礼帽和眼罩的怪盗猫从墙后冒出来，左看右看，抬帽致意，甩出一张旋转的预告函钉在墙上，然后缩回墙头只露出眼睛偷看。一段循环的小剧情，舞台永远不空。
 
 - 分类：角色
 - 技术：SVG / CSS / JS / WAAPI，无依赖，直接双击 `index.html` 就能看
@@ -30,7 +30,7 @@ CSS 变量在 `style.css` 顶部的 `:root` 里，`data-*` 在 `index.html` 上�
 
 ---
 
-**EN** — A top-hatted, masked thief cat pops up from behind a wall, glances left and right, tips its hat, flicks a spinning calling card that pins to the wall, then ducks away. A 4-second micro-story.
+**EN** — A top-hatted, masked thief cat pops up from behind a wall, glances left and right, tips its hat, flicks a spinning calling card that pins to the wall, then sinks back to peek over the ledge. A looping micro-story that never leaves the stage empty.
 
 Six beats on one async timeline: a 4% overshoot on the pop-up; only the pupils move to “look”; the card flies from the paw with translate + rotate(2 turns + 6deg) + scale, and a pin appears with a small squash on landing.
 

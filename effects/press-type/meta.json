@@ -1,14 +1,14 @@
 {
   "slug": "press-type",
-  "order": 24,
+  "order": 22,
   "category": "text",
   "name": {
     "zh": "压字机",
     "en": "Press Type"
   },
   "summary": {
-    "zh": "标题入场：一排小压机依次砸下来，每砸一下就从面团里“压”出一个字——先被压扁，再 Q 弹地回到原形，旁边冒两团小烟。最后一台是猫爪印章，压出一只幽灵猫。下面可以输入自己的词再压一遍，点任意一个字也能单独再压一次。",
-    "en": "A headline entrance: a row of little presses slam down one after another, each stamping a letter out of a lump of dough — squashed flat first, then springing back into shape with a puff. The last press is a paw stamp that stamps out a ghost cat. Type your own word to press it again, or click any letter to re-press it."
+    "zh": "标题入场：一排黑白线稿的压机依次砸下来，每砸一下就从料块里“压”出一个字——先被压扁，再按阻尼弹簧回到原形，旁边冒两团小烟。下面可以输入自己的词再压一遍，点任意一个字也能单独再压一次。",
+    "en": "A headline entrance: a row of line-drawn presses slam down one after another, each stamping a letter out of a block — squashed flat first, then springing back along a damped spring with a puff. Type your own word to press it again, or click any letter to re-press it."
   },
   "technique": {
     "zh": "压头用 ease-in 加速砸下（150ms），停 60ms 再带一点过冲弹回去。字从 scaleY(0.48) 开始按阻尼弹簧回到 1：x(t)=1+(x₀−1)·e^(−ζωt)(cos ω_d t + ζω/ω_d·sin ω_d t)，采样成 30 个关键帧，scaleX = 1/√scaleY 保持体积。错峰每台 140ms，奇偶交替快慢一点点，听起来更像机器。",

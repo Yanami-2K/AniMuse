@@ -1,10 +1,11 @@
-/* Dialog Entrances — 同一个对话框，六种进场 / 退场：果冻、展开、气泡、洗牌、掉落、收进 Dock。幽灵猫趴在对话框上沿 */
+/* Dialog Entrances（黑白线稿）— 同一个对话框，六种进场 / 退场：果冻、展开、气泡、洗牌、掉落、收进 Dock */
 :root {
-  --bg: #fdf6ea;
-  --ink: #3a3346;         /* 描边颜色 */
+  --bg: #fafaf8;
+  --ink: #111;            /* 线条颜色 */
   --paper: #fff;
-  --accent: #ff8fab;      /* 主按钮 */
-  --scrim: rgba(58, 51, 70, .3);
+  --accent: #111;         /* 主按钮 */
+  --line: .08rem;         /* 线宽 */
+  --scrim: rgba(17, 17, 17, .14);
   --in: 620ms;            /* 进场基准时长（每种方式在这个基础上缩放） */
   --out: 320ms;           /* 退场基准时长 */
   --wobble: 2.1;          /* 果冻回弹频率（Hz） */
@@ -14,65 +15,52 @@
 html { font-size: min(3.333vw, 4.444vh); }
 body {
   margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(36rem 18rem at 50% 108%, #f7e2cb, transparent 70%), var(--bg); color: var(--ink);
-  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  background: var(--bg); color: var(--ink);
+  font-family: Inter, "Helvetica Neue", Arial, ui-sans-serif, -apple-system, "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 button { font: inherit; color: inherit; }
 .stage { position: relative; width: 30rem; height: 22.5rem; }
 /* 背景里的“笔记应用” */
-.app { position: absolute; left: 2rem; top: 1rem; width: 26rem; height: 16.6rem; border-radius: 1rem; background: var(--paper); border: .16rem solid var(--ink); box-shadow: .3rem .36rem 0 var(--ink); overflow: hidden; }
-.bar { display: flex; align-items: center; gap: .36rem; height: 2.2rem; padding: 0 .5rem 0 .8rem; border-bottom: .14rem solid var(--ink); background: #f3f0ff; }
-.bar > i { width: .6rem; height: .6rem; border-radius: 50%; border: .12rem solid var(--ink); background: #ff8fab; }
-.bar > i:nth-child(2) { background: #ffd45c; } .bar > i:nth-child(3) { background: #7fe0b0; }
-.bar b { flex: 1; text-align: center; font-size: .8rem; font-weight: 800; opacity: .6; }
-.close { padding: .28rem .7rem; border: .12rem solid var(--ink); border-radius: 1rem; background: #fff; font-size: .72rem; font-weight: 800; cursor: pointer; box-shadow: .1rem .12rem 0 var(--ink); }
-.close:focus-visible, .picker button:focus-visible, .acts button:focus-visible { outline: .18rem solid #8fd3ff; outline-offset: .14rem; }
+.app { position: absolute; left: 2rem; top: 1rem; width: 26rem; height: 16.6rem; border-radius: .5rem; background: var(--paper); border: var(--line) solid var(--ink); overflow: hidden; }
+.bar { display: flex; align-items: center; gap: .36rem; height: 2.2rem; padding: 0 .5rem 0 .8rem; border-bottom: var(--line) solid var(--ink); background: var(--paper); }
+.bar > i { width: .55rem; height: .55rem; border-radius: 50%; border: var(--line) solid var(--ink); background: var(--paper); }
+.bar b { flex: 1; text-align: center; font: 500 .62rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .08em; opacity: .55; }
+.close { padding: .26rem .7rem; border: var(--line) solid var(--ink); border-radius: .3rem; background: var(--paper); font-size: .68rem; font-weight: 600; cursor: pointer; }
+.close:focus-visible, .picker button:focus-visible, .acts button:focus-visible { outline: var(--line) dashed var(--ink); outline-offset: .18rem; }
 .doc { padding: 1.1rem 1.6rem; }
-.doc p { height: .55rem; margin: 0 0 .7rem; border-radius: 1rem; background: #ece8f6; }
-.doc .h { width: 52%; height: .95rem; background: #d9cfff; margin-bottom: 1rem; }
+.doc p { height: .42rem; margin: 0 0 .75rem; border-radius: .1rem; background: #ececea; }
+.doc .h { width: 46%; height: .8rem; background: #111; margin-bottom: 1.05rem; }
 .doc .s { width: 78%; } .doc .s2 { width: 60%; }
-.dock { position: absolute; left: 50%; bottom: .7rem; display: flex; gap: .45rem; padding: .35rem .5rem; transform: translateX(-50%); border-radius: .9rem; background: rgba(243, 240, 255, .9); border: .12rem solid var(--ink); }
-.dock i { position: relative; width: 1.7rem; height: 1.7rem; border-radius: .5rem; border: .12rem solid var(--ink); background: #ffd45c; }
-.dock .app2 { background: #8fd3ff; }
-.dock .catApp { background: #b9a6ff; display: grid; place-items: center; transform-origin: 50% 100%; }
-.catApp svg { width: 1.15rem; height: 1.3rem; margin-top: .2rem; overflow: visible; }
-.catApp .shell { fill: #ece6ff; stroke: var(--ink); stroke-width: 8; stroke-linejoin: round; }
-.catApp .eye { fill: var(--ink); }
-.badge { position: absolute; right: .2rem; top: -.35rem; min-width: .9rem; height: .9rem; border-radius: 1rem; background: var(--accent); border: .1rem solid var(--ink); color: #fff; font-size: .55rem; line-height: .7rem; text-align: center; font-weight: 900; opacity: 0; transform: scale(0); }
-.toast { position: absolute; left: 50%; bottom: 3.6rem; margin: 0; padding: .35rem .8rem; transform: translateX(-50%); border-radius: 1rem; background: var(--ink); color: #fff; font-size: .72rem; font-weight: 800; opacity: 0; white-space: nowrap; pointer-events: none; }
+.dock { position: absolute; left: 50%; bottom: .7rem; display: flex; gap: .45rem; padding: .35rem .5rem; transform: translateX(-50%); border-radius: .45rem; background: var(--paper); border: var(--line) solid var(--ink); }
+.dock i { position: relative; width: 1.6rem; height: 1.6rem; border-radius: .32rem; border: var(--line) solid var(--ink); background: var(--paper); }
+.dock .app1 { background: repeating-linear-gradient(-45deg, var(--ink) 0 1px, transparent 1px .3rem), var(--paper); }
+.dock .app2 { background: radial-gradient(circle, var(--ink) 1px, transparent 1.4px) 0 0 / .3rem .3rem, var(--paper); }
+.dock .catApp { background: var(--ink); display: grid; place-items: center; transform-origin: 50% 100%; }
+.catApp svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--paper); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.badge { position: absolute; right: .2rem; top: -.35rem; min-width: .9rem; height: .9rem; border-radius: 1rem; background: var(--paper); border: var(--line) solid var(--ink); color: var(--ink); font-size: .55rem; line-height: .7rem; text-align: center; font-weight: 900; opacity: 0; transform: scale(0); }
+.toast { position: absolute; left: 50%; bottom: 3.6rem; margin: 0; padding: .35rem .8rem; transform: translateX(-50%); border-radius: .3rem; background: var(--ink); color: var(--paper); font-size: .68rem; font-weight: 600; opacity: 0; white-space: nowrap; pointer-events: none; }
 /* 遮罩 + 洗牌用的两张垫底卡片 */
-.scrim { position: absolute; left: 2rem; top: 1rem; width: 26rem; height: 16.6rem; border-radius: 1rem; background: var(--scrim); opacity: 0; pointer-events: none; }
+.scrim { position: absolute; left: 2rem; top: 1rem; width: 26rem; height: 16.6rem; border-radius: .5rem; background: var(--scrim); opacity: 0; pointer-events: none; }
 .scrim.on { pointer-events: auto; }
-.decoy { position: absolute; left: 8rem; top: 5.6rem; width: 14rem; height: 7.8rem; border-radius: 1rem; border: .16rem solid var(--ink); opacity: 0; pointer-events: none; }
-.d1 { background: #d9cfff; } .d2 { background: #ffd6e2; }
+.decoy { position: absolute; left: 8rem; top: 5.6rem; width: 14rem; height: 7.8rem; border-radius: .5rem; border: var(--line) solid var(--ink); opacity: 0; pointer-events: none; }
+.d1 { background: repeating-linear-gradient(-45deg, rgba(17, 17, 17, .5) 0 1px, var(--paper) 1px .32rem); } .d2 { background: radial-gradient(circle, rgba(17, 17, 17, .5) 1px, transparent 1.4px) 0 0 / .4rem .4rem, var(--paper); }
 /* 对话框 */
-.dlg { position: absolute; left: 8rem; top: 5.6rem; width: 14rem; min-height: 7.8rem; border-radius: 1rem; background: var(--paper); border: .16rem solid var(--ink); box-shadow: .26rem .32rem 0 var(--ink); will-change: transform; }
+.dlg { position: absolute; left: 8rem; top: 5.6rem; width: 14rem; min-height: 7.8rem; border-radius: .5rem; background: var(--paper); border: var(--line) solid var(--ink); box-shadow: .22rem .22rem 0 var(--ink); will-change: transform; }
 .dlg[hidden] { display: none; }
-.dlg .in { padding: 1.15rem 1.1rem .9rem; text-align: center; }
-.dlg h2 { margin: 0 0 .35rem; font-size: 1.02rem; font-weight: 900; }
+.dlg .in { padding: 1rem 1.1rem .9rem; text-align: left; }
+.dlg h2 { margin: 0 0 .35rem; font-size: .98rem; font-weight: 700; letter-spacing: -.01em; }
 .dlg p { margin: 0 0 .85rem; font-size: .7rem; line-height: 1.45; opacity: .7; }
-.acts { display: flex; gap: .5rem; justify-content: center; }
-.acts button { padding: .4rem .9rem; border: .13rem solid var(--ink); border-radius: 1rem; font-size: .74rem; font-weight: 900; cursor: pointer; box-shadow: .1rem .13rem 0 var(--ink); transition: transform .15s cubic-bezier(.34, 1.56, .64, 1), box-shadow .15s; }
-.acts button:active, .acts button.press { transform: translate(.08rem, .1rem); box-shadow: 0 0 0 var(--ink); }
-.ghost { background: #fff; } .pri { background: var(--accent); color: #fff; text-shadow: 0 .06rem 0 rgba(58, 51, 70, .35); }
-.dcat { position: absolute; left: 50%; top: -2.15rem; width: 2.9rem; height: 2.24rem; margin-left: -1.45rem; overflow: visible; }
-.dcat .shell { fill: #ece6ff; stroke: var(--ink); stroke-width: 6.5; stroke-linejoin: round; }
-.dcat .ear { fill: #d9cfff; }
-.dcat .eye { fill: var(--ink); }
-.dcat .line { fill: none; stroke: var(--ink); stroke-width: 5.5; stroke-linecap: round; stroke-linejoin: round; }
-.dcat .blush { fill: #ff8fab; opacity: .6; }
-.dcat .x, .dcat .h { display: none; }
-.dlg[data-face="x"] .dcat .n, .dlg[data-face="h"] .dcat .n { display: none; }
-.dlg[data-face="x"] .dcat .x, .dlg[data-face="h"] .dcat .h { display: inline; }
-.paw { position: absolute; top: -.36rem; width: .7rem; height: .5rem; border-radius: 50%; background: #ece6ff; border: .13rem solid var(--ink); }
-.p1 { left: calc(50% - .95rem); } .p2 { left: calc(50% + .25rem); }
-.tail { position: absolute; right: 1.6rem; top: -.75rem; width: 1.1rem; height: 1.1rem; background: var(--paper); border-left: .16rem solid var(--ink); border-top: .16rem solid var(--ink); transform: rotate(45deg) scale(0); border-radius: .2rem 0 0 0; }
+.acts { display: flex; gap: .45rem; justify-content: flex-end; }
+.acts button { padding: .38rem .85rem; border: var(--line) solid var(--ink); border-radius: .3rem; font-size: .7rem; font-weight: 600; cursor: pointer; transition: transform .15s cubic-bezier(.34, 1.56, .64, 1); }
+.acts button:active, .acts button.press { transform: scale(.95); }
+.ghost { background: var(--paper); } .pri { background: var(--accent); color: var(--paper); }
+.tail { position: absolute; right: 1.6rem; top: -.6rem; width: 1rem; height: 1rem; background: var(--paper); border-left: var(--line) solid var(--ink); border-top: var(--line) solid var(--ink); transform: rotate(45deg) scale(0); border-radius: .2rem 0 0 0; }
 /* 样式选择 */
-.picker { position: absolute; left: 50%; bottom: .9rem; display: flex; width: max-content; padding: .22rem; transform: translateX(-50%); border-radius: 2rem; background: #fff; border: .16rem solid var(--ink); box-shadow: .18rem .22rem 0 var(--ink); }
-.picker button { position: relative; z-index: 1; white-space: nowrap; padding: .38rem .78rem; border: 0; border-radius: 2rem; background: none; font-size: .78rem; font-weight: 900; cursor: pointer; transition: color .25s; }
+.picker { position: absolute; left: 50%; bottom: .9rem; display: flex; width: max-content; padding: .2rem; transform: translateX(-50%); border-radius: .45rem; background: var(--paper); border: var(--line) solid var(--ink); }
+.picker button { position: relative; z-index: 1; white-space: nowrap; padding: .36rem .74rem; border: 0; border-radius: .28rem; background: none; font-size: .72rem; font-weight: 600; cursor: pointer; transition: color .25s; }
 .picker button[aria-checked="true"] { color: #fff; }
-.pill { position: absolute; left: 0; top: .22rem; bottom: .22rem; width: 3rem; border-radius: 2rem; background: var(--ink); transition: transform .5s cubic-bezier(.34, 1.4, .5, 1), width .5s cubic-bezier(.34, 1.4, .5, 1); }
+.pill { position: absolute; left: 0; top: .2rem; bottom: .2rem; width: 3rem; border-radius: .28rem; background: var(--ink); transition: transform .5s cubic-bezier(.34, 1.4, .5, 1), width .5s cubic-bezier(.34, 1.4, .5, 1); }
 .finger {
   position: fixed; left: 0; top: 0; width: 2.2rem; height: 2.2rem; margin: -1.1rem 0 0 -1.1rem; border-radius: 50%;
   background: rgba(28, 26, 33, .16); border: .14rem solid rgba(255, 255, 255, .9); box-shadow: 0 .3rem .8rem rgba(28, 26, 33, .2);

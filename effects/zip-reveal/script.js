@@ -1,7 +1,7 @@
 /* i18n：画廊会传 ?lang=en|zh；单独打开时跟浏览器语言。英文模式把带 data-en 的元素换成英文 */
 var LANG = new URLSearchParams(location.search).get('lang') || (/^zh/i.test(navigator.language || '') ? 'zh' : 'en');
 if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(document.querySelectorAll('[data-en]'), function (el) { el.innerHTML = el.dataset.en; }); [].forEach.call(document.querySelectorAll('[data-en-label]'), function (el) { el.setAttribute('aria-label', el.dataset.enLabel); }); }
-// Zip Reveal — 缝的形状 = 两个 smoothstep 相乘（离拉链头越远越开、离起点越远越开），上唇往上、下唇往下；齿沿曲线排、跟着切线转
+// Zip Reveal（黑白线稿）— 缝的形状 = 两个 smoothstep 相乘（离拉链头越远越开、离起点越远越开），上唇往上、下唇往下；齿沿曲线排、跟着切线转
 (function () {
   var css = getComputedStyle(document.documentElement);
   var num = function (v) { return parseFloat(css.getPropertyValue(v)); };
@@ -100,7 +100,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     if (S.popped) return; S.popped = true; S.rv += reduce ? 0 : 260;
     setFace('o'); pfHappy(true); setTimeout(function () { if (S.popped) setFace('h'); }, 420);
     live.textContent = bubbleTxt.textContent;
-    var bb = bubbleTxt.getBBox(), w = bb.width + 22, h = 26, bx = 268, by = 52;
+    var bb = bubbleTxt.getBBox(), w = bb.width + 22, h = 26, bx = 300, by = 44;
     bubbleTxt.setAttribute('x', bx); bubbleTxt.setAttribute('y', by + 4.5);
     bubbleBox.setAttribute('d', 'M' + (bx - w / 2 + 10) + ' ' + (by - h / 2) + ' H' + (bx + w / 2 - 10) + ' Q' + (bx + w / 2) + ' ' + (by - h / 2) + ' ' + (bx + w / 2) + ' ' + (by - h / 2 + 10) + ' V' + (by + h / 2 - 10) + ' Q' + (bx + w / 2) + ' ' + (by + h / 2) + ' ' + (bx + w / 2 - 10) + ' ' + (by + h / 2) +
       ' H' + (bx - w / 2 + 34) + ' L' + (bx - w / 2 + 16) + ' ' + (by + h / 2 + 12) + ' L' + (bx - w / 2 + 20) + ' ' + (by + h / 2) + ' H' + (bx - w / 2 + 10) + ' Q' + (bx - w / 2) + ' ' + (by + h / 2) + ' ' + (bx - w / 2) + ' ' + (by + h / 2 - 10) + ' V' + (by - h / 2 + 10) + ' Q' + (bx - w / 2) + ' ' + (by - h / 2) + ' ' + (bx - w / 2 + 10) + ' ' + (by - h / 2) + ' Z');
@@ -115,11 +115,7 @@ if (LANG === 'en') { document.documentElement.lang = 'en'; [].forEach.call(docum
     bubble.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.6)' }], { duration: reduce ? 1 : 180, easing: 'ease-in', fill: 'both' });
   }
 
-  var pfEyes = $('pfEyes');
-  function pfHappy(on) { // 笔袋自己的脸：平时眯眼，猫冒出来时笑成 ^ ^
-    pfEyes.setAttribute('d', on ? 'M160 200 Q170 190 180 200 M220 200 Q230 190 240 200' : 'M160 196 Q170 204 180 196 M220 196 Q230 204 240 196');
-    if (!reduce && on) $('pface').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 360, easing: 'cubic-bezier(.2,.8,.2,1)' });
-  }
+  function pfHappy() {} // 黑白版的袋子没有脸
   // —— 拖动 ——
   var grabDx = 0;
   function toSvg(x, y) { var pt = svg.createSVGPoint(); pt.x = x; pt.y = y; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
